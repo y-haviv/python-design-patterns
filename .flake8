@@ -1,0 +1,29 @@
+[flake8]
+max-line-length = 100
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    build,
+    dist,
+    .eggs,
+    *.egg-info,
+    .tox,
+    .pytest_cache,
+    .mypy_cache,
+    .coverage,
+    htmlcov
+
+ignore = 
+    # Whitespace before ':' - Black adds it
+    E203,
+    # Line break before binary operator - Black prefers line break after
+    W503,
+    # Blank line after docstring
+    D205,
+    # 1 blank line required after class docstring
+    D204,
+
+# Docstring conventions
+docstring-convention = google
