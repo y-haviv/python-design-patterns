@@ -8,7 +8,7 @@ Method pattern abstracts away these differences from the client code.
 
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from enum import Enum
 import json
 
@@ -53,7 +53,7 @@ class RESTfulAPIService(APIService):
     standard HTTP methods.
     """
 
-    def __init__(self, base_url: str = "https://api.example.com"):
+    def __init__(self, base_url: str = "https://api.example.com") -> None:
         self.base_url = base_url
         self.timeout = 30
         self.retries = 3
@@ -95,7 +95,7 @@ class GraphQLAPIService(APIService):
     and sends queries as JSON payloads.
     """
 
-    def __init__(self, base_url: str = "https://graphql.example.com/query"):
+    def __init__(self, base_url: str = "https://graphql.example.com/query") -> None:
         self.base_url = base_url
         self.timeout = 45
         self.batch_size = 10
@@ -138,7 +138,7 @@ class SOAPAPIService(APIService):
     enhanced authentication headers.
     """
 
-    def __init__(self, wsdl_url: str = "https://soap.example.com/service?wsdl"):
+    def __init__(self, wsdl_url: str = "https://soap.example.com/service?wsdl") -> None:
         self.wsdl_url = wsdl_url
         self.timeout = 60
         self.soap_version = "1.2"
@@ -272,7 +272,7 @@ class APIServiceRegistry:
     This is useful when the API type is determined by configuration or user input.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._factories: Dict[str, APIServiceFactory] = {
             "rest": RESTfulAPIFactory(),
             "graphql": GraphQLAPIFactory(),
@@ -326,13 +326,11 @@ class APIServiceRegistry:
         self._factories[api_type] = factory
 
 
-def simulate_microservice_architecture():
+def simulate_microservice_architecture() -> str:
     """
     Simulate a microservice architecture where different services 
     use different API types to communicate.
     """
-    from typing import List
-
     services_config: List[tuple[str, str]] = [
         ("rest", "/api/users/123"),
         ("graphql", "/query?query={user{id,name}}"),

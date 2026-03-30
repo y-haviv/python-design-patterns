@@ -23,13 +23,13 @@ class Color:
     """Color representation."""
     name: str
     hex_code: str
-    rgb: tuple = field(default=(0, 0, 0))
+    rgb: tuple[int, int, int] = field(default=(0, 0, 0))
 
 
 @dataclass
 class Typography:
     """Typography settings."""
-    font_family: str
+    font_family: str = ""
     sizes: Dict[str, int] = field(default_factory=dict)  # heading1, heading2, body, etc.
     weights: Dict[str, int] = field(default_factory=dict)  # normal, bold, etc.
     line_heights: Dict[str, float] = field(default_factory=dict)
@@ -308,7 +308,7 @@ class ThemeLibrary:
     for efficient theme management.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize theme library."""
         # Create prototype themes (expensive)
         self._light_prototype = create_light_theme_prototype()

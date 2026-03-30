@@ -8,7 +8,7 @@ production environments.
 
 from __future__ import annotations
 from threading import Lock
-from typing import Dict, Any, Mapping
+from typing import Dict, Any, Mapping, Optional
 from .pattern import SingletonMeta
 
 

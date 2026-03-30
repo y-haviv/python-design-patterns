@@ -484,7 +484,7 @@ class UIThemeRegistry:
     switching themes at runtime without requiring factory knowledge.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize registry with available themes."""
         self._factories: Dict[UITheme, UIFactory] = {
             UITheme.LIGHT: LightThemeFactory(),
@@ -534,7 +534,7 @@ class UIThemeRegistry:
         """
         self._factories[theme] = factory
 
-    def list_available_themes(self) -> list:
+    def list_available_themes(self) -> list[UITheme]:
         """
         List all available themes.
         

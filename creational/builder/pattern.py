@@ -455,7 +455,9 @@ class Computer:
         
         lines.append(f"Cooling: {self.cooling_type}")
         lines.append(f"PSU: {self.psu_wattage}W")
-        lines.append(f"Connectivity: {"WiFi + " if self.has_wifi else ""}{"Bluetooth" if self.has_bluetooth else "Wired only"}")
+        wifi_part = "WiFi + " if self.has_wifi else ""
+        bt_part = "Bluetooth" if self.has_bluetooth else "Wired only"
+        lines.append(f"Connectivity: {wifi_part}{bt_part}")
         lines.append(f"Color: {self.color}")
         lines.append(f"Estimated Price: ${self.estimate_price():.2f}")
         

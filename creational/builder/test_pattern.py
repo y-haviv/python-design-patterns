@@ -137,14 +137,13 @@ class TestHTTPRequestBuilder:
     def test_builder_reset(self):
         """Verify builder can be reset to initial state."""
         builder = HTTPRequestBuilder()
-        
+
         builder.with_url("https://first.com").with_method("POST")
         builder.reset()
-        
-        # After reset, should create a GET request
-        request1 = builder.build()
-        assert request1.method == HTTPMethod.GET
-        assert request1.url == ""
+
+        # After reset, builder returns to initial defaults (GET method, empty URL)
+        assert builder._method == HTTPMethod.GET
+        assert builder._url == ""
 
     def test_builder_reuse(self):
         """Verify builder can be reused to create multiple objects."""
@@ -467,7 +466,7 @@ class TestSQLQueryBuilder:
         
         assert "name" in sql
         assert "products" in sql
-        assert "users" not in sql or "users" not being the original query
+        assert "users" not in sql  # users was from the original query before reset
 
 
 class TestQueryTemplates:

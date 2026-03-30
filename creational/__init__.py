@@ -34,7 +34,8 @@ See README.md for comprehensive comparison and best practices.
 """
 
 # Singleton Pattern
-from .singleton.pattern import SingletonMeta, FeatureFlagService
+from .singleton.pattern import SingletonMeta
+from .singleton.real_world_example import FeatureFlagService
 
 # Factory Method Pattern
 from .factory.pattern import (
@@ -57,10 +58,10 @@ from .abstract_factory.pattern import (
     Checkbox,
     TextInput,
     UIFactory,
-    LightUIFactory,
-    DarkUIFactory,
-    HighContrastUIFactory,
-    UIFactoryRegistry,
+    LightThemeFactory as LightUIFactory,
+    DarkThemeFactory as DarkUIFactory,
+    HighContrastThemeFactory as HighContrastUIFactory,
+    UIThemeRegistry as UIFactoryRegistry,
 )
 
 # Builder Pattern

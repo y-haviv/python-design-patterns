@@ -97,7 +97,7 @@ class DataTypeMapper(ABC):
 class PostgreSQLConnection(Connection):
     """Concrete Product: PostgreSQL Connection."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.host = None
         self.connected = False
         self.port = 5432  # Default PostgreSQL port
@@ -183,7 +183,7 @@ class PostgreSQLDataTypeMapper(DataTypeMapper):
 class MySQLConnection(Connection):
     """Concrete Product: MySQL Connection."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.host = None
         self.connected = False
         self.port = 3306  # Default MySQL port
@@ -270,11 +270,11 @@ class MySQLDataTypeMapper(DataTypeMapper):
 class SQLiteConnection(Connection):
     """Concrete Product: SQLite Connection."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_file = None
         self.connected = False
 
-    def connect(self, db_file: str, user: str = None, password: str = None) -> str:
+    def connect(self, db_file: str, user: Optional[str] = None, password: Optional[str] = None) -> str:
         """Connect to SQLite database file."""
         self.db_file = db_file
         self.connected = True
@@ -441,7 +441,7 @@ class DatabaseAdapter:
     never on concrete database implementations.
     """
 
-    def __init__(self, factory: DatabaseFactory):
+    def __init__(self, factory: DatabaseFactory) -> None:
         """
         Initialize adapter with a database factory.
         
@@ -457,7 +457,7 @@ class DatabaseAdapter:
         """Connect to the database."""
         return self._conn.connect(host, user, password)
 
-    def query_select(self, table: str, columns: List[str] = None) -> str:
+    def query_select(self, table: str, columns: Optional[List[str]] = None) -> str:
         """Build and show a SELECT query (database-agnostic)."""
         return self._query_builder.build_select(table, columns or [])
 
@@ -477,8 +477,8 @@ class DatabaseAdapter:
 class DatabaseFactoryRegistry:
     """Registry: Manages database factory instances."""
 
-    def __init__(self):
-        self._factories = {
+    def __init__(self) -> None:
+        self._factories: Dict[DatabaseEngine, DatabaseFactory] = {
             DatabaseEngine.POSTGRESQL: PostgreSQLFactory(),
             DatabaseEngine.MYSQL: MySQLFactory(),
             DatabaseEngine.SQLITE: SQLiteFactory(),

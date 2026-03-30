@@ -121,7 +121,7 @@ class SQLQueryBuilder:
     This demonstrates the Builder pattern for real-world SQL query construction.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize builder."""
         self._select_columns: List[str] = ["*"]
         self._from_table: Optional[str] = None

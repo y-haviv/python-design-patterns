@@ -210,10 +210,10 @@ class TestTransportRegistry:
     def test_registry_unknown_type_raises_error(self):
         """Verify registry raises error for unknown transport types."""
         registry = TransportFactoryRegistry()
+        registry._factories.clear()  # Empty the registry to simulate unregistered type
 
         with pytest.raises(ValueError):
-            registry.get_factory(TransportType.HTTP)  # Will fail if value is invalid
-            # (This is a simplified check; in real code, use an invalid enum)
+            registry.get_factory(TransportType.HTTP)
 
 
 class TestRealWorldAPIServices:

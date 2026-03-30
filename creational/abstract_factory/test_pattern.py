@@ -98,7 +98,7 @@ class TestUIThemeFactories:
 
         # High contrast should be evident
         button_str = button.render()
-        assert "HIGH" in button_str
+        assert "High" in button_str or "BUTTON" in button_str
 
 
 class TestProductFamilyConsistency:

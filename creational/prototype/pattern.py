@@ -342,7 +342,7 @@ class PrototypeRegistry:
     - Document system storing document templates
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the registry."""
         self._prototypes: Dict[str, Cloneable] = {}
 

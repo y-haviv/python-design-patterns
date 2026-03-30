@@ -91,7 +91,7 @@ class HTTPTransport(Transport):
     def disconnect(self) -> str:
         """Simulate HTTP disconnection."""
         self._connected = False
-        return "HTTP connection closed"
+        return "HTTP connection disconnected (closed)"
 
 
 class HTTPSTransport(Transport):
