@@ -21,7 +21,7 @@ from datetime import datetime
 class Colleague(ABC):
     """
     Abstract colleague that interacts through a mediator.
-    
+
     Colleagues don't interact directly with each other; they communicate
     exclusively through the mediator. This reduces coupling between colleagues.
     """
@@ -29,7 +29,7 @@ class Colleague(ABC):
     def __init__(self, name: str, mediator: Mediator) -> None:
         """
         Initialize colleague with name and mediator.
-        
+
         Args:
             name: Unique identifier for this colleague.
             mediator: The mediator that coordinates interactions.
@@ -51,7 +51,7 @@ class Colleague(ABC):
 class Mediator(ABC):
     """
     Abstract mediator that defines how colleagues interact.
-    
+
     The mediator encapsulates the interaction logic, allowing colleagues
     to be decoupled from each other.
     """
@@ -72,7 +72,7 @@ class Mediator(ABC):
 class ConcreteColleague(Colleague):
     """
     Concrete colleague that communicates through the mediator.
-    
+
     Knows about the mediator but not about other colleagues. All communication
     goes through the mediator.
     """
@@ -85,7 +85,7 @@ class ConcreteColleague(Colleague):
     def send(self, message: str, recipient: Optional[str] = None) -> None:
         """
         Send a message through the mediator.
-        
+
         Args:
             message: The message content.
             recipient: Optional specific recipient (None for broadcast).
@@ -103,7 +103,7 @@ class ConcreteColleague(Colleague):
 class ConcreteMediator(Mediator):
     """
     Concrete mediator that implements the interaction logic.
-    
+
     Maintains a list of colleagues and coordinates communication between them.
     This is where the complex interaction logic resides, centralizing it
     instead of scattering it across colleague classes.
@@ -117,7 +117,7 @@ class ConcreteMediator(Mediator):
     def register_colleague(self, colleague: Colleague) -> None:
         """
         Register a colleague with this mediator.
-        
+
         Args:
             colleague: The colleague to register.
         """
@@ -125,28 +125,27 @@ class ConcreteMediator(Mediator):
         print(f"[Mediator] Registered colleague: {colleague.name}")
 
     def send_message(
-        self, 
-        message: str, 
-        sender: Colleague, 
-        recipient: Optional[str] = None
+        self, message: str, sender: Colleague, recipient: Optional[str] = None
     ) -> None:
         """
         Send a message from sender to recipient (or all colleagues).
-        
+
         Args:
             message: The message content.
             sender: The sending colleague.
             recipient: Name of recipient colleague (None for broadcast).
         """
         timestamp = datetime.now()
-        
+
         # Log the message
-        self.message_log.append({
-            "sender": sender.name,
-            "recipient": recipient or "All",
-            "message": message,
-            "timestamp": timestamp,
-        })
+        self.message_log.append(
+            {
+                "sender": sender.name,
+                "recipient": recipient or "All",
+                "message": message,
+                "timestamp": timestamp,
+            }
+        )
 
         if recipient:
             # Send to specific colleague
@@ -178,7 +177,7 @@ class ConcreteMediator(Mediator):
 class SmartMediator(ConcreteMediator):
     """
     An advanced mediator with filtering, routing, and rule-based logic.
-    
+
     Demonstrates how the mediator pattern allows for sophisticated
     interaction logic without modifying colleagues.
     """
@@ -192,7 +191,7 @@ class SmartMediator(ConcreteMediator):
     def add_filter(self, colleague_name: str, filter_func: callable) -> None:
         """
         Add a message filter for a colleague.
-        
+
         The filter function receives a message and returns whether to deliver it.
         """
         self.filters[colleague_name] = filter_func
@@ -202,10 +201,7 @@ class SmartMediator(ConcreteMediator):
         self.routing_rules[from_name] = to_name
 
     def send_message(
-        self,
-        message: str,
-        sender: Colleague,
-        recipient: Optional[str] = None
+        self, message: str, sender: Colleague, recipient: Optional[str] = None
     ) -> None:
         """Send with filtering and routing logic."""
         # Check routing rules

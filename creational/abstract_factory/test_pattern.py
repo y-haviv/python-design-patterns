@@ -80,7 +80,7 @@ class TestUIThemeFactories:
         # Dark theme should be evident in rendering
         button_str = button.render()
         checkbox_str = checkbox.render()
-        
+
         assert "Dark" in button_str or "━" in button_str
         assert "Dark" in checkbox_str or "☑" in checkbox_str
 
@@ -166,7 +166,7 @@ class TestApplicationWithFactory:
         app = Application(factory)
 
         ui = app.render_ui()
-        
+
         # Should render and contain UI components
         assert len(ui) > 0
         assert "APPLICATION" in ui
@@ -226,29 +226,36 @@ class TestUIThemeRegistry:
 
     def test_registry_custom_factory_registration(self):
         """Verify registry allows registering custom factories."""
+
         class CustomFactory(UIFactory):
             def create_button(self) -> Button:
                 class CustomButton(Button):
                     def render(self) -> str:
                         return "CUSTOM BUTTON"
+
                     def on_click(self, callback: str) -> str:
                         return "CUSTOM CLICK"
+
                 return CustomButton()
 
             def create_checkbox(self) -> Checkbox:
                 class CustomCheckbox(Checkbox):
                     def render(self) -> str:
                         return "CUSTOM CHECKBOX"
+
                     def set_checked(self, value: bool) -> str:
                         return "CUSTOM CHECK"
+
                 return CustomCheckbox()
 
             def create_text_input(self) -> TextInput:
                 class CustomTextInput(TextInput):
                     def render(self) -> str:
                         return "CUSTOM INPUT"
+
                     def set_placeholder(self, text: str) -> str:
                         return "CUSTOM PLACEHOLDER"
+
                 return CustomTextInput()
 
         registry = UIThemeRegistry()
@@ -443,6 +450,7 @@ class TestDatabaseFactoryRegistry:
             # Create a dummy enum value that doesn't exist
             class FakeEngine:
                 value = "nonexistent"
+
             registry.get_factory(FakeEngine())  # type: ignore
 
 

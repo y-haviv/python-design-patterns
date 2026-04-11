@@ -1,8 +1,8 @@
 """
 Real-World Example: Text Editor with Undo/Redo via Command Pattern.
 
-This example demonstrates a practical text editor that uses the Command 
-pattern to implement undo/redo functionality, allowing users to reverse 
+This example demonstrates a practical text editor that uses the Command
+pattern to implement undo/redo functionality, allowing users to reverse
 and reapply their changes at any point.
 """
 
@@ -15,9 +15,9 @@ from datetime import datetime
 class TextEditor(Receiver):
     """
     Text editor document that performs actual text operations.
-    
-    Acts as the Receiver in the Command pattern. All text 
-    modifications happen through explicitly defined methods 
+
+    Acts as the Receiver in the Command pattern. All text
+    modifications happen through explicitly defined methods
     that can be called by commands.
     """
 
@@ -29,16 +29,12 @@ class TextEditor(Receiver):
     def insert_text(self, position: int, text_to_insert: str) -> None:
         """Insert text and log the action."""
         super().insert_text(position, text_to_insert)
-        self.history_log.append(
-            f"Inserted '{text_to_insert}' at position {position}"
-        )
+        self.history_log.append(f"Inserted '{text_to_insert}' at position {position}")
 
     def delete_text(self, position: int, length: int) -> None:
         """Delete text and log the action."""
         super().delete_text(position, length)
-        self.history_log.append(
-            f"Deleted {length} characters at position {position}"
-        )
+        self.history_log.append(f"Deleted {length} characters at position {position}")
 
     def display_document(self) -> str:
         """Get a view of the document with line numbers."""
@@ -75,12 +71,10 @@ class TextEditorCommand(Command):
 class InsertTextCommand(TextEditorCommand):
     """Command to insert text at a specific position."""
 
-    def __init__(
-        self, editor: TextEditor, position: int, text: str
-    ) -> None:
+    def __init__(self, editor: TextEditor, position: int, text: str) -> None:
         """
         Initialize insert command.
-        
+
         Args:
             editor: The text editor to modify.
             position: Where to insert the text.
@@ -104,12 +98,10 @@ class InsertTextCommand(TextEditorCommand):
 class DeleteTextCommand(TextEditorCommand):
     """Command to delete text from a specific position."""
 
-    def __init__(
-        self, editor: TextEditor, position: int, length: int
-    ) -> None:
+    def __init__(self, editor: TextEditor, position: int, length: int) -> None:
         """
         Initialize delete command.
-        
+
         Args:
             editor: The text editor to modify.
             position: Where to start deleting.
@@ -138,7 +130,7 @@ class UndoCommand(TextEditorCommand):
     def __init__(self, editor: TextEditor, invoker: Invoker) -> None:
         """
         Initialize undo command.
-        
+
         Args:
             editor: The text editor.
             invoker: The invoker managing command history.
@@ -161,7 +153,7 @@ class RedoCommand(TextEditorCommand):
     def __init__(self, editor: TextEditor, invoker: Invoker) -> None:
         """
         Initialize redo command.
-        
+
         Args:
             editor: The text editor.
             invoker: The invoker managing command history.
@@ -181,7 +173,7 @@ class RedoCommand(TextEditorCommand):
 def demonstrate_text_editor() -> None:
     """
     Demonstrate the text editor with command pattern.
-    
+
     This shows how the editor can perform operations and undo/redo them.
     """
     # Create editor and invoker

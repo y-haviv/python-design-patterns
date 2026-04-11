@@ -1,9 +1,9 @@
 """
 Iterator Pattern Implementation (Behavioral).
 
-Provides a way to access the elements of an aggregate object sequentially 
-without exposing its underlying representation. Decouples the traversal logic 
-from the collection, allowing multiple simultaneous iterators and alternative 
+Provides a way to access the elements of an aggregate object sequentially
+without exposing its underlying representation. Decouples the traversal logic
+from the collection, allowing multiple simultaneous iterators and alternative
 traversal strategies.
 
 Key Components:
@@ -23,7 +23,7 @@ T = TypeVar("T")
 class Iterator(ABC, Generic[T]):
     """
     Abstract interface for iterating over a collection.
-    
+
     Defines the methods that any iterator must support to traverse
     a collection sequentially.
     """
@@ -47,8 +47,8 @@ class Iterator(ABC, Generic[T]):
 class Iterable(ABC, Generic[T]):
     """
     Abstract interface for objects that can be iterated over.
-    
-    Responsible for creating and returning an iterator that can 
+
+    Responsible for creating and returning an iterator that can
     traverse the collection.
     """
 
@@ -61,11 +61,11 @@ class Iterable(ABC, Generic[T]):
 class ConcreteIterator(Iterator[T]):
     """
     Concrete iterator that traverses a specific collection.
-    
+
     Maintains a current position and provides methods to move through
     the collection. Can be implemented for any internal representation
     (arrays, linked lists, trees, etc.).
-    
+
     Attributes:
         collection: The collection being iterated.
         index: Current position in the collection.
@@ -84,7 +84,7 @@ class ConcreteIterator(Iterator[T]):
         """Get the next element."""
         if not self.has_next():
             raise StopIteration("No more elements in the collection")
-        
+
         element = self.collection.items[self.index]
         self.index += 1
         return element
@@ -97,7 +97,7 @@ class ConcreteIterator(Iterator[T]):
 class ReverseIterator(Iterator[T]):
     """
     Iterator that traverses a collection in reverse order.
-    
+
     Demonstrates how different iteration strategies can be implemented
     by creating different iterator classes for the same collection.
     """
@@ -115,7 +115,7 @@ class ReverseIterator(Iterator[T]):
         """Get the next element in reverse order."""
         if not self.has_next():
             raise StopIteration("No more elements in the collection")
-        
+
         element = self.collection.items[self.index]
         self.index -= 1
         return element
@@ -128,19 +128,15 @@ class ReverseIterator(Iterator[T]):
 class FilteredIterator(Iterator[T]):
     """
     Iterator that only returns elements matching a predicate.
-    
+
     Demonstrates filtering during iteration without creating a new collection.
     This is more memory-efficient for large collections.
     """
 
-    def __init__(
-        self, 
-        collection: ConcreteIterable[T], 
-        predicate: callable
-    ) -> None:
+    def __init__(self, collection: ConcreteIterable[T], predicate: callable) -> None:
         """
         Initialize filtered iterator.
-        
+
         Args:
             collection: The collection to iterate over.
             predicate: Function that returns True for elements to include.
@@ -165,7 +161,7 @@ class FilteredIterator(Iterator[T]):
         """Get the next matching element."""
         if not self.has_next():
             raise StopIteration("No more matching elements")
-        
+
         element = self.collection.items[self.index]
         self.index += 1
         self._find_next_valid()
@@ -180,11 +176,11 @@ class FilteredIterator(Iterator[T]):
 class ConcreteIterable(Iterable[T]):
     """
     Concrete collection that implements the Iterable interface.
-    
+
     This represents the aggregate object that can be iterated over.
     It can create iterators on demand, supporting multiple simultaneous
     iterators and different iteration strategies.
-    
+
     Attributes:
         items: The elements stored in this collection.
     """
@@ -213,7 +209,7 @@ class ConcreteIterable(Iterable[T]):
     def create_filtered_iterator(self, predicate: callable) -> Iterator[T]:
         """
         Create a filtered iterator for this collection.
-        
+
         Args:
             predicate: Function that determines which elements to include.
                       Should return True for elements to include.
@@ -236,7 +232,7 @@ class ConcreteIterable(Iterable[T]):
 class BidirectionalIterator(Iterator[T]):
     """
     Iterator that can move both forward and backward through a collection.
-    
+
     Demonstrates more advanced iteration with additional navigation methods.
     """
 
@@ -284,7 +280,7 @@ class BidirectionalIterator(Iterator[T]):
 class LazyIterator(Iterator[T]):
     """
     Iterator that computes elements on-demand.
-    
+
     Useful for large or infinite sequences where you don't want to
     compute or store all elements upfront.
     """
@@ -292,7 +288,7 @@ class LazyIterator(Iterator[T]):
     def __init__(self, generator_func: callable, size: Optional[int] = None) -> None:
         """
         Initialize a lazy iterator.
-        
+
         Args:
             generator_func: Function that takes index and returns value.
             size: Optional size of the sequence (None for infinite).
@@ -311,7 +307,7 @@ class LazyIterator(Iterator[T]):
         """Compute and return the next element."""
         if not self.has_next():
             raise StopIteration("Sequence exhausted")
-        
+
         element = self.generator_func(self.index)
         self.index += 1
         return element

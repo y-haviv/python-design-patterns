@@ -21,7 +21,7 @@ from datetime import datetime
 class Memento(ABC):
     """
     Abstract memento that stores the state of an originator.
-    
+
     The interface is designed to prevent other objects from accessing
     the memento's state (white-box mementos expose state; black-box mementos hide it).
     """
@@ -40,7 +40,7 @@ class Memento(ABC):
 class ConcreteMemento(Memento):
     """
     Concrete memento that stores internal state.
-    
+
     In Python, we can make this accessible only to the Originator through
     name mangling or by using a simple class structure.
     """
@@ -48,7 +48,7 @@ class ConcreteMemento(Memento):
     def __init__(self, state: dict[str, Any], name: str = "") -> None:
         """
         Initialize memento with state snapshot.
-        
+
         Args:
             state: Dictionary containing the object's state.
             name: Optional descriptive name for this memento.
@@ -73,7 +73,7 @@ class ConcreteMemento(Memento):
 class Originator:
     """
     The object whose state we want to capture.
-    
+
     Creates mementos to save its current state and can restore itself
     from a previously saved memento.
     """
@@ -93,10 +93,10 @@ class Originator:
     def create_memento(self, name: str = "") -> ConcreteMemento:
         """
         Create a memento of the current state.
-        
+
         Args:
             name: Optional descriptive name for the memento.
-            
+
         Returns:
             A memento object with the current state.
         """
@@ -105,7 +105,7 @@ class Originator:
     def restore_from_memento(self, memento: ConcreteMemento) -> None:
         """
         Restore state from a memento.
-        
+
         Args:
             memento: The memento to restore from.
         """
@@ -115,7 +115,7 @@ class Originator:
 class Caretaker:
     """
     Manages mementos (history).
-    
+
     Responsible for storing mementos and providing undo/redo functionality.
     Similar to the Invoker pattern but focused on state rather than commands.
     """
@@ -123,7 +123,7 @@ class Caretaker:
     def __init__(self, originator: Originator) -> None:
         """
         Initialize with the originator to manage.
-        
+
         Args:
             originator: The object whose state we're managing.
         """
@@ -134,13 +134,13 @@ class Caretaker:
     def save(self, name: str = "") -> None:
         """
         Save the originator's current state.
-        
+
         Args:
             name: Optional name for this save point.
         """
         # Remove any redo history when making a new save
-        self.history = self.history[:self.current_index + 1]
-        
+        self.history = self.history[: self.current_index + 1]
+
         memento = self.originator.create_memento(name)
         self.history.append(memento)
         self.current_index = len(self.history) - 1
@@ -148,7 +148,7 @@ class Caretaker:
     def undo(self) -> bool:
         """
         Restore to the previous state.
-        
+
         Returns:
             True if undo was successful, False if at beginning of history.
         """
@@ -162,7 +162,7 @@ class Caretaker:
     def redo(self) -> bool:
         """
         Restore to the next state.
-        
+
         Returns:
             True if redo was successful, False if at end of history.
         """
@@ -176,10 +176,10 @@ class Caretaker:
     def jump_to(self, index: int) -> bool:
         """
         Jump to a specific point in history.
-        
+
         Args:
             index: The history index to jump to.
-            
+
         Returns:
             True if successful, False if index out of range.
         """

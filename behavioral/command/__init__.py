@@ -1,7 +1,7 @@
 """
 Command Pattern (Behavioral)
 
-Encapsulates a request as an object, thereby allowing you to parameterize 
+Encapsulates a request as an object, thereby allowing you to parameterize
 clients with different requests, queue requests, and log requests.
 """
 

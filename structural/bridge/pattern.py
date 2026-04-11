@@ -2,8 +2,8 @@
 Bridge Pattern Implementation (Structural).
 
 Decouple an abstraction from its implementation so the two can vary independently.
-The Bridge pattern is useful when you want to avoid permanent binding between 
-abstraction and implementation, and when changes in the implementation should not 
+The Bridge pattern is useful when you want to avoid permanent binding between
+abstraction and implementation, and when changes in the implementation should not
 affect clients, and sharing of implementation is desired by multiple objects.
 
 Key Components:
@@ -21,8 +21,8 @@ from typing import List, Optional, Any
 class Implementor(ABC):
     """
     Implementor interface - defines platform-specific operations.
-    
-    This is the low-level interface that different implementations 
+
+    This is the low-level interface that different implementations
     must provide. It represents the implementation side of the bridge.
     """
 
@@ -35,8 +35,8 @@ class Implementor(ABC):
 class ConcreteImplementorA(Implementor):
     """
     Concrete Implementor A - specific platform/implementation.
-    
-    This represents one way something could be implemented 
+
+    This represents one way something could be implemented
     (e.g., Windows platform, PostgreSQL database, etc.).
     """
 
@@ -48,8 +48,8 @@ class ConcreteImplementorA(Implementor):
 class ConcreteImplementorB(Implementor):
     """
     Concrete Implementor B - different platform/implementation.
-    
-    This represents another way something could be implemented 
+
+    This represents another way something could be implemented
     (e.g., Linux platform, MySQL database, etc.).
     """
 
@@ -61,17 +61,17 @@ class ConcreteImplementorB(Implementor):
 class Abstraction:
     """
     Abstraction - defines the high-level interface for clients.
-    
-    This is the interface that clients interact with. It maintains 
-    a reference to an Implementor but doesn't depend on concrete 
-    implementations. Changes to the implementation don't affect 
+
+    This is the interface that clients interact with. It maintains
+    a reference to an Implementor but doesn't depend on concrete
+    implementations. Changes to the implementation don't affect
     this abstraction.
     """
 
     def __init__(self, implementor: Implementor) -> None:
         """
         Initialize with an implementation.
-        
+
         Args:
             implementor: The implementation to use.
         """
@@ -89,8 +89,8 @@ class Abstraction:
 class RefinedAbstraction(Abstraction):
     """
     Refined Abstraction - extends the abstraction with more specifics.
-    
-    Provides additional functionality on top of the basic abstraction 
+
+    Provides additional functionality on top of the basic abstraction
     while still using the bridged implementor for platform-specific work.
     """
 
@@ -107,7 +107,7 @@ class RefinedAbstraction(Abstraction):
 class DrawingAPI(ABC):
     """
     Implementor interface for drawing operations.
-    
+
     Represents different drawing implementations (Canvas, SVG, etc.).
     """
 
@@ -130,7 +130,7 @@ class DrawingAPI(ABC):
 class CanvasAPI(DrawingAPI):
     """
     Concrete Implementor - Canvas drawing implementation.
-    
+
     Uses Canvas API for rendering (e.g., HTML5 Canvas).
     """
 
@@ -150,7 +150,7 @@ class CanvasAPI(DrawingAPI):
 class SVGAPI(DrawingAPI):
     """
     Concrete Implementor - SVG drawing implementation.
-    
+
     Uses SVG for rendering (vector graphics).
     """
 
@@ -170,8 +170,8 @@ class SVGAPI(DrawingAPI):
 class Shape:
     """
     Abstraction - represents a geometric shape.
-    
-    This is what clients interact with. The bridge pattern allows 
+
+    This is what clients interact with. The bridge pattern allows
     different shape types to work with different drawing implementations.
     """
 
@@ -191,7 +191,7 @@ class Shape:
 class Circle(Shape):
     """
     Refined Abstraction - a circle shape.
-    
+
     Knows how to draw itself using the bridged drawing API.
     """
 
@@ -214,7 +214,7 @@ class Circle(Shape):
 class Rectangle(Shape):
     """
     Refined Abstraction - a rectangle shape.
-    
+
     Knows how to draw itself using the bridged drawing API.
     """
 
@@ -241,7 +241,7 @@ class Rectangle(Shape):
 class Line(Shape):
     """
     Refined Abstraction - a line shape.
-    
+
     Knows how to draw itself using the bridged drawing API.
     """
 
@@ -266,7 +266,7 @@ class Line(Shape):
 class ShapeComposer:
     """
     Composes multiple shapes for drawing.
-    
+
     Demonstrates how bridge pattern allows flexible composition.
     """
 
@@ -293,5 +293,3 @@ class ShapeComposer:
     def draw_all_with_new_api(self) -> List[str]:
         """Redraw all shapes with current API."""
         return self.draw_all()
-
-

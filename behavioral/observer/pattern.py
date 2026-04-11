@@ -20,7 +20,7 @@ from datetime import datetime
 class Observer(ABC):
     """
     Abstract observer that receives updates from a subject.
-    
+
     Observers define the interface for receiving notifications from
     the subject about state changes.
     """
@@ -29,7 +29,7 @@ class Observer(ABC):
     def update(self, subject: Subject, **kwargs: Any) -> None:
         """
         Receive an update from the subject.
-        
+
         Args:
             subject: The subject that changed.
             **kwargs: Additional information about the change.
@@ -40,7 +40,7 @@ class Observer(ABC):
 class Subject(ABC):
     """
     Abstract subject that notifies observers of state changes.
-    
+
     The subject maintains a list of observers and notifies them
     whenever its state changes.
     """
@@ -64,7 +64,7 @@ class Subject(ABC):
 class ConcreteObserver(Observer):
     """
     Concrete observer that tracks subject state changes.
-    
+
     Implements the observer interface and maintains a reference to
     the subject whose state it observes.
     """
@@ -72,7 +72,7 @@ class ConcreteObserver(Observer):
     def __init__(self, name: str, subject: Subject) -> None:
         """
         Initialize the observer.
-        
+
         Args:
             name: Identifier for this observer.
             subject: The subject to observe.
@@ -86,7 +86,7 @@ class ConcreteObserver(Observer):
     def update(self, subject: Subject, **kwargs: Any) -> None:
         """
         Receive update from subject.
-        
+
         Args:
             subject: The subject that changed.
             **kwargs: Information about the change.
@@ -95,7 +95,7 @@ class ConcreteObserver(Observer):
             self.subject_state = subject.get_state()
             self.update_count += 1
             timestamp = datetime.now().strftime("%H:%M:%S")
-            
+
             update_info = {
                 "timestamp": timestamp,
                 "update_count": self.update_count,
@@ -103,11 +103,8 @@ class ConcreteObserver(Observer):
                 "extra_info": kwargs,
             }
             self.update_history.append(update_info)
-            
-            print(
-                f"[{self.name}] Updated at {timestamp}: "
-                f"Subject state = {self.subject_state}"
-            )
+
+            print(f"[{self.name}] Updated at {timestamp}: " f"Subject state = {self.subject_state}")
             if kwargs:
                 for key, value in kwargs.items():
                     print(f"           {key}: {value}")
@@ -124,7 +121,7 @@ class ConcreteObserver(Observer):
 class ConcreteSubject(Subject):
     """
     Concrete subject that maintains state and notifies observers.
-    
+
     When the state changes, the subject automatically notifies all
     attached observers about the change.
     """
@@ -132,7 +129,7 @@ class ConcreteSubject(Subject):
     def __init__(self, name: str, initial_state: Optional[Any] = None) -> None:
         """
         Initialize the subject.
-        
+
         Args:
             name: Identifier for this subject.
             initial_state: Initial state of the subject.
@@ -145,7 +142,7 @@ class ConcreteSubject(Subject):
     def attach(self, observer: Observer) -> None:
         """
         Attach an observer to this subject.
-        
+
         Args:
             observer: The observer to attach.
         """
@@ -156,7 +153,7 @@ class ConcreteSubject(Subject):
     def detach(self, observer: Observer) -> None:
         """
         Detach an observer from this subject.
-        
+
         Args:
             observer: The observer to detach.
         """
@@ -167,18 +164,20 @@ class ConcreteSubject(Subject):
     def notify(self, **kwargs: Any) -> None:
         """
         Notify all observers about a state change.
-        
+
         Args:
             **kwargs: Additional information about the change.
         """
         timestamp = datetime.now().strftime("%H:%M:%S")
-        self.state_change_log.append({
-            "timestamp": timestamp,
-            "state": self._state,
-            "observer_count": len(self._observers),
-            "extra_info": kwargs,
-        })
-        
+        self.state_change_log.append(
+            {
+                "timestamp": timestamp,
+                "state": self._state,
+                "observer_count": len(self._observers),
+                "extra_info": kwargs,
+            }
+        )
+
         print(f"\n[Subject({self.name})] Notifying {len(self._observers)} observer(s)...")
         for observer in self._observers:
             observer.update(self, **kwargs)
@@ -186,16 +185,14 @@ class ConcreteSubject(Subject):
     def set_state(self, new_state: Any) -> None:
         """
         Set the subject's state and notify observers.
-        
+
         Args:
             new_state: The new state value.
         """
         if self._state != new_state:
             old_state = self._state
             self._state = new_state
-            print(
-                f"[Subject({self.name})] State changed: {old_state} → {new_state}"
-            )
+            print(f"[Subject({self.name})] State changed: {old_state} → {new_state}")
             self.notify(old_state=old_state, new_state=new_state)
 
     def get_state(self) -> Any:

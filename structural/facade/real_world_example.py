@@ -44,5 +44,3 @@ class ComputerFacade:
         self.cpu.jump(0)
         self.cpu.execute()
         return operations
-
-

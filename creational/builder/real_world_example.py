@@ -1,7 +1,7 @@
 """
 Real-world Builder: SQL Query Builder with Fluent API.
 
-This example demonstrates a realistic use case where the Builder pattern 
+This example demonstrates a realistic use case where the Builder pattern
 is used to construct complex SQL queries in a readable, maintainable way.
 SQL queries often have many optional clauses (WHERE, ORDER BY, GROUP BY, LIMIT, etc.),
 making the Builder pattern ideal for this use case.
@@ -17,6 +17,7 @@ from enum import Enum
 
 class JoinType(Enum):
     """SQL JOIN types."""
+
     INNER = "INNER JOIN"
     LEFT = "LEFT JOIN"
     RIGHT = "RIGHT JOIN"
@@ -26,6 +27,7 @@ class JoinType(Enum):
 
 class OrderDirection(Enum):
     """Sort order direction."""
+
     ASC = "ASC"
     DESC = "DESC"
 
@@ -34,7 +36,7 @@ class OrderDirection(Enum):
 class SQLQuery:
     """
     Complex Product: SQL Query.
-    
+
     Represents a structured SQL SELECT query with all its components.
     This would be cumbersome to construct directly.
     """
@@ -63,7 +65,7 @@ class SQLQuery:
     def to_sql(self) -> str:
         """
         Construct the SQL string from the query components.
-        
+
         Returns:
             The SQL query string (without parameters substituted).
         """
@@ -116,7 +118,7 @@ class SQLQuery:
 class SQLQueryBuilder:
     """
     Concrete Builder: SQL Query Builder.
-    
+
     Provides a fluent interface for constructing complex SQL SELECT queries.
     This demonstrates the Builder pattern for real-world SQL query construction.
     """
@@ -137,10 +139,10 @@ class SQLQueryBuilder:
     def select(self, *columns: str) -> SQLQueryBuilder:
         """
         Set the SELECT columns.
-        
+
         Args:
             *columns: Column names to select. If empty, uses '*' (all columns).
-            
+
         Returns:
             Self for method chaining.
         """
@@ -153,10 +155,10 @@ class SQLQueryBuilder:
     def from_table(self, table_name: str) -> SQLQueryBuilder:
         """
         Set the FROM table.
-        
+
         Args:
             table_name: Name of the table to query from.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -186,12 +188,12 @@ class SQLQueryBuilder:
     def where(self, condition: str) -> SQLQueryBuilder:
         """
         Add a WHERE condition.
-        
+
         Multiple calls are combined with AND.
-        
+
         Args:
             condition: The WHERE condition (e.g., "age > 18", "status = :status").
-            
+
         Returns:
             Self for method chaining.
         """
@@ -218,11 +220,11 @@ class SQLQueryBuilder:
     def parameter(self, name: str, value: Any) -> SQLQueryBuilder:
         """
         Add a query parameter (for parameterized queries).
-        
+
         Args:
             name: Parameter name (used in conditions with :name).
             value: Parameter value.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -232,10 +234,10 @@ class SQLQueryBuilder:
     def group_by(self, *columns: str) -> SQLQueryBuilder:
         """
         Add GROUP BY columns.
-        
+
         Args:
             *columns: Columns to group by.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -245,24 +247,26 @@ class SQLQueryBuilder:
     def having(self, condition: str) -> SQLQueryBuilder:
         """
         Add a HAVING condition.
-        
+
         Args:
             condition: The HAVING condition (e.g., "COUNT(*) > 5").
-            
+
         Returns:
             Self for method chaining.
         """
         self._having_conditions.append(condition)
         return self
 
-    def order_by(self, column: str, direction: OrderDirection = OrderDirection.ASC) -> SQLQueryBuilder:
+    def order_by(
+        self, column: str, direction: OrderDirection = OrderDirection.ASC
+    ) -> SQLQueryBuilder:
         """
         Add an ORDER BY clause.
-        
+
         Args:
             column: Column to order by.
             direction: Sort direction (ASC or DESC).
-            
+
         Returns:
             Self for method chaining.
         """
@@ -272,10 +276,10 @@ class SQLQueryBuilder:
     def limit(self, count: int) -> SQLQueryBuilder:
         """
         Set the LIMIT clause.
-        
+
         Args:
             count: Maximum number of rows to return.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -285,10 +289,10 @@ class SQLQueryBuilder:
     def offset(self, count: int) -> SQLQueryBuilder:
         """
         Set the OFFSET clause (for pagination).
-        
+
         Args:
             count: Number of rows to skip.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -303,10 +307,10 @@ class SQLQueryBuilder:
     def build(self) -> SQLQuery:
         """
         Build and return the SQLQuery object.
-        
+
         Returns:
             A validated SQLQuery instance.
-            
+
         Raises:
             ValueError: If the query is invalid.
         """
@@ -320,7 +324,7 @@ class SQLQueryBuilder:
             order_by=self._order_by.copy(),
             limit_value=self._limit_value,
             offset_value=self._offset_value,
-            parameters=self._parameters.copy()
+            parameters=self._parameters.copy(),
         )
         query.validate()
         return query
@@ -339,96 +343,113 @@ class QueryTemplates:
     @staticmethod
     def users_with_posts() -> SQLQuery:
         """Query users with their post count."""
-        return (SQLQueryBuilder()
-                .select("u.id", "u.name", "u.email", "COUNT(p.id) as post_count")
-                .from_table("users u")
-                .left_join("posts p", "p.user_id = u.id")
-                .group_by("u.id", "u.name", "u.email")
-                .having("COUNT(p.id) > 0")
-                .order_by("post_count", OrderDirection.DESC)
-                .build())
+        return (
+            SQLQueryBuilder()
+            .select("u.id", "u.name", "u.email", "COUNT(p.id) as post_count")
+            .from_table("users u")
+            .left_join("posts p", "p.user_id = u.id")
+            .group_by("u.id", "u.name", "u.email")
+            .having("COUNT(p.id) > 0")
+            .order_by("post_count", OrderDirection.DESC)
+            .build()
+        )
 
     @staticmethod
     def active_users_paginated(page: int = 1, page_size: int = 20) -> SQLQuery:
         """Query active users with pagination."""
         offset = (page - 1) * page_size
-        return (SQLQueryBuilder()
-                .select("id", "name", "email", "created_at")
-                .from_table("users")
-                .where("status = :status")
-                .parameter("status", "active")
-                .order_by("created_at", OrderDirection.DESC)
-                .limit(page_size)
-                .offset(offset)
-                .build())
+        return (
+            SQLQueryBuilder()
+            .select("id", "name", "email", "created_at")
+            .from_table("users")
+            .where("status = :status")
+            .parameter("status", "active")
+            .order_by("created_at", OrderDirection.DESC)
+            .limit(page_size)
+            .offset(offset)
+            .build()
+        )
 
     @staticmethod
     def orders_by_customer(customer_id: int) -> SQLQuery:
         """Query orders for a specific customer with product details."""
-        return (SQLQueryBuilder()
-                .select("o.id", "o.order_date", "p.name", "p.price", "oi.quantity")
-                .from_table("orders o")
-                .inner_join("order_items oi", "oi.order_id = o.id")
-                .inner_join("products p", "p.id = oi.product_id")
-                .where("o.customer_id = :customer_id")
-                .parameter("customer_id", customer_id)
-                .order_by("o.order_date", OrderDirection.DESC)
-                .build())
+        return (
+            SQLQueryBuilder()
+            .select("o.id", "o.order_date", "p.name", "p.price", "oi.quantity")
+            .from_table("orders o")
+            .inner_join("order_items oi", "oi.order_id = o.id")
+            .inner_join("products p", "p.id = oi.product_id")
+            .where("o.customer_id = :customer_id")
+            .parameter("customer_id", customer_id)
+            .order_by("o.order_date", OrderDirection.DESC)
+            .build()
+        )
 
     @staticmethod
     def sales_report() -> SQLQuery:
         """Query sales summary by product."""
-        return (SQLQueryBuilder()
-                .select("p.id", "p.name", "SUM(oi.quantity) as total_sold", "SUM(oi.quantity * p.price) as revenue")
-                .from_table("products p")
-                .left_join("order_items oi", "oi.product_id = p.id")
-                .where("p.active = :active")
-                .parameter("active", True)
-                .group_by("p.id", "p.name")
-                .having("SUM(oi.quantity) > :min_sales")
-                .parameter("min_sales", 10)
-                .order_by("revenue", OrderDirection.DESC)
-                .limit(100)
-                .build())
+        return (
+            SQLQueryBuilder()
+            .select(
+                "p.id",
+                "p.name",
+                "SUM(oi.quantity) as total_sold",
+                "SUM(oi.quantity * p.price) as revenue",
+            )
+            .from_table("products p")
+            .left_join("order_items oi", "oi.product_id = p.id")
+            .where("p.active = :active")
+            .parameter("active", True)
+            .group_by("p.id", "p.name")
+            .having("SUM(oi.quantity) > :min_sales")
+            .parameter("min_sales", 10)
+            .order_by("revenue", OrderDirection.DESC)
+            .limit(100)
+            .build()
+        )
 
 
 def demonstrate_query_building():
     """Demonstrate various SQL query building scenarios."""
-    
+
     scenarios = []
-    
+
     # Scenario 1: Simple SELECT
-    query1 = (SQLQueryBuilder()
-              .select("id", "name", "email")
-              .from_table("users")
-              .where("age > :min_age")
-              .parameter("min_age", 18)
-              .order_by("name")
-              .limit(10)
-              .build())
-    
+    query1 = (
+        SQLQueryBuilder()
+        .select("id", "name", "email")
+        .from_table("users")
+        .where("age > :min_age")
+        .parameter("min_age", 18)
+        .order_by("name")
+        .limit(10)
+        .build()
+    )
+
     scenarios.append(("Simple User Query", query1.to_sql_single_line()))
-    
+
     # Scenario 2: Complex query with joins and aggregation
-    query2 = (SQLQueryBuilder()
-              .select("u.id", "u.name", "COUNT(o.id) as order_count", "SUM(o.total) as total_spent")
-              .from_table("users u")
-              .left_join("orders o", "o.user_id = u.id")
-              .where("u.status = :status")
-              .parameter("status", "active")
-              .where("u.created_at >= :start_date")
-              .parameter("start_date", "2024-01-01")
-              .group_by("u.id", "u.name")
-              .having("COUNT(o.id) >= :min_orders")
-              .parameter("min_orders", 5)
-              .order_by("total_spent", OrderDirection.DESC)
-              .limit(50)
-              .build())
-    
+    query2 = (
+        SQLQueryBuilder()
+        .select("u.id", "u.name", "COUNT(o.id) as order_count", "SUM(o.total) as total_spent")
+        .from_table("users u")
+        .left_join("orders o", "o.user_id = u.id")
+        .where("u.status = :status")
+        .parameter("status", "active")
+        .where("u.created_at >= :start_date")
+        .parameter("start_date", "2024-01-01")
+        .group_by("u.id", "u.name")
+        .having("COUNT(o.id) >= :min_orders")
+        .parameter("min_orders", 5)
+        .order_by("total_spent", OrderDirection.DESC)
+        .limit(50)
+        .build()
+    )
+
     scenarios.append(("Complex Analytics Query", query2.to_sql_single_line()))
-    
+
     # Scenario 3: Using templates
     query3 = QueryTemplates.active_users_paginated(page=2, page_size=25)
     scenarios.append(("Paginated Users Query", query3.to_sql_single_line()))
-    
+
     return scenarios

@@ -19,7 +19,7 @@ from datetime import datetime
 class Strategy(ABC):
     """
     Abstract strategy that defines interface for algorithms.
-    
+
     Different algorithms implement this interface, allowing them
     to be used interchangeably by the context.
     """
@@ -28,10 +28,10 @@ class Strategy(ABC):
     def execute(self, data: Any) -> Any:
         """
         Execute the algorithm.
-        
+
         Args:
             data: Input data for the algorithm.
-            
+
         Returns:
             Result of the algorithm.
         """
@@ -51,7 +51,7 @@ class Strategy(ABC):
 class Context:
     """
     Context that uses a Strategy to perform an algorithm.
-    
+
     The context accepts a strategy at construction time and
     uses it to execute the algorithm without knowing the
     algorithm details.
@@ -60,7 +60,7 @@ class Context:
     def __init__(self, strategy: Strategy) -> None:
         """
         Initialize context with a strategy.
-        
+
         Args:
             strategy: The strategy to use for algorithm execution.
         """
@@ -70,41 +70,41 @@ class Context:
     def set_strategy(self, strategy: Strategy) -> None:
         """
         Replace the current strategy.
-        
+
         Args:
             strategy: The new strategy to use.
         """
         old_strategy_name = self._strategy.get_name()
         new_strategy_name = strategy.get_name()
-        
-        print(
-            f"\n[Context] Strategy change: {old_strategy_name} → {new_strategy_name}"
-        )
+
+        print(f"\n[Context] Strategy change: {old_strategy_name} → {new_strategy_name}")
         self._strategy = strategy
 
     def execute_strategy(self, data: Any) -> Any:
         """
         Execute the current strategy.
-        
+
         Args:
             data: Input data for the strategy.
-            
+
         Returns:
             Result from the strategy.
         """
         print(f"[Context] Using strategy: {self._strategy.get_name()}")
         print(f"          {self._strategy.describe()}")
-        
+
         result = self._strategy.execute(data)
-        
+
         # Log execution
-        self.execution_log.append({
-            "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
-            "strategy": self._strategy.get_name(),
-            "input": data,
-            "output": result,
-        })
-        
+        self.execution_log.append(
+            {
+                "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
+                "strategy": self._strategy.get_name(),
+                "input": data,
+                "output": result,
+            }
+        )
+
         return result
 
     def get_strategy(self) -> Strategy:
@@ -126,10 +126,10 @@ class ConcreteStrategyA(Strategy):
     def execute(self, data: Any) -> Any:
         """
         Execute algorithm A.
-        
+
         Args:
             data: Input data (typically a list or number).
-            
+
         Returns:
             Result of algorithm A.
         """
@@ -161,10 +161,10 @@ class ConcreteStrategyB(Strategy):
     def execute(self, data: Any) -> Any:
         """
         Execute algorithm B.
-        
+
         Args:
             data: Input data (typically a list or number).
-            
+
         Returns:
             Result of algorithm B.
         """
@@ -174,11 +174,11 @@ class ConcreteStrategyB(Strategy):
             print(f"  [Strategy B] Result: {result}")
             return result
         elif isinstance(data, str):
-            result = ''.join(sorted(data))  # Sort characters
+            result = "".join(sorted(data))  # Sort characters
             print(f"  [Strategy B] Result: {result}")
             return result
         elif isinstance(data, (int, float)):
-            result = data ** 2  # Square
+            result = data**2  # Square
             print(f"  [Strategy B] Result: {result}")
             return result
         else:
@@ -200,10 +200,10 @@ class ConcreteStrategyC(Strategy):
     def execute(self, data: Any) -> Any:
         """
         Execute algorithm C.
-        
+
         Args:
             data: Input data (typically a list or number).
-            
+
         Returns:
             Result of algorithm C.
         """
@@ -213,7 +213,7 @@ class ConcreteStrategyC(Strategy):
             print(f"  [Strategy C] Result: {result}")
             return result
         elif isinstance(data, str):
-            result = ''.join(dict.fromkeys(data))  # Remove duplicate chars
+            result = "".join(dict.fromkeys(data))  # Remove duplicate chars
             print(f"  [Strategy C] Result: {result}")
             return result
         elif isinstance(data, (int, float)):

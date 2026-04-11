@@ -1,9 +1,9 @@
 """
 Builder Pattern - Structural Implementation.
 
-This module demonstrates the Builder pattern, which provides a way to construct 
-complex objects step-by-step. It separates the construction logic from the 
-representation, allowing the same construction process to create different 
+This module demonstrates the Builder pattern, which provides a way to construct
+complex objects step-by-step. It separates the construction logic from the
+representation, allowing the same construction process to create different
 representations.
 
 The Builder pattern is particularly useful when:
@@ -21,6 +21,7 @@ from enum import Enum
 
 class HTTPMethod(Enum):
     """HTTP request methods."""
+
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
@@ -34,7 +35,7 @@ class HTTPMethod(Enum):
 class HTTPRequest:
     """
     Complex Product: HTTP Request.
-    
+
     Represents a complete HTTP request with all its components.
     This would be difficult to construct directly due to many parameters.
     """
@@ -54,7 +55,7 @@ class HTTPRequest:
     def validate(self) -> bool:
         """
         Validate that the request is properly configured.
-        
+
         Returns:
             True if valid, raises ValueError if invalid.
         """
@@ -71,7 +72,7 @@ class HTTPRequest:
     def construct(self) -> str:
         """
         Construct a string representation of the request.
-        
+
         Returns:
             A formatted string showing the complete request.
         """
@@ -107,10 +108,10 @@ class HTTPRequest:
 class HTTPRequestBuilder:
     """
     Concrete Builder: HTTP Request Builder.
-    
+
     Provides a fluent interface for constructing HTTPRequest objects.
     Each method returns self to enable method chaining (fluent interface).
-    
+
     Benefits:
     - Readable: building a complex object reads like English
     - Flexible: can set only the fields you need
@@ -135,10 +136,10 @@ class HTTPRequestBuilder:
     def with_url(self, url: str) -> HTTPRequestBuilder:
         """
         Set the request URL.
-        
+
         Args:
             url: The target URL (required).
-            
+
         Returns:
             Self for method chaining.
         """
@@ -148,10 +149,10 @@ class HTTPRequestBuilder:
     def with_method(self, method: HTTPMethod | str) -> HTTPRequestBuilder:
         """
         Set the HTTP method.
-        
+
         Args:
             method: HTTPMethod enum or string ("GET", "POST", etc.)
-            
+
         Returns:
             Self for method chaining.
         """
@@ -164,11 +165,11 @@ class HTTPRequestBuilder:
     def with_header(self, key: str, value: str) -> HTTPRequestBuilder:
         """
         Add a header to the request.
-        
+
         Args:
             key: Header name.
             value: Header value.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -178,10 +179,10 @@ class HTTPRequestBuilder:
     def with_headers(self, headers: Dict[str, str]) -> HTTPRequestBuilder:
         """
         Add multiple headers at once.
-        
+
         Args:
             headers: Dictionary of header key-value pairs.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -191,11 +192,11 @@ class HTTPRequestBuilder:
     def with_query_param(self, key: str, value: str) -> HTTPRequestBuilder:
         """
         Add a query parameter.
-        
+
         Args:
             key: Parameter name.
             value: Parameter value.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -205,10 +206,10 @@ class HTTPRequestBuilder:
     def with_query_params(self, params: Dict[str, str]) -> HTTPRequestBuilder:
         """
         Add multiple query parameters at once.
-        
+
         Args:
             params: Dictionary of query parameters.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -218,10 +219,10 @@ class HTTPRequestBuilder:
     def with_body(self, body: str) -> HTTPRequestBuilder:
         """
         Set the request body (for POST, PUT, PATCH).
-        
+
         Args:
             body: The request body content.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -231,14 +232,15 @@ class HTTPRequestBuilder:
     def with_json_body(self, data: Dict[str, Any]) -> HTTPRequestBuilder:
         """
         Set the request body as JSON.
-        
+
         Args:
             data: A dictionary to serialize as JSON.
-            
+
         Returns:
             Self for method chaining.
         """
         import json
+
         self._body = json.dumps(data)
         self._headers["Content-Type"] = "application/json"
         return self
@@ -246,10 +248,10 @@ class HTTPRequestBuilder:
     def with_timeout(self, seconds: int) -> HTTPRequestBuilder:
         """
         Set the request timeout.
-        
+
         Args:
             seconds: Timeout in seconds.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -259,10 +261,10 @@ class HTTPRequestBuilder:
     def with_max_retries(self, retries: int) -> HTTPRequestBuilder:
         """
         Set the maximum number of retries.
-        
+
         Args:
             retries: Number of retry attempts.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -272,10 +274,10 @@ class HTTPRequestBuilder:
     def with_ssl_verification(self, verify: bool) -> HTTPRequestBuilder:
         """
         Set whether to verify SSL certificates.
-        
+
         Args:
             verify: True to verify, False to skip verification.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -285,10 +287,10 @@ class HTTPRequestBuilder:
     def with_proxy(self, proxy_url: str) -> HTTPRequestBuilder:
         """
         Set a proxy for the request.
-        
+
         Args:
             proxy_url: The proxy URL (e.g., "http://proxy.example.com:8080").
-            
+
         Returns:
             Self for method chaining.
         """
@@ -298,10 +300,10 @@ class HTTPRequestBuilder:
     def with_auth_bearer_token(self, token: str) -> HTTPRequestBuilder:
         """
         Set bearer token authentication.
-        
+
         Args:
             token: The bearer token.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -311,10 +313,10 @@ class HTTPRequestBuilder:
     def with_user_agent(self, user_agent: str) -> HTTPRequestBuilder:
         """
         Set the User-Agent header.
-        
+
         Args:
             user_agent: The User-Agent string.
-            
+
         Returns:
             Self for method chaining.
         """
@@ -324,9 +326,9 @@ class HTTPRequestBuilder:
     def reset(self) -> HTTPRequestBuilder:
         """
         Reset the builder to its initial state.
-        
+
         Useful for reusing a builder to create multiple requests.
-        
+
         Returns:
             Self for method chaining.
         """
@@ -336,12 +338,12 @@ class HTTPRequestBuilder:
     def build(self) -> HTTPRequest:
         """
         Build and return the HTTPRequest object.
-        
+
         Validates the request before returning.
-        
+
         Returns:
             A valid HTTPRequest instance.
-            
+
         Raises:
             ValueError: If the request is invalid.
         """
@@ -356,7 +358,7 @@ class HTTPRequestBuilder:
             verify_ssl=self._verify_ssl,
             proxy=self._proxy,
             auth_token=self._auth_token,
-            user_agent=self._user_agent
+            user_agent=self._user_agent,
         )
         request.validate()
         return request
@@ -371,7 +373,7 @@ class HTTPRequestBuilder:
 class Computer:
     """
     Complex Product: Computer Configuration.
-    
+
     Represents a computer with various components and specifications.
     This demonstrates how the Builder pattern works with domain objects.
     """
@@ -379,24 +381,24 @@ class Computer:
     # Processor
     cpu_cores: int = 4
     cpu_ghz: float = 2.5
-    
+
     # Memory
     ram_gb: int = 8
-    
+
     # Storage
     ssd_gb: int = 256
     has_hdd: bool = False
     hdd_gb: int = 0
-    
+
     # GPU
     has_gpu: bool = False
     gpu_vram_gb: int = 0
     gpu_model: str = ""
-    
+
     # Cooling & Power
     cooling_type: str = "air"  # "air", "liquid", "passive"
     psu_wattage: int = 450
-    
+
     # Features
     has_wifi: bool = True
     has_bluetooth: bool = True
@@ -415,30 +417,30 @@ class Computer:
     def estimate_price(self) -> float:
         """Estimate the computer's price."""
         price = 400.0  # Base price
-        
+
         # CPU
         price += self.cpu_cores * 50
         price += self.cpu_ghz * 100
-        
+
         # RAM
         price += self.ram_gb * 80
-        
+
         # Storage
         price += self.ssd_gb * 0.10
         if self.has_hdd:
             price += self.hdd_gb * 0.05
-        
+
         # GPU
         if self.has_gpu:
             price += 300 + (self.gpu_vram_gb * 50)
-        
+
         # Cooling
         if self.cooling_type == "liquid":
             price += 150
-        
+
         # PSU
         price += self.psu_wattage * 0.5
-        
+
         return price
 
     def specifications_summary(self) -> str:
@@ -447,12 +449,13 @@ class Computer:
         lines.append("=== COMPUTER SPECIFICATIONS ===")
         lines.append(f"CPU: {self.cpu_cores} cores @ {self.cpu_ghz}GHz")
         lines.append(f"RAM: {self.ram_gb}GB")
-        lines.append(f"Storage: {self.ssd_gb}GB SSD" + 
-                    (f" + {self.hdd_gb}GB HDD" if self.has_hdd else ""))
-        
+        lines.append(
+            f"Storage: {self.ssd_gb}GB SSD" + (f" + {self.hdd_gb}GB HDD" if self.has_hdd else "")
+        )
+
         if self.has_gpu:
             lines.append(f"GPU: {self.gpu_model} ({self.gpu_vram_gb}GB VRAM)")
-        
+
         lines.append(f"Cooling: {self.cooling_type}")
         lines.append(f"PSU: {self.psu_wattage}W")
         wifi_part = "WiFi + " if self.has_wifi else ""
@@ -460,14 +463,14 @@ class Computer:
         lines.append(f"Connectivity: {wifi_part}{bt_part}")
         lines.append(f"Color: {self.color}")
         lines.append(f"Estimated Price: ${self.estimate_price():.2f}")
-        
+
         return "\n".join(lines)
 
 
 class ComputerBuilder:
     """
     Concrete Builder: Computer Configuration Builder.
-    
+
     Provides a fluent interface for building computer configurations.
     This demonstrates the Builder pattern for more complex domain objects.
     """
@@ -559,7 +562,7 @@ class ComputerBuilder:
             psu_wattage=self._psu_wattage,
             has_wifi=self._has_wifi,
             has_bluetooth=self._has_bluetooth,
-            color=self._color
+            color=self._color,
         )
         computer.validate()
         return computer
@@ -573,7 +576,7 @@ class ComputerBuilder:
 class RequestTemplates:
     """
     Director Pattern (Optional Enhancement).
-    
+
     Provides pre-built request templates for common scenarios.
     This eliminates the need to build from scratch for typical use cases.
     """
@@ -581,34 +584,40 @@ class RequestTemplates:
     @staticmethod
     def get_api_call() -> HTTPRequest:
         """Build a typical RESTful API request."""
-        return (HTTPRequestBuilder()
-                .with_url("https://api.example.com/v1/users")
-                .with_method(HTTPMethod.GET)
-                .with_header("Accept", "application/json")
-                .with_auth_bearer_token("your-api-key")
-                .with_timeout(15)
-                .build())
+        return (
+            HTTPRequestBuilder()
+            .with_url("https://api.example.com/v1/users")
+            .with_method(HTTPMethod.GET)
+            .with_header("Accept", "application/json")
+            .with_auth_bearer_token("your-api-key")
+            .with_timeout(15)
+            .build()
+        )
 
     @staticmethod
     def post_json_data() -> HTTPRequest:
         """Build a POST request with JSON data."""
-        return (HTTPRequestBuilder()
-                .with_url("https://api.example.com/v1/users")
-                .with_method(HTTPMethod.POST)
-                .with_json_body({"name": "John", "email": "john@example.com"})
-                .with_auth_bearer_token("api-key")
-                .build())
+        return (
+            HTTPRequestBuilder()
+            .with_url("https://api.example.com/v1/users")
+            .with_method(HTTPMethod.POST)
+            .with_json_body({"name": "John", "email": "john@example.com"})
+            .with_auth_bearer_token("api-key")
+            .build()
+        )
 
     @staticmethod
     def webhook_request() -> HTTPRequest:
         """Build a webhook request with retries."""
-        return (HTTPRequestBuilder()
-                .with_url("https://webhook.example.com/events")
-                .with_method(HTTPMethod.POST)
-                .with_header("X-Webhook-Secret", "secret-key")
-                .with_max_retries(5)
-                .with_timeout(10)
-                .build())
+        return (
+            HTTPRequestBuilder()
+            .with_url("https://webhook.example.com/events")
+            .with_method(HTTPMethod.POST)
+            .with_header("X-Webhook-Secret", "secret-key")
+            .with_max_retries(5)
+            .with_timeout(10)
+            .build()
+        )
 
 
 class ComputerTemplates:
@@ -617,34 +626,34 @@ class ComputerTemplates:
     @staticmethod
     def budget_build() -> Computer:
         """Build a budget computer."""
-        return (ComputerBuilder()
-                .with_cpu(4, 2.5)
-                .with_ram(8)
-                .with_ssd(256)
-                .build())
+        return ComputerBuilder().with_cpu(4, 2.5).with_ram(8).with_ssd(256).build()
 
     @staticmethod
     def gaming_build() -> Computer:
         """Build a gaming computer."""
-        return (ComputerBuilder()
-                .with_cpu(16, 4.0)
-                .with_ram(32)
-                .with_ssd(1024)
-                .with_hdd(2048)
-                .with_gpu("NVIDIA RTX 4080", 12)
-                .with_liquid_cooling()
-                .with_psu(1200)
-                .with_color("RGB")
-                .build())
+        return (
+            ComputerBuilder()
+            .with_cpu(16, 4.0)
+            .with_ram(32)
+            .with_ssd(1024)
+            .with_hdd(2048)
+            .with_gpu("NVIDIA RTX 4080", 12)
+            .with_liquid_cooling()
+            .with_psu(1200)
+            .with_color("RGB")
+            .build()
+        )
 
     @staticmethod
     def workstation_build() -> Computer:
         """Build a professional workstation."""
-        return (ComputerBuilder()
-                .with_cpu(32, 3.8)
-                .with_ram(128)
-                .with_ssd(2048)
-                .with_gpu("NVIDIA A6000", 48)
-                .with_liquid_cooling()
-                .with_psu(2000)
-                .build())
+        return (
+            ComputerBuilder()
+            .with_cpu(32, 3.8)
+            .with_ram(128)
+            .with_ssd(2048)
+            .with_gpu("NVIDIA A6000", 48)
+            .with_liquid_cooling()
+            .with_psu(2000)
+            .build()
+        )

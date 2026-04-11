@@ -1,7 +1,7 @@
 """
 Iterator Pattern (Behavioral)
 
-Provides a way to access the elements of an aggregate object sequentially 
+Provides a way to access the elements of an aggregate object sequentially
 without exposing its underlying representation.
 """
 
@@ -24,7 +24,7 @@ __all__ = [
     "ConcreteIterator",
     "ConcreteIterable",
     "BookCollection",
-    "BookIterator", 
+    "BookIterator",
     "ReverseBookIterator",
     "FilteredBookIterator",
 ]

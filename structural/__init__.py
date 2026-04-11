@@ -19,22 +19,22 @@ This module provides seven fundamental structural patterns:
 Usage Examples:
     # Adapter - interface translation
     from structural import Adapter, Target
-    
+
     # Bridge - decouple abstraction/implementation
     from structural import Abstraction, Implementor
-    
+
     # Composite - tree structures
     from structural import Component, Leaf, Composite
-    
+
     # Decorator - add behavior dynamically
     from structural import Decorator, Component as DecoratorComponent
-    
+
     # Facade - simplified interface
     from structural import Facade, Subsystem1
-    
+
     # Flyweight - share objects
     from structural import FlyweightFactory, Flyweight
-    
+
     # Proxy - control access
     from structural import Proxy, Subject
 
@@ -51,6 +51,8 @@ from .adapter.pattern import (
     LegacySystemAdapter,
     AdapterWithValidation,
     AdapterRegistry,
+)
+from .adapter.real_world_example import (
     PaymentProcessor,
     StripePaymentGateway,
     PayPalPaymentGateway,
@@ -74,6 +76,8 @@ from .bridge.pattern import (
     Rectangle,
     Line,
     ShapeComposer,
+)
+from .bridge.real_world_example import (
     CommunicationBridge,
     WiFiBridge,
     BluetoothBridge,
@@ -99,6 +103,8 @@ from .composite.pattern import (
     MenuComponent,
     MenuItem,
     Menu,
+)
+from .composite.real_world_example import (
     TextElement,
     Paragraph,
     Heading,
@@ -135,6 +141,8 @@ from .decorator.pattern import (
     BorderDecorator,
     ScrollDecorator,
     ShadowDecorator,
+)
+from .decorator.real_world_example import (
     Stream,
     FileStream,
     StreamDecorator,
@@ -156,6 +164,8 @@ from .facade.pattern import (
     NotificationService,
     InventoryService,
     OrderFacade,
+)
+from .facade.real_world_example import (
     CPU,
     Memory,
     HardDrive,
@@ -178,6 +188,8 @@ from .flyweight.pattern import (
     Particle,
     ParticleInstance,
     ParticleFactory,
+)
+from .flyweight.real_world_example import (
     Font,
     FontFactory,
     TextRenderer,
@@ -200,6 +212,8 @@ from .proxy.pattern import (
     DataValidator,
     ValidationProxy,
     LoggingProxy,
+)
+from .proxy.real_world_example import (
     RemoteService,
     ExpensiveRemoteService,
     RemoteServiceProxy,
@@ -221,7 +235,6 @@ __all__ = [
     "StripeAdapter",
     "PayPalAdapter",
     "PaymentSystem",
-    
     # Bridge
     "Implementor",
     "ConcreteImplementorA",
@@ -245,7 +258,6 @@ __all__ = [
     "StereoRemote",
     "ProjectorRemote",
     "RemoteControlFactory",
-    
     # Composite
     "Component",
     "Leaf",
@@ -266,7 +278,6 @@ __all__ = [
     "Section",
     "Document",
     "DocumentBuilder",
-    
     # Decorator
     "DecoratorComponent",
     "ConcreteComponent",
@@ -299,7 +310,6 @@ __all__ = [
     "CompressionStreamDecorator",
     "EncryptionStreamDecorator",
     "BufferedStreamDecorator",
-    
     # Facade
     "Subsystem1",
     "Subsystem2",
@@ -316,7 +326,6 @@ __all__ = [
     "Memory",
     "HardDrive",
     "ComputerFacade",
-    
     # Flyweight
     "Flyweight",
     "FlyweightFactory",
@@ -335,7 +344,6 @@ __all__ = [
     "Font",
     "FontFactory",
     "TextRenderer",
-    
     # Proxy
     "Subject",
     "RealSubject",

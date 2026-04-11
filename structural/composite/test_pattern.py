@@ -216,6 +216,7 @@ class TestMenuComposite:
 
     def test_simple_menu_item(self) -> None:
         """Verify simple menu item."""
+
         def action():
             return "Action executed"
 
@@ -225,6 +226,7 @@ class TestMenuComposite:
 
     def test_menu_with_items(self) -> None:
         """Verify menu with items."""
+
         def save():
             return "Saving"
 
@@ -240,6 +242,7 @@ class TestMenuComposite:
 
     def test_nested_menus(self) -> None:
         """Verify nested menu structure."""
+
         def print_doc():
             return "Printing"
 
@@ -368,5 +371,3 @@ class TestDocumentStructure:
         assert doc.get_metadata()["word_count"] > 0
         assert len(doc.export_to_html()) > 0
         assert len(doc.export_to_markdown()) > 0
-
-

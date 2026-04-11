@@ -501,4 +501,3 @@ class TestRemoteControlFactory:
         assert isinstance(remotes["tv_1"], TVRemote)
         assert isinstance(remotes["stereo_1"], StereoRemote)
         assert isinstance(remotes["projector_1"], ProjectorRemote)
-

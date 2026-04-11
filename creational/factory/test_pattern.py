@@ -186,6 +186,7 @@ class TestTransportRegistry:
 
     def test_registry_register_custom_factory(self):
         """Verify registry allows registering custom factories."""
+
         class CustomTransport(Transport):
             def connect(self) -> str:
                 return "Custom connection"
@@ -299,6 +300,7 @@ class TestAPIServiceRegistry:
 
     def test_registry_register_custom_api_factory(self):
         """Verify registry allows registering custom API factories."""
+
         class CustomAPIService(APIService):
             def get_config(self):
                 return {"protocol": "CUSTOM"}

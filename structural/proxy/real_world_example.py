@@ -19,7 +19,7 @@ class ExpensiveRemoteService(RemoteService):
         return {
             "id": resource_id,
             "data": f"Data for {resource_id}",
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
         }
 
 
@@ -48,9 +48,4 @@ class RemoteServiceProxy(RemoteService):
             return {"error": str(e)}
 
     def get_stats(self) -> dict:
-        return {
-            "requests": self._request_count,
-            "cached_items": len(self._cache)
-        }
-
-
+        return {"requests": self._request_count, "cached_items": len(self._cache)}

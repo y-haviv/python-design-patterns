@@ -38,7 +38,7 @@ class ConcreteComponent(Component):
 class Decorator(Component):
     """
     Decorator abstract class.
-    
+
     Maintains reference to Component and delegates to it,
     while potentially adding additional behavior.
     """
@@ -102,7 +102,7 @@ class FileDataSource(DataSource):
 class DataSourceDecorator(DataSource):
     """
     Abstract decorator for DataSource.
-    
+
     Wraps another DataSource and potentially adds behavior.
     """
 
@@ -382,5 +382,3 @@ class ShadowDecorator(WidgetDecorator):
             result.append(f"  {line}")
         result.append("  ~~~")
         return "\n".join(result)
-
-

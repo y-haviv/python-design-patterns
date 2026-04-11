@@ -20,8 +20,8 @@ from typing import List, Optional, Union, Any
 class Component(ABC):
     """
     Abstract Component interface for both leaf and composite objects.
-    
-    This is what clients work with. It defines operations that both 
+
+    This is what clients work with. It defines operations that both
     Leaf and Composite objects support.
     """
 
@@ -46,7 +46,7 @@ class Component(ABC):
 class Leaf(Component):
     """
     Leaf Component - represents leaf node in tree.
-    
+
     A leaf has no children. It implements operations from the Component interface.
     """
 
@@ -62,7 +62,7 @@ class Leaf(Component):
 class Composite(Component):
     """
     Composite Component - represents node that can contain children.
-    
+
     Can have child components (both leaf and composite). Implements
     tree operations and delegates operations to children.
     """
@@ -374,5 +374,3 @@ class Menu(MenuComponent):
     def get_items(self) -> List[MenuComponent]:
         """Get direct items."""
         return self.items.copy()
-
-

@@ -1,9 +1,9 @@
 """
 Real-world Abstract Factory: Database Access Layer.
 
-This example demonstrates a realistic scenario where different databases 
-(PostgreSQL, MySQL, SQLite) require different connection strategies, 
-query builders, and result formatters. The Abstract Factory pattern 
+This example demonstrates a realistic scenario where different databases
+(PostgreSQL, MySQL, SQLite) require different connection strategies,
+query builders, and result formatters. The Abstract Factory pattern
 ensures a consistent, database-agnostic interface across the application.
 
 This is a common pattern in ORMs like SQLAlchemy and database abstraction layers.
@@ -18,6 +18,7 @@ from enum import Enum
 
 class DatabaseEngine(Enum):
     """Supported database engines (product families)."""
+
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     SQLITE = "sqlite"
@@ -26,6 +27,7 @@ class DatabaseEngine(Enum):
 @dataclass
 class QueryResult:
     """Encapsulates query execution results."""
+
     rows: List[Dict[str, Any]]
     affected_rows: int = 0
     last_insert_id: Optional[int] = None
@@ -120,7 +122,7 @@ class PostgreSQLConnection(Connection):
         return QueryResult(
             rows=[{"id": 1, "name": "John"}, {"id": 2, "name": "Jane"}],
             affected_rows=2,
-            execution_time_ms=0.45
+            execution_time_ms=0.45,
         )
 
     def close(self) -> str:
@@ -135,7 +137,7 @@ class PostgreSQLQueryBuilder(QueryBuilder):
     def build_select(self, table: str, columns: List[str]) -> str:
         """Build PostgreSQL SELECT with OFFSET pagination."""
         cols = ", ".join(columns) if columns else "*"
-        return f'SELECT {cols} FROM {table} OFFSET 0 LIMIT 10;'
+        return f"SELECT {cols} FROM {table} OFFSET 0 LIMIT 10;"
 
     def build_insert(self, table: str, values: Dict[str, Any]) -> str:
         """Build PostgreSQL INSERT with RETURNING clause."""
@@ -159,7 +161,7 @@ class PostgreSQLDataTypeMapper(DataTypeMapper):
             int: "INTEGER",
             float: "NUMERIC(10,2)",
             bool: "BOOLEAN",
-            bytes: "BYTEA"
+            bytes: "BYTEA",
         }
         return mapping.get(python_type, "TEXT")
 
@@ -170,7 +172,7 @@ class PostgreSQLDataTypeMapper(DataTypeMapper):
             "VARCHAR": str,
             "NUMERIC": float,
             "BOOLEAN": bool,
-            "BYTEA": bytes
+            "BYTEA": bytes,
         }
         return mapping.get(sql_type, str)
 
@@ -207,7 +209,7 @@ class MySQLConnection(Connection):
             rows=[{"id": 1, "name": "John"}, {"id": 2, "name": "Jane"}],
             affected_rows=2,
             last_insert_id=3,
-            execution_time_ms=0.62
+            execution_time_ms=0.62,
         )
 
     def close(self) -> str:
@@ -246,19 +248,13 @@ class MySQLDataTypeMapper(DataTypeMapper):
             int: "INT",
             float: "DECIMAL(10,2)",
             bool: "TINYINT(1)",
-            bytes: "BLOB"
+            bytes: "BLOB",
         }
         return mapping.get(python_type, "TEXT")
 
     def sql_to_python_type(self, sql_type: str) -> type:
         """Convert MySQL types to Python."""
-        mapping = {
-            "INT": int,
-            "VARCHAR": str,
-            "DECIMAL": float,
-            "TINYINT": bool,
-            "BLOB": bytes
-        }
+        mapping = {"INT": int, "VARCHAR": str, "DECIMAL": float, "TINYINT": bool, "BLOB": bytes}
         return mapping.get(sql_type, str)
 
 
@@ -274,7 +270,9 @@ class SQLiteConnection(Connection):
         self.db_file = None
         self.connected = False
 
-    def connect(self, db_file: str, user: Optional[str] = None, password: Optional[str] = None) -> str:
+    def connect(
+        self, db_file: str, user: Optional[str] = None, password: Optional[str] = None
+    ) -> str:
         """Connect to SQLite database file."""
         self.db_file = db_file
         self.connected = True
@@ -292,7 +290,7 @@ class SQLiteConnection(Connection):
         return QueryResult(
             rows=[{"id": 1, "name": "John"}, {"id": 2, "name": "Jane"}],
             affected_rows=2,
-            execution_time_ms=0.08
+            execution_time_ms=0.08,
         )
 
     def close(self) -> str:
@@ -307,7 +305,7 @@ class SQLiteQueryBuilder(QueryBuilder):
     def build_select(self, table: str, columns: List[str]) -> str:
         """Build SQLite SELECT."""
         cols = ", ".join(columns) if columns else "*"
-        return f'SELECT {cols} FROM {table} LIMIT 10;'
+        return f"SELECT {cols} FROM {table} LIMIT 10;"
 
     def build_insert(self, table: str, values: Dict[str, Any]) -> str:
         """Build SQLite INSERT (no RETURNING clause)."""
@@ -331,18 +329,13 @@ class SQLiteDataTypeMapper(DataTypeMapper):
             int: "INTEGER",
             float: "REAL",
             bool: "INTEGER",  # SQLite uses INTEGER for booleans
-            bytes: "BLOB"
+            bytes: "BLOB",
         }
         return mapping.get(python_type, "TEXT")
 
     def sql_to_python_type(self, sql_type: str) -> type:
         """Convert SQLite types to Python."""
-        mapping = {
-            "INTEGER": int,
-            "TEXT": str,
-            "REAL": float,
-            "BLOB": bytes
-        }
+        mapping = {"INTEGER": int, "TEXT": str, "REAL": float, "BLOB": bytes}
         return mapping.get(sql_type, str)
 
 
@@ -354,8 +347,8 @@ class SQLiteDataTypeMapper(DataTypeMapper):
 class DatabaseFactory(ABC):
     """
     Abstract Factory: Creates database implementation components.
-    
-    Each concrete factory provides a complete family of database-specific 
+
+    Each concrete factory provides a complete family of database-specific
     components that work together seamlessly.
     """
 
@@ -436,15 +429,15 @@ class SQLiteFactory(DatabaseFactory):
 class DatabaseAdapter:
     """
     Adapter: Uses a database factory to provide a database-agnostic interface.
-    
-    Client code depends only on this adapter and abstract interfaces, 
+
+    Client code depends only on this adapter and abstract interfaces,
     never on concrete database implementations.
     """
 
     def __init__(self, factory: DatabaseFactory) -> None:
         """
         Initialize adapter with a database factory.
-        
+
         Args:
             factory: The DatabaseFactory providing the implementation family.
         """
@@ -503,30 +496,32 @@ class DatabaseFactoryRegistry:
 def demonstrate_database_agnosticism():
     """
     Demonstrate how the same application code works with different databases.
-    
+
     This shows the power of Abstract Factory: client code never changes,
     but the entire database backend can be switched by changing one factory.
     """
     registry = DatabaseFactoryRegistry()
-    
+
     results = []
-    
+
     for engine in [DatabaseEngine.POSTGRESQL, DatabaseEngine.MYSQL, DatabaseEngine.SQLITE]:
         adapter = registry.create_adapter(engine)
-        
+
         # Same code for all databases
         connection_info = adapter.connect(
             host="localhost" if engine != DatabaseEngine.SQLITE else "app.db",
             user="admin",
-            password="secret"
+            password="secret",
         )
-        
+
         select_query = adapter.query_select("users", ["id", "name"])
-        insert_query = adapter.query_insert("users", {"name": "Alice", "email": "alice@example.com"})
+        insert_query = adapter.query_insert(
+            "users", {"name": "Alice", "email": "alice@example.com"}
+        )
         int_type = adapter.get_column_type(int)
         str_type = adapter.get_column_type(str)
         close_info = adapter.close()
-        
+
         engine_name = engine.value.upper()
         results.append(
             f"=== {engine_name} ===\n"
@@ -537,5 +532,5 @@ def demonstrate_database_agnosticism():
             f"STR Type: {str_type}\n"
             f"Close: {close_info}\n"
         )
-    
+
     return "\n".join(results)

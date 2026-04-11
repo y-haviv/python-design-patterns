@@ -33,7 +33,7 @@ class TCPState(State):
 class TCPClosed(TCPState):
     """
     TCP closed state.
-    
+
     The connection is closed and can be opened.
     """
 
@@ -68,7 +68,7 @@ class TCPClosed(TCPState):
 class TCPListen(TCPState):
     """
     TCP listen state.
-    
+
     Connection is listening for incoming connections.
     """
 
@@ -110,7 +110,7 @@ class TCPListen(TCPState):
 class TCPEstablished(TCPState):
     """
     TCP established state.
-    
+
     Connection is active and data can be transferred.
     """
 
@@ -139,21 +139,25 @@ class TCPEstablished(TCPState):
         """Send data over the connection."""
         timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
         print(f"  [ESTABLISHED] Sending data: {data}")
-        connection.send_log.append({
-            "timestamp": timestamp,
-            "data": data,
-            "size": len(data),
-        })
+        connection.send_log.append(
+            {
+                "timestamp": timestamp,
+                "data": data,
+                "size": len(data),
+            }
+        )
 
     def receive(self, context: Context, connection: TCPConnection, data: str) -> None:
         """Receive data on the connection."""
         timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
         print(f"  [ESTABLISHED] Received data: {data}")
-        connection.receive_log.append({
-            "timestamp": timestamp,
-            "data": data,
-            "size": len(data),
-        })
+        connection.receive_log.append(
+            {
+                "timestamp": timestamp,
+                "data": data,
+                "size": len(data),
+            }
+        )
 
     def close(self, context: Context, connection: TCPConnection) -> None:
         """Close the connection - transition to CLOSED state."""
@@ -168,7 +172,7 @@ class TCPEstablished(TCPState):
 class TCPConnection:
     """
     Represents a TCP connection with state-dependent behavior.
-    
+
     The connection delegates operations to its current state, allowing
     different behaviors in different states.
     """
@@ -176,7 +180,7 @@ class TCPConnection:
     def __init__(self, name: str) -> None:
         """
         Initialize a TCP connection.
-        
+
         Args:
             name: Identifier for this connection.
         """
@@ -186,7 +190,7 @@ class TCPConnection:
         self.connected_at: Optional[datetime] = None
         self.send_log: List[Dict[str, Any]] = []
         self.receive_log: List[Dict[str, Any]] = []
-        
+
         # Create context with initial CLOSED state
         self.context = Context(TCPClosed())
         self.context.set_data("connection", self)
@@ -251,19 +255,19 @@ class TCPConnection:
         print(f"  State: {self.get_state()}")
         print(f"  Established: {self.is_established()}")
         print(f"  Listening: {self.is_listening()}")
-        
+
         if self.connected_at:
             duration = self.get_connection_duration()
             print(f"  Connection Duration: {duration:.2f}s")
-        
+
         print(f"  Data Sent: {len(self.send_log)} messages")
         print(f"  Data Received: {len(self.receive_log)} messages")
-        
+
         if self.send_log:
             print("  Last sent:")
             for entry in self.send_log[-3:]:
                 print(f"    [{entry['timestamp']}] {entry['data']}")
-        
+
         if self.receive_log:
             print("  Last received:")
             for entry in self.receive_log[-3:]:

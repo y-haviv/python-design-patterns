@@ -1,8 +1,8 @@
 """
 Real-world singleton: A Dynamic Feature Flag Service.
 
-This service ensures a single source of truth for application behavior 
-toggles, which is vital for canary releases or model A/B testing in 
+This service ensures a single source of truth for application behavior
+toggles, which is vital for canary releases or model A/B testing in
 production environments.
 """
 
@@ -15,8 +15,8 @@ from .pattern import SingletonMeta
 class FeatureFlagService(metaclass=SingletonMeta):
     """
     Registry for feature flags that ensures data consistency across the app.
-    
-    This service is thread-safe and can be updated dynamically from 
+
+    This service is thread-safe and can be updated dynamically from
     external loaders (e.g., JSON config, Remote API).
     """
 
@@ -28,10 +28,10 @@ class FeatureFlagService(metaclass=SingletonMeta):
     def is_enabled(self, flag: str) -> bool:
         """
         Check if a specific feature flag is enabled.
-        
+
         Args:
             flag: The name of the feature to check.
-            
+
         Returns:
             True if enabled, False otherwise.
         """
@@ -58,8 +58,4 @@ def load_flags_from_config() -> Dict[str, bool]:
     Simulation of an external configuration loader.
     In a real scenario, this might read from a JSON file or a Consul KV store.
     """
-    return {
-        "use_new_ai_model": True,
-        "enable_beta_ui": False,
-        "performance_tracing": True
-    }
+    return {"use_new_ai_model": True, "enable_beta_ui": False, "performance_tracing": True}

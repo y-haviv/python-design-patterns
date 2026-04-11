@@ -29,9 +29,9 @@ class TestMemento:
         """Verify memento captures state."""
         originator = Originator()
         originator.set_state({"name": "Test", "value": 42})
-        
+
         memento = originator.create_memento("Test Snapshot")
-        
+
         assert memento.get_name() == "Test Snapshot"
         assert memento.get_state() == {"name": "Test", "value": 42}
 
@@ -40,12 +40,12 @@ class TestMemento:
         originator = Originator()
         state = {"list": [1, 2, 3]}
         originator.set_state(state)
-        
+
         memento = originator.create_memento()
-        
+
         # Modify original state
         originator._state["list"].append(4)
-        
+
         # Memento should be unaffected
         assert memento.get_state()["list"] == [1, 2, 3]
 
@@ -57,7 +57,7 @@ class TestOriginator:
         """Verify setting and getting state."""
         originator = Originator()
         state = {"key": "value"}
-        
+
         originator.set_state(state)
         assert originator.get_state() == state
 
@@ -65,16 +65,16 @@ class TestOriginator:
         """Verify restoring from memento."""
         originator = Originator()
         originator.set_state({"version": 1})
-        
+
         memento1 = originator.create_memento()
-        
+
         originator.set_state({"version": 2, "modified": True})
         memento2 = originator.create_memento()
-        
+
         # Restore to first state
         originator.restore_from_memento(memento1)
         assert originator.get_state() == {"version": 1}
-        
+
         # Restore to second state
         originator.restore_from_memento(memento2)
         assert originator.get_state() == {"version": 2, "modified": True}
@@ -87,13 +87,13 @@ class TestCaretaker:
         """Verify saving and retrieving from history."""
         originator = Originator()
         caretaker = Caretaker(originator)
-        
+
         originator.set_state({"value": 1})
         caretaker.save("State 1")
-        
+
         originator.set_state({"value": 2})
         caretaker.save("State 2")
-        
+
         history = caretaker.get_history()
         assert len(history) == 2
 
@@ -101,13 +101,13 @@ class TestCaretaker:
         """Verify undo functionality."""
         originator = Originator()
         caretaker = Caretaker(originator)
-        
+
         originator.set_state({"step": 1})
         caretaker.save()
-        
+
         originator.set_state({"step": 2})
         caretaker.save()
-        
+
         caretaker.undo()
         assert originator.get_state() == {"step": 1}
 
@@ -115,13 +115,13 @@ class TestCaretaker:
         """Verify redo functionality."""
         originator = Originator()
         caretaker = Caretaker(originator)
-        
+
         originator.set_state({"value": 1})
         caretaker.save()
-        
+
         originator.set_state({"value": 2})
         caretaker.save()
-        
+
         caretaker.undo()
         caretaker.redo()
         assert originator.get_state() == {"value": 2}
@@ -130,11 +130,11 @@ class TestCaretaker:
         """Verify jumping to specific version."""
         originator = Originator()
         caretaker = Caretaker(originator)
-        
+
         for i in range(1, 5):
             originator.set_state({"version": i})
             caretaker.save()
-        
+
         caretaker.jump_to(1)
         assert originator.get_state() == {"version": 2}
 
@@ -142,39 +142,39 @@ class TestCaretaker:
         """Verify undo at beginning returns False."""
         originator = Originator()
         caretaker = Caretaker(originator)
-        
+
         originator.set_state({"value": 1})
         caretaker.save()
-        
+
         assert caretaker.undo() is False
 
     def test_redo_at_end(self) -> None:
         """Verify redo at end returns False."""
         originator = Originator()
         caretaker = Caretaker(originator)
-        
+
         originator.set_state({"value": 1})
         caretaker.save()
-        
+
         assert caretaker.redo() is False
 
     def test_new_save_clears_redo_history(self) -> None:
         """Verify making new save clears redo history."""
         originator = Originator()
         caretaker = Caretaker(originator)
-        
+
         originator.set_state({"value": 1})
         caretaker.save()
-        
+
         originator.set_state({"value": 2})
         caretaker.save()
-        
+
         caretaker.undo()
         assert len(caretaker.history) == 2
-        
+
         originator.set_state({"value": 3})
         caretaker.save()
-        
+
         # Should only have 2 items now (original + new)
         assert len(caretaker.history) == 2
 
@@ -212,16 +212,16 @@ class TestTextDocumentExample:
         """Verify document save and restore."""
         doc = TextDocument("MyDoc")
         history = DocumentHistory(doc)
-        
+
         doc.insert_text("Initial content")
         history.save_version("v1")
-        
+
         doc.replace_text("content", "modified content")
         history.save_version("v2")
-        
+
         history.undo()
         assert doc.get_content() == "Initial content"
-        
+
         history.redo()
         assert doc.get_content() == "Initial modified content"
 
@@ -229,11 +229,11 @@ class TestTextDocumentExample:
         """Verify version count tracking."""
         doc = TextDocument()
         history = DocumentHistory(doc)
-        
+
         for i in range(5):
             doc.insert_text(f"Line {i}\n")
             history.save_version(f"v{i + 1}")
-        
+
         assert history.get_version_count() == 5
 
 

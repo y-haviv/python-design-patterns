@@ -19,7 +19,7 @@ from datetime import datetime
 class State(ABC):
     """
     Abstract state that defines behavior for a particular state.
-    
+
     Different states define different behaviors. Each state knows how to
     handle transitions to other states.
     """
@@ -48,7 +48,7 @@ class State(ABC):
 class Context:
     """
     Context that maintains state and delegates behavior to current state.
-    
+
     The context maintains a reference to a ConcreteState object that defines
     the current state. The context delegates to the state object all state-specific
     behavior; state objects can access the context to trigger transitions.
@@ -57,7 +57,7 @@ class Context:
     def __init__(self, initial_state: State) -> None:
         """
         Initialize context with initial state.
-        
+
         Args:
             initial_state: The initial state.
         """
@@ -71,15 +71,15 @@ class Context:
     def set_state(self, new_state: State) -> None:
         """
         Transition to a new state.
-        
+
         Args:
             new_state: The new state to transition to.
         """
         old_state_name = self._state.get_name()
         new_state_name = new_state.get_name()
-        
+
         print(f"\n[Context] State transition: {old_state_name} → {new_state_name}")
-        
+
         self._state.on_exit(self)
         self._state = new_state
         self._transition_count += 1
@@ -89,7 +89,7 @@ class Context:
     def request(self) -> None:
         """
         Request the current state to handle the action.
-        
+
         The behavior depends on the current state.
         """
         print(f"\n[Context] Handling request in state: {self._state.get_name()}")
@@ -109,12 +109,14 @@ class Context:
 
     def _record_state_change(self, reason: str) -> None:
         """Record a state change in the log."""
-        self.state_log.append({
-            "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
-            "state": self._state.get_name(),
-            "reason": reason,
-            "transition_count": self._transition_count,
-        })
+        self.state_log.append(
+            {
+                "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
+                "state": self._state.get_name(),
+                "reason": reason,
+                "transition_count": self._transition_count,
+            }
+        )
 
     def set_data(self, key: str, value: Any) -> None:
         """Store data in context."""

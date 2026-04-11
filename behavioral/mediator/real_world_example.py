@@ -26,7 +26,7 @@ class User(Colleague):
             print(f"[{timestamp}] {self.name} → {recipient}: {message}")
         else:
             print(f"[{timestamp}] {self.name} (broadcast): {message}")
-        
+
         self.mediator.send_message(message, self, recipient)
 
     def receive(self, message: str, sender: str) -> None:
@@ -53,7 +53,7 @@ class User(Colleague):
 class ChatMediator(Mediator):
     """
     Concrete chat room mediator.
-    
+
     Coordinates communication between users. When a user sends a message,
     the chat room decides who receives it.
     """
@@ -61,7 +61,7 @@ class ChatMediator(Mediator):
     def __init__(self, name: str, max_users: int = 100) -> None:
         """
         Initialize the chat room.
-        
+
         Args:
             name: Name of the chat room.
             max_users: Maximum number of users allowed.
@@ -85,20 +85,19 @@ class ChatMediator(Mediator):
             print(f"[{self.name}] User '{colleague.name}' joined")
 
     def send_message(
-        self,
-        message: str,
-        sender: Colleague,
-        recipient: Optional[str] = None
+        self, message: str, sender: Colleague, recipient: Optional[str] = None
     ) -> None:
         """Send a message from one user to recipient(s)."""
         timestamp = datetime.now()
-        
-        self.message_log.append({
-            "sender": sender.name,
-            "recipient": recipient or "broadcast",
-            "message": message,
-            "timestamp": timestamp,
-        })
+
+        self.message_log.append(
+            {
+                "sender": sender.name,
+                "recipient": recipient or "broadcast",
+                "message": message,
+                "timestamp": timestamp,
+            }
+        )
 
         if recipient:
             # Direct message
@@ -148,41 +147,41 @@ class ChatMediator(Mediator):
 
 def demonstrate_chat_room() -> None:
     """Demonstrate the chat room mediator pattern."""
-    
+
     # Create chat room
     chat = ChatMediator("Python Developers", max_users=10)
-    
+
     # Create users
     alice = User("Alice", chat)
     bob = User("Bob", chat)
     charlie = User("Charlie", chat)
     diana = User("Diana", chat)
-    
+
     # Register users
     chat.register_colleague(alice)
     chat.register_colleague(bob)
     chat.register_colleague(charlie)
     chat.register_colleague(diana)
-    
+
     print("\n=== Chat Room Interactions ===\n")
-    
+
     # Broadcast messages
     alice.send("Hello everyone!")
     bob.send("Hey Alice!")
     charlie.send("Welcome to the chat!")
-    
+
     # Direct messages
     print()
     diana.send("Bob, can you help with Python?", "Bob")
     bob.send("Sure Diana, what do you need?", "Diana")
-    
+
     # More interaction
     print()
     alice.send("Anyone doing machine learning?")
     charlie.send("Yes, working on some TensorFlow projects")
-    
+
     # Display statistics
     chat.display_statistics()
-    
+
     # Show message history for one user
     alice.display_history()

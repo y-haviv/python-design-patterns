@@ -31,7 +31,7 @@ class Paragraph(DocumentElement):
     def __init__(self, text: str) -> None:
         """
         Initialize a paragraph.
-        
+
         Args:
             text: The paragraph text.
         """
@@ -60,7 +60,7 @@ class Image(DocumentElement):
     def __init__(self, filename: str, width: int, height: int, alt_text: str) -> None:
         """
         Initialize an image.
-        
+
         Args:
             filename: Image file name.
             width: Image width in pixels.
@@ -89,12 +89,10 @@ class Image(DocumentElement):
 class Table(DocumentElement):
     """Represents a table element in a document."""
 
-    def __init__(
-        self, headers: List[str], rows: List[List[str]]
-    ) -> None:
+    def __init__(self, headers: List[str], rows: List[List[str]]) -> None:
         """
         Initialize a table.
-        
+
         Args:
             headers: Column headers.
             rows: Table rows as list of lists.
@@ -233,13 +231,13 @@ class HTMLExportVisitor(DocumentVisitor):
         for header in element.headers:
             table_html += f"<th>{header}</th>"
         table_html += "</tr>\n"
-        
+
         for row in element.rows:
             table_html += "  <tr>"
             for cell in row:
                 table_html += f"<td>{cell}</td>"
             table_html += "</tr>\n"
-        
+
         table_html += "</table>"
         self.output.append(table_html)
         print(f"  ✓ HTML: Generated <table>")
@@ -276,11 +274,11 @@ class TextAnalysisVisitor(DocumentVisitor):
         self.element_count += 1
         word_count = element.get_word_count()
         char_count = element.get_character_count()
-        
+
         self.statistics["paragraph_count"] += 1
         self.statistics["total_words"] += word_count
         self.statistics["total_characters"] += char_count
-        
+
         analysis = {
             "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
             "element_type": "Paragraph",
@@ -288,7 +286,7 @@ class TextAnalysisVisitor(DocumentVisitor):
             "characters": char_count,
         }
         self.analysis_log.append(analysis)
-        
+
         print(f"  ✓ Analysis: Paragraph ({word_count} words, {char_count} chars)")
         return analysis
 
@@ -296,10 +294,10 @@ class TextAnalysisVisitor(DocumentVisitor):
         """Analyze image."""
         self.element_count += 1
         size_kb = element.get_size_kb()
-        
+
         self.statistics["image_count"] += 1
         self.statistics["total_image_size_kb"] += size_kb
-        
+
         analysis = {
             "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
             "element_type": "Image",
@@ -308,7 +306,7 @@ class TextAnalysisVisitor(DocumentVisitor):
             "estimated_size_kb": round(size_kb, 2),
         }
         self.analysis_log.append(analysis)
-        
+
         print(f"  ✓ Analysis: Image ({element.width}x{element.height}, ~{size_kb:.2f}KB)")
         return analysis
 
@@ -316,10 +314,10 @@ class TextAnalysisVisitor(DocumentVisitor):
         """Analyze table."""
         self.element_count += 1
         cell_count = element.get_cell_count()
-        
+
         self.statistics["table_count"] += 1
         self.statistics["total_cells"] += cell_count
-        
+
         analysis = {
             "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
             "element_type": "Table",
@@ -328,8 +326,10 @@ class TextAnalysisVisitor(DocumentVisitor):
             "total_cells": cell_count,
         }
         self.analysis_log.append(analysis)
-        
-        print(f"  ✓ Analysis: Table ({len(element.headers)}x{len(element.rows)}, {cell_count} cells)")
+
+        print(
+            f"  ✓ Analysis: Table ({len(element.headers)}x{len(element.rows)}, {cell_count} cells)"
+        )
         return analysis
 
     def get_result(self) -> Dict[str, Any]:
@@ -353,14 +353,14 @@ class TextAnalysisVisitor(DocumentVisitor):
 class Document:
     """
     Represents a document containing multiple elements.
-    
+
     Demonstrates how visitors can operate on complex object structures.
     """
 
     def __init__(self, title: str) -> None:
         """
         Initialize a document.
-        
+
         Args:
             title: Document title.
         """

@@ -292,5 +292,3 @@ class DocumentBuilder:
     def build(self) -> Document:
         """Get built document."""
         return self.document
-
-

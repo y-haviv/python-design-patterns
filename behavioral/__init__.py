@@ -20,25 +20,25 @@ This module provides eight fundamental behavioral patterns:
 Usage Examples:
     # Command - request encapsulation
     from behavioral import Command, Invoker
-    
+
     # Iterator - sequential access
     from behavioral import Iterator, ConcreteIterable
-    
+
     # Mediator - centralized communication
     from behavioral import Mediator, Colleague
-    
+
     # Memento - state snapshots
     from behavioral import Memento, Originator, Caretaker
-    
+
     # Observer - event notifications
     from behavioral import Observer, Subject
-    
+
     # State - dynamic behavior
     from behavioral import State, Context
-    
+
     # Strategy - algorithm selection
     from behavioral import Strategy, Context
-    
+
     # Visitor - operations on structures
     from behavioral import Visitor, Element
 
@@ -126,7 +126,6 @@ __all__ = [
     "ConcreteCommand",
     "Invoker",
     "MacroCommand",
-    
     # Iterator
     "Iterator",
     "Iterable",
@@ -136,40 +135,34 @@ __all__ = [
     "ConcreteIterable",
     "BidirectionalIterator",
     "LazyIterator",
-    
     # Mediator
     "Colleague",
     "Mediator",
     "ConcreteColleague",
     "ConcreteMediator",
     "SmartMediator",
-    
     # Memento
     "Memento",
     "ConcreteMemento",
     "Originator",
     "Caretaker",
-    
     # Observer
     "Observer",
     "Subject",
     "ConcreteObserver",
     "ConcreteSubject",
-    
     # State
     "State",
     "StateContext",
     "ConcreteStateA",
     "ConcreteStateB",
     "ConcreteStateC",
-    
     # Strategy
     "Strategy",
     "StrategyContext",
     "ConcreteStrategyA",
     "ConcreteStrategyB",
     "ConcreteStrategyC",
-    
     # Visitor
     "Visitor",
     "Element",

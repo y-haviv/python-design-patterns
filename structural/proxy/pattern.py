@@ -96,7 +96,7 @@ class DatabaseProxy(Database):
     def query(self, sql: str) -> str:
         if sql in self._cache:
             return f"(Cached) {self._cache[sql]}"
-        
+
         result = self._real_db.query(sql)
         self._cache[sql] = result
         return result
@@ -166,5 +166,3 @@ class LoggingProxy(Service):
 
     def get_log(self):
         return self._log
-
-

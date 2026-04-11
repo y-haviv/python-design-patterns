@@ -2,8 +2,8 @@
 Adapter Pattern Implementation (Structural).
 
 Convert the interface of a class into another interface clients expect.
-Adapter lets classes work together that couldn't otherwise because of 
-incompatible interfaces. Useful when integrating legacy systems or 
+Adapter lets classes work together that couldn't otherwise because of
+incompatible interfaces. Useful when integrating legacy systems or
 third-party libraries with incompatible interfaces.
 
 Key Components:
@@ -21,8 +21,8 @@ from typing import Any, Dict, List
 class Target(ABC):
     """
     Target interface expected by clients.
-    
-    This is the interface that clients want to use. Any class that 
+
+    This is the interface that clients want to use. Any class that
     implements this interface can be used by the client.
     """
 
@@ -35,13 +35,13 @@ class Target(ABC):
 class Adaptee:
     """
     Adaptee class with an incompatible interface.
-    
-    This class provides functionality but uses a different interface 
-    than what clients expect. It needs to be adapted to work with 
+
+    This class provides functionality but uses a different interface
+    than what clients expect. It needs to be adapted to work with
     the Target interface.
-    
+
     Example:
-        A legacy library with a specific API that doesn't match 
+        A legacy library with a specific API that doesn't match
         the client's expectations.
     """
 
@@ -61,16 +61,16 @@ class Adaptee:
 class Adapter(Target):
     """
     Adapter that converts Adaptee's interface to Target's interface.
-    
+
     This is the class adapter implementation using inheritance.
-    It adapts the incompatible Adaptee so it can work with code 
+    It adapts the incompatible Adaptee so it can work with code
     expecting the Target interface.
     """
 
     def __init__(self, adaptee: Adaptee) -> None:
         """
         Initialize the adapter with an Adaptee instance.
-        
+
         Args:
             adaptee: The object with incompatible interface to adapt.
         """
@@ -79,8 +79,8 @@ class Adapter(Target):
     def request(self) -> str:
         """
         Adapt the Adaptee's specific request to the Target interface.
-        
-        This method translates calls from the Target interface to 
+
+        This method translates calls from the Target interface to
         the Adaptee's interface.
         """
         # Translate Target interface to Adaptee interface
@@ -92,8 +92,8 @@ class Adapter(Target):
 class TwoWayAdapter(Target):
     """
     Two-way adapter that can work with both Adaptee and Target.
-    
-    This adapter allows bidirectional adaptation, enabling code to 
+
+    This adapter allows bidirectional adaptation, enabling code to
     work with either interface seamlessly.
     """
 
@@ -121,7 +121,7 @@ class TwoWayAdapter(Target):
 class LegacySystem:
     """
     Another legacy system with yet another incompatible interface.
-    
+
     Demonstrates adapting multiple different legacy systems.
     """
 
@@ -153,11 +153,11 @@ class LegacySystemAdapter(Target):
 class ClassAdapter(Target):
     """
     Class adapter using multiple inheritance.
-    
-    Inherits from both Target (the interface we want) and Adaptee 
+
+    Inherits from both Target (the interface we want) and Adaptee
     (the implementation we need to adapt).
-    
-    Note: This approach is less preferred in Python. The object 
+
+    Note: This approach is less preferred in Python. The object
     adapter (composition-based) is generally better.
     """
 
@@ -170,7 +170,7 @@ class ClassAdapter(Target):
 class AdapterWithValidation(Target):
     """
     Enhanced adapter that adds validation and transformation logic.
-    
+
     Demonstrates how adapters can do more than just interface translation—
     they can also validate, transform, and enrich data.
     """
@@ -215,7 +215,7 @@ class AdapterWithValidation(Target):
 class AdapterRegistry:
     """
     Registry pattern for managing multiple adapters.
-    
+
     Dynamically creates and manages adapters based on adaptee types.
     Useful when you need to adapt many different legacy systems.
     """
@@ -239,5 +239,3 @@ class AdapterRegistry:
     def get_registered_adapters(self) -> List[str]:
         """Get list of registered adapter types."""
         return list(self._adapters.keys())
-
-

@@ -1,13 +1,13 @@
 """
 Command Pattern Implementation (Behavioral).
 
-Encapsulates a request as an object, allowing parameterization of clients 
+Encapsulates a request as an object, allowing parameterization of clients
 with different requests, queueing, and logging. Enables undo/redo functionality
 and decouples objects that produce commands from those that consume them.
 
 Key Components:
 - Command: Abstract interface for executing operations.
-- ConcreteCommand: Implements the Command interface, binding an action 
+- ConcreteCommand: Implements the Command interface, binding an action
   to a Receiver.
 - Receiver: Performs the actual work requested by the command.
 - Invoker: Asks the command to carry out the operation.
@@ -22,7 +22,7 @@ from datetime import datetime
 class Command(ABC):
     """
     Abstract interface for commands.
-    
+
     All concrete commands must implement the execute() method to perform
     their specific operations.
     """
@@ -41,12 +41,12 @@ class Command(ABC):
 class Receiver:
     """
     The object that performs the actual work.
-    
-    The Receiver contains the business logic for operations. Commands 
+
+    The Receiver contains the business logic for operations. Commands
     delegate work to the Receiver rather than implementing logic themselves.
-    
+
     Example:
-        In a text editor, the Receiver might be the Document class that 
+        In a text editor, the Receiver might be the Document class that
         knows how to insert and delete text.
     """
 
@@ -58,9 +58,7 @@ class Receiver:
     def insert_text(self, position: int, text: str) -> None:
         """Insert text at a specific position."""
         if position < 0 or position > len(self.text):
-            raise ValueError(
-                f"Invalid position {position}. Document length: {len(self.text)}"
-            )
+            raise ValueError(f"Invalid position {position}. Document length: {len(self.text)}")
         self.text = self.text[:position] + text + self.text[position:]
 
     def delete_text(self, position: int, length: int) -> None:
@@ -90,18 +88,16 @@ class Receiver:
 class ConcreteCommand(Command):
     """
     Concrete command that binds an action to a Receiver.
-    
-    The ConcreteCommand is responsible for associating a Receiver with 
-    an action and calling the appropriate Receiver methods to execute 
+
+    The ConcreteCommand is responsible for associating a Receiver with
+    an action and calling the appropriate Receiver methods to execute
     the operation.
     """
 
-    def __init__(
-        self, receiver: Receiver, action: str, *args: Any, **kwargs: Any
-    ) -> None:
+    def __init__(self, receiver: Receiver, action: str, *args: Any, **kwargs: Any) -> None:
         """
         Initialize command with receiver and arguments.
-        
+
         Args:
             receiver: The object that will perform the work.
             action: The name of the method to call on the receiver.
@@ -132,11 +128,11 @@ class ConcreteCommand(Command):
 class Invoker:
     """
     The object that invokes commands.
-    
-    The Invoker knows about the Command interface and invokes 
-    commands without knowing their specific implementations. 
+
+    The Invoker knows about the Command interface and invokes
+    commands without knowing their specific implementations.
     Supports command history and undo/redo functionality.
-    
+
     Attributes:
         history (List[Command]): Stack of executed commands for undo.
         redo_stack: Stack of undone commands for redo.
@@ -146,7 +142,7 @@ class Invoker:
     def __init__(self, max_history: int = 100) -> None:
         """
         Initialize the Invoker.
-        
+
         Args:
             max_history: Maximum number of commands to keep in history.
         """
@@ -157,7 +153,7 @@ class Invoker:
     def execute_command(self, command: Command) -> None:
         """
         Execute a command and add it to history.
-        
+
         Args:
             command: The command to execute.
         """
@@ -172,7 +168,7 @@ class Invoker:
     def undo(self) -> bool:
         """
         Undo the last command.
-        
+
         Returns:
             True if undo was successful, False if history is empty.
         """
@@ -187,7 +183,7 @@ class Invoker:
     def redo(self) -> bool:
         """
         Redo the last undone command.
-        
+
         Returns:
             True if redo was successful, False if redo stack is empty.
         """
@@ -202,7 +198,7 @@ class Invoker:
     def get_history(self) -> List[str]:
         """
         Get a string representation of command history.
-        
+
         Returns:
             List of command descriptions.
         """
@@ -224,15 +220,15 @@ class Invoker:
 class MacroCommand(Command):
     """
     Composite command that executes a sequence of commands.
-    
-    Useful for creating complex operations from simpler ones, or 
+
+    Useful for creating complex operations from simpler ones, or
     recording and replaying sequences of commands.
     """
 
     def __init__(self, commands: List[Command] | None = None) -> None:
         """
         Initialize with optional list of commands.
-        
+
         Args:
             commands: Initial sequence of commands to execute.
         """

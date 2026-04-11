@@ -2,7 +2,7 @@
 Real-World Example: Payment Processing System Integration.
 
 This example demonstrates the Adapter pattern in a practical scenario:
-integrating multiple payment processors with different APIs into a 
+integrating multiple payment processors with different APIs into a
 unified payment system.
 """
 
@@ -14,14 +14,12 @@ from datetime import datetime
 
 class PaymentProcessor(ABC):
     """
-    Target interface - the standard payment processor interface 
+    Target interface - the standard payment processor interface
     our application expects.
     """
 
     @abstractmethod
-    def process_payment(
-        self, amount: float, customer_id: str, description: str
-    ) -> Dict[str, Any]:
+    def process_payment(self, amount: float, customer_id: str, description: str) -> Dict[str, Any]:
         """Process a payment and return transaction result."""
         pass
 
@@ -39,8 +37,8 @@ class PaymentProcessor(ABC):
 class StripePaymentGateway:
     """
     Adaptee - third-party Stripe payment API with different interface.
-    
-    This represents a real-world payment gateway with its own API 
+
+    This represents a real-world payment gateway with its own API
     that doesn't match our PaymentProcessor interface.
     """
 
@@ -49,12 +47,10 @@ class StripePaymentGateway:
         self.api_key = api_key
         self.transactions: Dict[str, Dict[str, Any]] = {}
 
-    def charge_card(
-        self, amount_cents: int, card_token: str, description: str
-    ) -> Dict[str, Any]:
+    def charge_card(self, amount_cents: int, card_token: str, description: str) -> Dict[str, Any]:
         """
         Charge a card using Stripe API.
-        
+
         Note: Stripe uses cents, not dollars, and different parameter names.
         """
         transaction_id = f"stripe_{datetime.now().timestamp()}"
@@ -89,7 +85,7 @@ class StripePaymentGateway:
 class PayPalPaymentGateway:
     """
     Another Adaptee - PayPal API with its own different interface.
-    
+
     Represents another real payment gateway that needs adaptation.
     """
 
@@ -99,12 +95,10 @@ class PayPalPaymentGateway:
         self.client_secret = client_secret
         self.payments: Dict[str, Dict[str, Any]] = {}
 
-    def create_payment(
-        self, total: str, currency: str, description: str
-    ) -> Dict[str, Any]:
+    def create_payment(self, total: str, currency: str, description: str) -> Dict[str, Any]:
         """
         Create a PayPal payment.
-        
+
         Note: PayPal uses different parameter names and structure.
         """
         payment_id = f"paypal_{datetime.now().timestamp()}"
@@ -127,9 +121,7 @@ class PayPalPaymentGateway:
             return self.payments[payment_id]["state"]
         return "unknown"
 
-    def execute_refund(
-        self, payment_id: str, refund_amount: str
-    ) -> Dict[str, Any]:
+    def execute_refund(self, payment_id: str, refund_amount: str) -> Dict[str, Any]:
         """Execute PayPal refund."""
         if payment_id in self.payments:
             self.payments[payment_id]["state"] = "refunded"
@@ -143,7 +135,7 @@ class PayPalPaymentGateway:
 class StripeAdapter(PaymentProcessor):
     """
     Adapter - makes Stripe API conform to PaymentProcessor interface.
-    
+
     Translates PaymentProcessor method calls to Stripe API calls.
     """
 
@@ -151,12 +143,10 @@ class StripeAdapter(PaymentProcessor):
         """Initialize adapter with Stripe gateway."""
         self.stripe = stripe_gateway
 
-    def process_payment(
-        self, amount: float, customer_id: str, description: str
-    ) -> Dict[str, Any]:
+    def process_payment(self, amount: float, customer_id: str, description: str) -> Dict[str, Any]:
         """
         Process payment using Stripe.
-        
+
         Adapts from standard interface (dollars) to Stripe interface (cents).
         """
         amount_cents = int(amount * 100)
@@ -194,7 +184,7 @@ class StripeAdapter(PaymentProcessor):
 class PayPalAdapter(PaymentProcessor):
     """
     Adapter - makes PayPal API conform to PaymentProcessor interface.
-    
+
     Translates PaymentProcessor method calls to PayPal API calls.
     """
 
@@ -202,12 +192,10 @@ class PayPalAdapter(PaymentProcessor):
         """Initialize adapter with PayPal gateway."""
         self.paypal = paypal_gateway
 
-    def process_payment(
-        self, amount: float, customer_id: str, description: str
-    ) -> Dict[str, Any]:
+    def process_payment(self, amount: float, customer_id: str, description: str) -> Dict[str, Any]:
         """
         Process payment using PayPal.
-        
+
         Adapts from standard interface to PayPal interface.
         """
         # PayPal expects string amounts and currency
@@ -243,7 +231,7 @@ class PayPalAdapter(PaymentProcessor):
 class PaymentSystem:
     """
     Client that uses adapters to work with multiple payment providers.
-    
+
     This system doesn't need to know about different payment APIs—
     it just uses the unified PaymentProcessor interface.
     """
@@ -303,5 +291,3 @@ class PaymentSystem:
     def get_transaction_details(self, order_id: str) -> Optional[Dict[str, Any]]:
         """Get transaction details."""
         return self.transactions.get(order_id)
-
-

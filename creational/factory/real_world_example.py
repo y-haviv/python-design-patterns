@@ -1,8 +1,8 @@
 """
 Real-world Factory Method: HTTP Client Factory for Multiple API Services.
 
-This example demonstrates a realistic use case where different API services 
-require different HTTP configurations, retry policies, and headers. The Factory 
+This example demonstrates a realistic use case where different API services
+require different HTTP configurations, retry policies, and headers. The Factory
 Method pattern abstracts away these differences from the client code.
 """
 
@@ -16,7 +16,7 @@ import json
 class APIService(ABC):
     """
     Abstract Product: API Service Client.
-    
+
     Defines the common interface that all concrete API clients must implement.
     """
 
@@ -34,11 +34,11 @@ class APIService(ABC):
     def make_request(self, endpoint: str, method: str = "GET") -> str:
         """
         Simulate making an HTTP request to the API.
-        
+
         Args:
             endpoint: The API endpoint path.
             method: The HTTP method (GET, POST, etc.)
-            
+
         Returns:
             A simulated response from the API.
         """
@@ -48,8 +48,8 @@ class APIService(ABC):
 class RESTfulAPIService(APIService):
     """
     Concrete Product: RESTful API Service.
-    
-    Implements a standard REST API client with JSON payloads and 
+
+    Implements a standard REST API client with JSON payloads and
     standard HTTP methods.
     """
 
@@ -65,7 +65,7 @@ class RESTfulAPIService(APIService):
             "timeout": self.timeout,
             "retries": self.retries,
             "protocol": "REST",
-            "content_type": "application/json"
+            "content_type": "application/json",
         }
 
     def build_headers(self) -> Dict[str, str]:
@@ -73,7 +73,7 @@ class RESTfulAPIService(APIService):
         return {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "User-Agent": "PythonClientV1.0"
+            "User-Agent": "PythonClientV1.0",
         }
 
     def make_request(self, endpoint: str, method: str = "GET") -> str:
@@ -90,8 +90,8 @@ class RESTfulAPIService(APIService):
 class GraphQLAPIService(APIService):
     """
     Concrete Product: GraphQL API Service.
-    
-    Implements a GraphQL client that always uses POST requests 
+
+    Implements a GraphQL client that always uses POST requests
     and sends queries as JSON payloads.
     """
 
@@ -107,7 +107,7 @@ class GraphQLAPIService(APIService):
             "timeout": self.timeout,
             "batch_size": self.batch_size,
             "protocol": "GraphQL",
-            "introspection_enabled": True
+            "introspection_enabled": True,
         }
 
     def build_headers(self) -> Dict[str, str]:
@@ -115,13 +115,13 @@ class GraphQLAPIService(APIService):
         return {
             "Content-Type": "application/json",
             "X-GraphQL-Client": "PythonClientV1.0",
-            "Accept": "application/json"
+            "Accept": "application/json",
         }
 
     def make_request(self, endpoint: str, method: str = "POST") -> str:
         """Simulate GraphQL query request (always POST)."""
         headers = self.build_headers()
-        query = '{ user { id name email } }'
+        query = "{ user { id name email } }"
         return (
             f"GraphQL Request: POST {self.base_url}\n"
             f"Headers: {json.dumps(headers, indent=2)}\n"
@@ -133,8 +133,8 @@ class GraphQLAPIService(APIService):
 class SOAPAPIService(APIService):
     """
     Concrete Product: SOAP API Service.
-    
-    Implements a SOAP client with XML payloads, WSDL support, and 
+
+    Implements a SOAP client with XML payloads, WSDL support, and
     enhanced authentication headers.
     """
 
@@ -150,7 +150,7 @@ class SOAPAPIService(APIService):
             "timeout": self.timeout,
             "soap_version": self.soap_version,
             "protocol": "SOAP",
-            "ws_security": True
+            "ws_security": True,
         }
 
     def build_headers(self) -> Dict[str, str]:
@@ -158,7 +158,7 @@ class SOAPAPIService(APIService):
         return {
             "Content-Type": f"application/soap+xml; charset=UTF-8 (version {self.soap_version})",
             "SOAPAction": "http://example.com/GetUser",
-            "Authorization": "Bearer ws-security-token-xyz"
+            "Authorization": "Bearer ws-security-token-xyz",
         }
 
     def make_request(self, endpoint: str, method: str = "POST") -> str:
@@ -167,8 +167,8 @@ class SOAPAPIService(APIService):
         soap_envelope = (
             '<?xml version="1.0"?>\n'
             '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\n'
-            '  <soap:Body>...</soap:Body>\n'
-            '</soap:Envelope>'
+            "  <soap:Body>...</soap:Body>\n"
+            "</soap:Envelope>"
         )
         return (
             f"SOAP Request: POST {endpoint}\n"
@@ -181,8 +181,8 @@ class SOAPAPIService(APIService):
 class APIServiceFactory(ABC):
     """
     Abstract Creator (Factory).
-    
-    Declares the factory method for creating API service clients 
+
+    Declares the factory method for creating API service clients
     and provides template methods that use these services.
     """
 
@@ -190,7 +190,7 @@ class APIServiceFactory(ABC):
     def create_api_service(self) -> APIService:
         """
         Factory method: Create an API service client.
-        
+
         Returns:
             An APIService instance of the appropriate type.
         """
@@ -199,24 +199,21 @@ class APIServiceFactory(ABC):
     def call_api(self, endpoint: str) -> str:
         """
         Template method: Uses the factory method to call an API.
-        
-        This demonstrates how the base class provides a common workflow 
+
+        This demonstrates how the base class provides a common workflow
         while delegating the specific API client instantiation to subclasses.
-        
+
         Args:
             endpoint: The API endpoint to call.
-            
+
         Returns:
             The result of the API call.
         """
         service = self.create_api_service()
         config = service.get_config()
         response = service.make_request(endpoint, method="GET")
-        
-        return (
-            f"API Configuration: {config}\n"
-            f"\n{response}"
-        )
+
+        return f"API Configuration: {config}\n" f"\n{response}"
 
 
 class RESTfulAPIFactory(APIServiceFactory):
@@ -227,7 +224,7 @@ class RESTfulAPIFactory(APIServiceFactory):
     def create_api_service(self) -> APIService:
         """
         Create a RESTful API service.
-        
+
         Returns:
             A RESTfulAPIService configured for the application.
         """
@@ -242,7 +239,7 @@ class GraphQLAPIFactory(APIServiceFactory):
     def create_api_service(self) -> APIService:
         """
         Create a GraphQL API service.
-        
+
         Returns:
             A GraphQLAPIService configured for the application.
         """
@@ -257,7 +254,7 @@ class SOAPAPIFactory(APIServiceFactory):
     def create_api_service(self) -> APIService:
         """
         Create a SOAP API service.
-        
+
         Returns:
             A SOAPAPIService configured for the application.
         """
@@ -267,7 +264,7 @@ class SOAPAPIFactory(APIServiceFactory):
 class APIServiceRegistry:
     """
     Registry Enhancement: Centralized management of API service factories.
-    
+
     Allows runtime selection of API factories without knowing concrete types.
     This is useful when the API type is determined by configuration or user input.
     """
@@ -282,31 +279,30 @@ class APIServiceRegistry:
     def get_factory(self, api_type: str) -> APIServiceFactory:
         """
         Retrieve a factory for the specified API type.
-        
+
         Args:
             api_type: The API type (e.g., "rest", "graphql", "soap").
-            
+
         Returns:
             The corresponding APIServiceFactory.
-            
+
         Raises:
             ValueError: If the API type is not registered.
         """
         if api_type not in self._factories:
             raise ValueError(
-                f"Unknown API type: {api_type}\n"
-                f"Available types: {list(self._factories.keys())}"
+                f"Unknown API type: {api_type}\n" f"Available types: {list(self._factories.keys())}"
             )
         return self._factories[api_type]
 
     def call_api(self, api_type: str, endpoint: str) -> str:
         """
         Convenient method to call an API by type without knowing the factory.
-        
+
         Args:
             api_type: The API type to use.
             endpoint: The API endpoint to call.
-            
+
         Returns:
             The result of the API call.
         """
@@ -316,9 +312,9 @@ class APIServiceRegistry:
     def register_factory(self, api_type: str, factory: APIServiceFactory) -> None:
         """
         Register a custom factory for a specific API type.
-        
+
         This allows adding support for new API types at runtime.
-        
+
         Args:
             api_type: The name of the API type.
             factory: The APIServiceFactory instance to register.
@@ -328,7 +324,7 @@ class APIServiceRegistry:
 
 def simulate_microservice_architecture() -> str:
     """
-    Simulate a microservice architecture where different services 
+    Simulate a microservice architecture where different services
     use different API types to communicate.
     """
     services_config: List[tuple[str, str]] = [

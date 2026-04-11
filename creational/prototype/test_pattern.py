@@ -70,10 +70,7 @@ class TestBasicCloning:
     def test_game_character_clone_independence(self):
         """Verify cloned character is independent."""
         warrior = GameCharacter(
-            name="Warrior",
-            character_class=CharacterClass.WARRIOR,
-            health=100,
-            strength=15
+            name="Warrior", character_class=CharacterClass.WARRIOR, health=100, strength=15
         )
 
         cloned = warrior.clone()
@@ -88,11 +85,7 @@ class TestBasicCloning:
 
     def test_ui_component_clone_independence(self):
         """Verify cloned UI component is independent."""
-        button = UIComponent(
-            component_type=UIComponentType.BUTTON,
-            id="btn1",
-            label="Click"
-        )
+        button = UIComponent(component_type=UIComponentType.BUTTON, id="btn1", label="Click")
 
         cloned = button.clone()
         cloned.label = "Modified"
@@ -143,10 +136,7 @@ class TestDeepCopyBehavior:
 
     def test_character_skills_are_deep_copied(self):
         """Verify that character skills list is deep copied."""
-        original = GameCharacter(
-            name="Mage",
-            character_class=CharacterClass.MAGE
-        )
+        original = GameCharacter(name="Mage", character_class=CharacterClass.MAGE)
         original.add_skill(Skill("Fireball", 40, 2.0, 40))
 
         cloned = original.clone()
@@ -158,10 +148,7 @@ class TestDeepCopyBehavior:
 
     def test_character_inventory_is_deep_copied(self):
         """Verify that character inventory is deep copied."""
-        original = GameCharacter(
-            name="Rogue",
-            character_class=CharacterClass.ROGUE
-        )
+        original = GameCharacter(name="Rogue", character_class=CharacterClass.ROGUE)
         original.add_inventory_item("Gold", 100)
 
         cloned = original.clone()
@@ -334,9 +321,7 @@ class TestUIComponentCloning:
     def test_ui_component_clone_generates_new_id(self):
         """Verify cloned components get new IDs."""
         button = UIComponent(
-            component_type=UIComponentType.BUTTON,
-            id="btn_original",
-            label="Original"
+            component_type=UIComponentType.BUTTON, id="btn_original", label="Original"
         )
 
         cloned = button.clone()
@@ -350,7 +335,7 @@ class TestUIComponentCloning:
         button = UIComponent(
             component_type=UIComponentType.BUTTON,
             id="btn1",
-            style=UIStyle(background_color="#FF0000")
+            style=UIStyle(background_color="#FF0000"),
         )
 
         cloned = button.clone()
@@ -362,10 +347,7 @@ class TestUIComponentCloning:
 
     def test_ui_component_handlers_are_cloned(self):
         """Verify component event handlers are cloned."""
-        button = UIComponent(
-            component_type=UIComponentType.BUTTON,
-            id="btn1"
-        )
+        button = UIComponent(component_type=UIComponentType.BUTTON, id="btn1")
         button.bind_handler("click", "on_click")
         button.bind_handler("hover", "on_hover")
 
@@ -395,7 +377,7 @@ class TestThemePrototypes:
 
         assert dark.name == "Dark Theme"
         assert dark.colors["background"].hex_code == "#1A1A1A"
-        
+
         # Light unchanged
         assert light.colors["background"].hex_code == "#FFFFFF"
 

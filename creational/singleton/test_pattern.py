@@ -31,7 +31,7 @@ def test_singleton_identity():
     """Verify that multiple calls return the exact same instance."""
     app_settings_1 = AppSettings()
     app_settings_2 = AppSettings()
-    
+
     assert app_settings_1 is app_settings_2
     assert id(app_settings_1) == id(app_settings_2)
 
@@ -40,7 +40,7 @@ def test_state_consistency():
     """Verify that changes in one reference reflect in all others."""
     s1 = AppSettings()
     s1.update_setting("api_key", "secret_123")
-    
+
     s2 = AppSettings()
     assert s2.get_setting("api_key") == "secret_123"
 
@@ -60,13 +60,13 @@ def test_thread_safety_high_concurrency():
         instances.append(FeatureFlagService())
 
     threads = [threading.Thread(target=create_instance) for _ in range(50)]
-    
+
     for t in threads:
         t.start()
-        
+
     # 'Bang!' - Release all threads at the same time
     start_event.set()
-    
+
     for t in threads:
         t.join()
 
@@ -79,7 +79,7 @@ def test_feature_flag_logic():
     """Verify business logic within a Singleton instance."""
     service = FeatureFlagService({"ai_enabled": True})
     assert service.is_enabled("ai_enabled") is True
-    
+
     service.set_flag("ai_enabled", False)
     # Check via a new 'reference'
     assert FeatureFlagService().is_enabled("ai_enabled") is False

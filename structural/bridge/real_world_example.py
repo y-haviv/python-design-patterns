@@ -5,7 +5,7 @@ This example demonstrates the Bridge pattern in a practical scenario:
 creating remote controls that can work with different types of devices
 (TV, stereo, projector) on different platforms (WiFi, Bluetooth, IR).
 
-The Bridge pattern allows us to vary the device type and communication 
+The Bridge pattern allows us to vary the device type and communication
 platform independently.
 """
 
@@ -18,7 +18,7 @@ from datetime import datetime
 class CommunicationBridge(ABC):
     """
     Implementor interface - represents communication method.
-    
+
     Different concrete implementations handle different communication
     protocols (WiFi, Bluetooth, Infrared) for controlling remote devices.
     """
@@ -52,7 +52,7 @@ class CommunicationBridge(ABC):
 class WiFiBridge(CommunicationBridge):
     """
     Concrete Implementor - WiFi-based communication.
-    
+
     Communicates with devices over WiFi/network protocol.
     """
 
@@ -102,7 +102,7 @@ class WiFiBridge(CommunicationBridge):
 class BluetoothBridge(CommunicationBridge):
     """
     Concrete Implementor - Bluetooth-based communication.
-    
+
     Communicates with devices over Bluetooth protocol.
     """
 
@@ -152,7 +152,7 @@ class BluetoothBridge(CommunicationBridge):
 class InfraredBridge(CommunicationBridge):
     """
     Concrete Implementor - Infrared-based communication.
-    
+
     Communicates with devices using infrared signals (traditional remote).
     """
 
@@ -202,7 +202,7 @@ class InfraredBridge(CommunicationBridge):
 class RemoteControl:
     """
     Abstraction - represents a remote control.
-    
+
     This is what the user interacts with. Different remote types and
     communication methods can be used without changing this interface.
     """
@@ -210,7 +210,7 @@ class RemoteControl:
     def __init__(self, device_id: str, communication: CommunicationBridge) -> None:
         """
         Initialize remote control.
-        
+
         Args:
             device_id: ID of the device to control
             communication: The communication bridge to use
@@ -243,7 +243,7 @@ class RemoteControl:
 class TVRemote(RemoteControl):
     """
     Refined Abstraction - TV-specific remote control.
-    
+
     Provides TV-specific operations like volume, channel, power.
     """
 
@@ -275,7 +275,7 @@ class TVRemote(RemoteControl):
 class StereoRemote(RemoteControl):
     """
     Refined Abstraction - Stereo-specific remote control.
-    
+
     Provides stereo-specific operations like play, stop, album, artist.
     """
 
@@ -307,7 +307,7 @@ class StereoRemote(RemoteControl):
 class ProjectorRemote(RemoteControl):
     """
     Refined Abstraction - Projector-specific remote control.
-    
+
     Provides projector-specific operations like focus, zoom, brightness.
     """
 
@@ -335,7 +335,7 @@ class ProjectorRemote(RemoteControl):
 class RemoteControlFactory:
     """
     Factory for creating remote controls with specific configurations.
-    
+
     Allows easy instantiation of different remote types with different
     communication bridges.
     """
@@ -344,9 +344,7 @@ class RemoteControlFactory:
         """Initialize factory."""
         self.remotes: Dict[str, RemoteControl] = {}
 
-    def create_tv_remote(
-        self, device_id: str, communication: CommunicationBridge
-    ) -> TVRemote:
+    def create_tv_remote(self, device_id: str, communication: CommunicationBridge) -> TVRemote:
         """Create TV remote."""
         remote = TVRemote(device_id, communication)
         self.remotes[device_id] = remote
@@ -375,5 +373,3 @@ class RemoteControlFactory:
     def get_all_remotes(self) -> Dict[str, RemoteControl]:
         """Get all created remotes."""
         return self.remotes.copy()
-
-

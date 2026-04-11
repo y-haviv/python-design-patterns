@@ -45,11 +45,13 @@ class TestHTTPRequestBuilder:
 
     def test_fluent_interface_chain(self):
         """Verify fluent interface chaining works."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://api.example.com")
-                  .with_method("GET")
-                  .with_header("Accept", "application/json")
-                  .build())
+        request = (
+            HTTPRequestBuilder()
+            .with_url("https://api.example.com")
+            .with_method("GET")
+            .with_header("Accept", "application/json")
+            .build()
+        )
 
         assert isinstance(request, HTTPRequest)
         assert request.url == "https://api.example.com"
@@ -58,19 +60,14 @@ class TestHTTPRequestBuilder:
 
     def test_build_creates_http_request(self):
         """Verify build() creates an HTTPRequest instance."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://example.com")
-                  .with_method("POST")
-                  .build())
+        request = HTTPRequestBuilder().with_url("https://example.com").with_method("POST").build()
 
         assert isinstance(request, HTTPRequest)
         assert request.method == HTTPMethod.POST
 
     def test_default_values_are_applied(self):
         """Verify default values are set when not specified."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://example.com")
-                  .build())
+        request = HTTPRequestBuilder().with_url("https://example.com").build()
 
         assert request.method == HTTPMethod.GET
         assert request.timeout == 30
@@ -84,23 +81,27 @@ class TestHTTPRequestBuilder:
 
     def test_with_json_body_sets_content_type_header(self):
         """Verify with_json_body sets Content-Type header."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://example.com")
-                  .with_method("POST")
-                  .with_json_body({"key": "value"})
-                  .build())
+        request = (
+            HTTPRequestBuilder()
+            .with_url("https://example.com")
+            .with_method("POST")
+            .with_json_body({"key": "value"})
+            .build()
+        )
 
         assert request.headers["Content-Type"] == "application/json"
         assert '"key": "value"' in request.body or "'key': 'value'" in request.body
 
     def test_multiple_headers(self):
         """Verify multiple headers can be added."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://example.com")
-                  .with_header("X-Token", "secret")
-                  .with_header("X-Request-ID", "req-123")
-                  .with_headers({"X-Custom": "value"})
-                  .build())
+        request = (
+            HTTPRequestBuilder()
+            .with_url("https://example.com")
+            .with_header("X-Token", "secret")
+            .with_header("X-Request-ID", "req-123")
+            .with_headers({"X-Custom": "value"})
+            .build()
+        )
 
         assert request.headers["X-Token"] == "secret"
         assert request.headers["X-Request-ID"] == "req-123"
@@ -108,24 +109,28 @@ class TestHTTPRequestBuilder:
 
     def test_query_parameters(self):
         """Verify query parameters can be added."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://example.com")
-                  .with_query_param("page", "1")
-                  .with_query_param("limit", "10")
-                  .build())
+        request = (
+            HTTPRequestBuilder()
+            .with_url("https://example.com")
+            .with_query_param("page", "1")
+            .with_query_param("limit", "10")
+            .build()
+        )
 
         assert request.query_params["page"] == "1"
         assert request.query_params["limit"] == "10"
 
     def test_request_construct_method(self):
         """Verify request can be constructed as a string."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://api.example.com/users")
-                  .with_method("POST")
-                  .with_header("X-Token", "secret")
-                  .with_json_body({"name": "John"})
-                  .with_timeout(20)
-                  .build())
+        request = (
+            HTTPRequestBuilder()
+            .with_url("https://api.example.com/users")
+            .with_method("POST")
+            .with_header("X-Token", "secret")
+            .with_json_body({"name": "John"})
+            .with_timeout(20)
+            .build()
+        )
 
         constructed = request.construct()
 
@@ -148,12 +153,12 @@ class TestHTTPRequestBuilder:
     def test_builder_reuse(self):
         """Verify builder can be reused to create multiple objects."""
         builder = HTTPRequestBuilder()
-        
+
         request1 = builder.with_url("https://api1.com").build()
-        
+
         builder.reset()
         request2 = builder.with_url("https://api2.com").build()
-        
+
         assert request1.url == "https://api1.com"
         assert request2.url == "https://api2.com"
 
@@ -171,11 +176,7 @@ class TestComputerBuilder:
 
     def test_custom_computer_configuration(self):
         """Verify custom computer configuration."""
-        computer = (ComputerBuilder()
-                   .with_cpu(8, 3.5)
-                   .with_ram(16)
-                   .with_ssd(512)
-                   .build())
+        computer = ComputerBuilder().with_cpu(8, 3.5).with_ram(16).with_ssd(512).build()
 
         assert computer.cpu_cores == 8
         assert computer.cpu_ghz == 3.5
@@ -184,9 +185,7 @@ class TestComputerBuilder:
 
     def test_computer_with_gpu(self):
         """Verify computer with GPU configuration."""
-        computer = (ComputerBuilder()
-                   .with_gpu("NVIDIA RTX 3080", 10)
-                   .build())
+        computer = ComputerBuilder().with_gpu("NVIDIA RTX 3080", 10).build()
 
         assert computer.has_gpu is True
         assert computer.gpu_model == "NVIDIA RTX 3080"
@@ -194,27 +193,20 @@ class TestComputerBuilder:
 
     def test_computer_with_hdd(self):
         """Verify computer with HDD configuration."""
-        computer = (ComputerBuilder()
-                   .with_hdd(2048)
-                   .build())
+        computer = ComputerBuilder().with_hdd(2048).build()
 
         assert computer.has_hdd is True
         assert computer.hdd_gb == 2048
 
     def test_computer_liquid_cooling(self):
         """Verify liquid cooling option."""
-        computer = (ComputerBuilder()
-                   .with_liquid_cooling()
-                   .build())
+        computer = ComputerBuilder().with_liquid_cooling().build()
 
         assert computer.cooling_type == "liquid"
 
     def test_computer_connectivity_options(self):
         """Verify WiFi and Bluetooth options."""
-        computer = (ComputerBuilder()
-                   .without_wifi()
-                   .without_bluetooth()
-                   .build())
+        computer = ComputerBuilder().without_wifi().without_bluetooth().build()
 
         assert computer.has_wifi is False
         assert computer.has_bluetooth is False
@@ -222,11 +214,9 @@ class TestComputerBuilder:
     def test_computer_price_estimation(self):
         """Verify price estimation increases with features."""
         basic = ComputerBuilder().build()
-        gaming = (ComputerBuilder()
-                 .with_cpu(16, 4.0)
-                 .with_ram(32)
-                 .with_gpu("NVIDIA RTX 4080", 12)
-                 .build())
+        gaming = (
+            ComputerBuilder().with_cpu(16, 4.0).with_ram(32).with_gpu("NVIDIA RTX 4080", 12).build()
+        )
 
         basic_price = basic.estimate_price()
         gaming_price = gaming.estimate_price()
@@ -235,10 +225,7 @@ class TestComputerBuilder:
 
     def test_computer_specifications_summary(self):
         """Verify specifications summary generation."""
-        computer = (ComputerBuilder()
-                   .with_cpu(8, 3.0)
-                   .with_ram(16)
-                   .build())
+        computer = ComputerBuilder().with_cpu(8, 3.0).with_ram(16).build()
 
         summary = computer.specifications_summary()
 
@@ -309,10 +296,7 @@ class TestSQLQueryBuilder:
 
     def test_simple_select_query(self):
         """Verify simple SELECT query building."""
-        query = (SQLQueryBuilder()
-                .select("id", "name")
-                .from_table("users")
-                .build())
+        query = SQLQueryBuilder().select("id", "name").from_table("users").build()
 
         sql = query.to_sql_single_line()
 
@@ -321,21 +305,21 @@ class TestSQLQueryBuilder:
 
     def test_select_all_by_default(self):
         """Verify SELECT * when no columns specified."""
-        query = (SQLQueryBuilder()
-                .from_table("users")
-                .build())
+        query = SQLQueryBuilder().from_table("users").build()
 
         sql = query.to_sql_single_line()
         assert "SELECT *" in sql
 
     def test_where_clause(self):
         """Verify WHERE clause building."""
-        query = (SQLQueryBuilder()
-                .select("id", "name")
-                .from_table("users")
-                .where("age > :age")
-                .parameter("age", 18)
-                .build())
+        query = (
+            SQLQueryBuilder()
+            .select("id", "name")
+            .from_table("users")
+            .where("age > :age")
+            .parameter("age", 18)
+            .build()
+        )
 
         sql = query.to_sql_single_line()
 
@@ -344,13 +328,15 @@ class TestSQLQueryBuilder:
 
     def test_multiple_where_conditions(self):
         """Verify multiple WHERE conditions are combined with AND."""
-        query = (SQLQueryBuilder()
-                .from_table("users")
-                .where("age > :min_age")
-                .where("status = :status")
-                .parameter("min_age", 18)
-                .parameter("status", "active")
-                .build())
+        query = (
+            SQLQueryBuilder()
+            .from_table("users")
+            .where("age > :min_age")
+            .where("status = :status")
+            .parameter("min_age", 18)
+            .parameter("status", "active")
+            .build()
+        )
 
         sql = query.to_sql_single_line()
 
@@ -360,11 +346,13 @@ class TestSQLQueryBuilder:
 
     def test_join_clause(self):
         """Verify JOIN clause building."""
-        query = (SQLQueryBuilder()
-                .select("u.name", "o.id")
-                .from_table("users u")
-                .inner_join("orders o", "o.user_id = u.id")
-                .build())
+        query = (
+            SQLQueryBuilder()
+            .select("u.name", "o.id")
+            .from_table("users u")
+            .inner_join("orders o", "o.user_id = u.id")
+            .build()
+        )
 
         sql = query.to_sql_single_line()
 
@@ -374,11 +362,13 @@ class TestSQLQueryBuilder:
 
     def test_group_by_clause(self):
         """Verify GROUP BY clause building."""
-        query = (SQLQueryBuilder()
-                .select("user_id", "COUNT(*) as total")
-                .from_table("orders")
-                .group_by("user_id")
-                .build())
+        query = (
+            SQLQueryBuilder()
+            .select("user_id", "COUNT(*) as total")
+            .from_table("orders")
+            .group_by("user_id")
+            .build()
+        )
 
         sql = query.to_sql_single_line()
 
@@ -387,13 +377,15 @@ class TestSQLQueryBuilder:
 
     def test_having_clause(self):
         """Verify HAVING clause building."""
-        query = (SQLQueryBuilder()
-                .select("user_id", "COUNT(*) as total")
-                .from_table("orders")
-                .group_by("user_id")
-                .having("COUNT(*) > :min")
-                .parameter("min", 5)
-                .build())
+        query = (
+            SQLQueryBuilder()
+            .select("user_id", "COUNT(*) as total")
+            .from_table("orders")
+            .group_by("user_id")
+            .having("COUNT(*) > :min")
+            .parameter("min", 5)
+            .build()
+        )
 
         sql = query.to_sql_single_line()
 
@@ -401,12 +393,14 @@ class TestSQLQueryBuilder:
 
     def test_order_by_clause(self):
         """Verify ORDER BY clause building."""
-        query = (SQLQueryBuilder()
-                .select("id", "name")
-                .from_table("users")
-                .order_by("name", OrderDirection.ASC)
-                .order_by("id", OrderDirection.DESC)
-                .build())
+        query = (
+            SQLQueryBuilder()
+            .select("id", "name")
+            .from_table("users")
+            .order_by("name", OrderDirection.ASC)
+            .order_by("id", OrderDirection.DESC)
+            .build()
+        )
 
         sql = query.to_sql_single_line()
 
@@ -416,12 +410,9 @@ class TestSQLQueryBuilder:
 
     def test_limit_and_offset(self):
         """Verify LIMIT and OFFSET clauses."""
-        query = (SQLQueryBuilder()
-                .select("id", "name")
-                .from_table("users")
-                .limit(10)
-                .offset(20)
-                .build())
+        query = (
+            SQLQueryBuilder().select("id", "name").from_table("users").limit(10).offset(20).build()
+        )
 
         sql = query.to_sql_single_line()
 
@@ -430,18 +421,20 @@ class TestSQLQueryBuilder:
 
     def test_complex_query_building(self):
         """Verify complex query with multiple clauses."""
-        query = (SQLQueryBuilder()
-                .select("u.id", "u.name", "COUNT(o.id) as order_count")
-                .from_table("users u")
-                .left_join("orders o", "o.user_id = u.id")
-                .where("u.status = :status")
-                .parameter("status", "active")
-                .group_by("u.id", "u.name")
-                .having("COUNT(o.id) > :min")
-                .parameter("min", 5)
-                .order_by("order_count", OrderDirection.DESC)
-                .limit(100)
-                .build())
+        query = (
+            SQLQueryBuilder()
+            .select("u.id", "u.name", "COUNT(o.id) as order_count")
+            .from_table("users u")
+            .left_join("orders o", "o.user_id = u.id")
+            .where("u.status = :status")
+            .parameter("status", "active")
+            .group_by("u.id", "u.name")
+            .having("COUNT(o.id) > :min")
+            .parameter("min", 5)
+            .order_by("order_count", OrderDirection.DESC)
+            .limit(100)
+            .build()
+        )
 
         sql = query.to_sql_single_line()
 
@@ -457,13 +450,13 @@ class TestSQLQueryBuilder:
     def test_query_reset(self):
         """Verify query builder reset."""
         builder = SQLQueryBuilder()
-        
+
         builder.select("id").from_table("users").where("age > 18")
         builder.reset()
-        
+
         query = builder.select("name").from_table("products").build()
         sql = query.to_sql_single_line()
-        
+
         assert "name" in sql
         assert "products" in sql
         assert "users" not in sql  # users was from the original query before reset
@@ -517,23 +510,23 @@ class TestBuilderBenefits:
 
     def test_readable_configuration_http_request(self):
         """Demonstrate readable HTTP request configuration."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://api.example.com/users")
-                  .with_method("POST")
-                  .with_header("Authorization", "Bearer token")
-                  .with_json_body({"email": "user@example.com"})
-                  .with_timeout(30)
-                  .with_max_retries(3)
-                  .build())
+        request = (
+            HTTPRequestBuilder()
+            .with_url("https://api.example.com/users")
+            .with_method("POST")
+            .with_header("Authorization", "Bearer token")
+            .with_json_body({"email": "user@example.com"})
+            .with_timeout(30)
+            .with_max_retries(3)
+            .build()
+        )
 
         # If we reach here, the fluent interface allows clear configuration
         assert request.url == "https://api.example.com/users"
 
     def test_partial_configuration_with_defaults(self):
         """Verify partial configuration works with defaults."""
-        request = (HTTPRequestBuilder()
-                  .with_url("https://example.com")
-                  .build())
+        request = HTTPRequestBuilder().with_url("https://example.com").build()
 
         # Many defaults should be applied
         assert request.timeout == 30  # Default
@@ -541,16 +534,18 @@ class TestBuilderBenefits:
 
     def test_complex_query_readability(self):
         """Demonstrate readable query building."""
-        query = (SQLQueryBuilder()
-                .select("id", "name", "email")
-                .from_table("users")
-                .where("status = :status")
-                .parameter("status", "active")
-                .where("age > :age")
-                .parameter("age", 21)
-                .order_by("name", OrderDirection.ASC)
-                .limit(50)
-                .build())
+        query = (
+            SQLQueryBuilder()
+            .select("id", "name", "email")
+            .from_table("users")
+            .where("status = :status")
+            .parameter("status", "active")
+            .where("age > :age")
+            .parameter("age", 21)
+            .order_by("name", OrderDirection.ASC)
+            .limit(50)
+            .build()
+        )
 
         # If we reach here, the fluent interface is clearly readable
         assert len(query.to_sql_single_line()) > 0

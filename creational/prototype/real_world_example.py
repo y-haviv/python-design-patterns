@@ -1,8 +1,8 @@
 """
 Real-world Prototype: Design System Component Library.
 
-This example demonstrates a design system (like Material Design or Bootstrap) 
-where UI components have predefined themes/variants. Instead of creating 
+This example demonstrates a design system (like Material Design or Bootstrap)
+where UI components have predefined themes/variants. Instead of creating
 each variant from scratch, prototypes are cloned and customized.
 
 This is commonly used in:
@@ -21,6 +21,7 @@ from copy import deepcopy
 @dataclass
 class Color:
     """Color representation."""
+
     name: str
     hex_code: str
     rgb: tuple[int, int, int] = field(default=(0, 0, 0))
@@ -29,6 +30,7 @@ class Color:
 @dataclass
 class Typography:
     """Typography settings."""
+
     font_family: str = ""
     sizes: Dict[str, int] = field(default_factory=dict)  # heading1, heading2, body, etc.
     weights: Dict[str, int] = field(default_factory=dict)  # normal, bold, etc.
@@ -38,6 +40,7 @@ class Typography:
 @dataclass
 class Spacing:
     """Spacing scale."""
+
     unit: int = 4  # 4px base unit
     values: Dict[str, int] = field(default_factory=dict)  # xs, sm, md, lg, xl
 
@@ -46,7 +49,7 @@ class Spacing:
 class DesignTheme:
     """
     Prototype: Design System Theme.
-    
+
     A complete theme definition with colors, typography, spacing, etc.
     Expensive to create, cheap to clone for variations.
     """
@@ -62,9 +65,9 @@ class DesignTheme:
     def clone(self) -> DesignTheme:
         """
         Create a deep copy of this theme.
-        
+
         Useful for creating theme variations (light, dark, etc.)
-        
+
         Returns:
             A completely independent copy of this theme.
         """
@@ -83,13 +86,13 @@ class DesignTheme:
 def create_light_theme_prototype() -> DesignTheme:
     """
     Create the light theme prototype (expensive operation).
-    
+
     In reality, this might:
     - Load from a design system server
     - Parse a design tokens file
     - Query a design database
     - Load and process large SVG assets
-    
+
     Returns:
         A complete light theme prototype.
     """
@@ -127,7 +130,7 @@ def create_light_theme_prototype() -> DesignTheme:
             "tight": 1.2,
             "normal": 1.5,
             "relaxed": 1.8,
-        }
+        },
     )
 
     # Spacing
@@ -173,13 +176,13 @@ def create_light_theme_prototype() -> DesignTheme:
 def create_dark_theme_from_light(light_prototype: DesignTheme) -> DesignTheme:
     """
     Create a dark theme by cloning and modifying the light theme.
-    
+
     Instead of creating from scratch (expensive), we clone the light
     prototype and modify specific colors.
-    
+
     Args:
         light_prototype: The light theme prototype to base on.
-        
+
     Returns:
         A dark theme variant.
     """
@@ -212,10 +215,10 @@ def create_dark_theme_from_light(light_prototype: DesignTheme) -> DesignTheme:
 def create_high_contrast_theme_from_light(light_prototype: DesignTheme) -> DesignTheme:
     """
     Create a high-contrast theme for accessibility.
-    
+
     Args:
         light_prototype: The light theme prototype to base on.
-        
+
     Returns:
         A high-contrast theme variant.
     """
@@ -258,10 +261,10 @@ def create_high_contrast_theme_from_light(light_prototype: DesignTheme) -> Desig
 def create_compact_theme_from_light(light_prototype: DesignTheme) -> DesignTheme:
     """
     Create a compact theme for space-constrained interfaces.
-    
+
     Args:
         light_prototype: The light theme prototype to base on.
-        
+
     Returns:
         A compact theme variant.
     """
@@ -303,7 +306,7 @@ def create_compact_theme_from_light(light_prototype: DesignTheme) -> DesignTheme
 class ThemeLibrary:
     """
     Manages multiple theme prototypes and provides variants through cloning.
-    
+
     This demonstrates the registry pattern combined with Prototype pattern
     for efficient theme management.
     """
@@ -324,10 +327,10 @@ class ThemeLibrary:
     def get_theme(self, theme_name: str) -> DesignTheme:
         """
         Get a theme (returns the prototype; clone if you need to modify).
-        
+
         Args:
             theme_name: Name of the theme.
-            
+
         Returns:
             The theme prototype.
         """
@@ -338,11 +341,11 @@ class ThemeLibrary:
     def create_theme_variant(self, template_name: str, name: str) -> DesignTheme:
         """
         Create a custom theme variant by cloning a template.
-        
+
         Args:
             template_name: Name of the template theme to clone.
             name: Name for the new variant.
-            
+
         Returns:
             A cloned theme ready for customization.
         """
@@ -358,10 +361,10 @@ class ThemeLibrary:
     def get_theme_clone(self, theme_name: str) -> DesignTheme:
         """
         Get an independent clone of a theme for modification.
-        
+
         Args:
             theme_name: Name of the theme to clone.
-            
+
         Returns:
             A deep copy of the theme.
         """
@@ -372,7 +375,7 @@ class ThemeLibrary:
 def demonstrate_theme_system() -> List[str]:
     """
     Demonstrate the theme system with cloning and variants.
-    
+
     Returns:
         A list of theme demonstrations.
     """
@@ -388,7 +391,9 @@ def demonstrate_theme_system() -> List[str]:
 
     # Use the library
     library = ThemeLibrary()
-    results.append(f"Theme library initialized with themes: {', '.join(library.list_available_themes())}")
+    results.append(
+        f"Theme library initialized with themes: {', '.join(library.list_available_themes())}"
+    )
 
     # Get and customize a theme
     custom_theme = library.get_theme_clone("light")

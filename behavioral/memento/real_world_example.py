@@ -48,10 +48,8 @@ class TextDocument(Originator):
         """Insert text at a specific position."""
         if position is None:
             position = self.cursor_position
-        
-        self.content = (
-            self.content[:position] + text + self.content[position:]
-        )
+
+        self.content = self.content[:position] + text + self.content[position:]
         self.cursor_position = position + len(text)
 
     def delete_text(self, start: int, end: int) -> None:
@@ -117,16 +115,14 @@ class DocumentHistory(Caretaker):
         if not self.history:
             print("  (no versions saved)")
             return
-        
+
         for i, memento in enumerate(self.history, 1):
             marker = " ← Current" if i - 1 == self.current_index else ""
             print(f"  v{i}. {memento.get_name()}{marker}")
 
     def compare_versions(self, index1: int, index2: int) -> None:
         """Compare two versions."""
-        if not (0 <= index1 < len(self.history)) or not (
-            0 <= index2 < len(self.history)
-        ):
+        if not (0 <= index1 < len(self.history)) or not (0 <= index2 < len(self.history)):
             print("Invalid version indices")
             return
 
@@ -142,41 +138,41 @@ class DocumentHistory(Caretaker):
 
 def demonstrate_document_history() -> None:
     """Demonstrate text document with memento pattern."""
-    
+
     # Create document
     doc = TextDocument("My Essay")
     history = DocumentHistory(doc)
-    
+
     print("=== Text Document with Undo/Redo History ===\n")
-    
+
     # Initial content
     doc.insert_text("The quick brown fox jumps over the lazy dog.")
     history.save_version("Initial draft")
     doc.display()
-    
+
     # Edit 1
     doc.replace_text("quick", "clever")
     history.save_version("Changed adjective")
     doc.display()
-    
+
     # Edit 2
     doc.replace_text("lazy", "sleepy")
     history.save_version("Changed adjective 2")
     doc.display()
-    
+
     # Undo
     print("\n--- Undoing changes ---")
     history.undo()
     doc.display()
-    
+
     # Undo again
     history.undo()
     doc.display()
-    
+
     # Redo
     print("\n--- Redoing changes ---")
     history.redo()
     doc.display()
-    
+
     # Display timeline
     history.display_timeline()

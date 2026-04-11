@@ -1,12 +1,12 @@
 """
 Factory Method Pattern - Structural Implementation.
 
-This module demonstrates the Factory Method pattern using abstract base classes 
-and metaclasses to enforce the pattern's contract. The Factory Method provides 
-a way to create objects without specifying the exact classes that will be 
+This module demonstrates the Factory Method pattern using abstract base classes
+and metaclasses to enforce the pattern's contract. The Factory Method provides
+a way to create objects without specifying the exact classes that will be
 instantiated at compile time.
 
-The pattern delegates object instantiation to factory methods defined in 
+The pattern delegates object instantiation to factory methods defined in
 subclasses, allowing the type of objects created to be determined at runtime.
 """
 
@@ -18,6 +18,7 @@ from typing import Dict, Type, Any, Optional
 
 class TransportType(Enum):
     """Enumeration of supported transport protocols."""
+
     HTTP = "http"
     HTTPS = "https"
     FTP = "ftp"
@@ -27,9 +28,9 @@ class TransportType(Enum):
 class Transport(ABC):
     """
     Abstract Product (Transport Protocol).
-    
+
     Defines the interface that all concrete transports must implement.
-    This ensures that clients can work with any transport type through 
+    This ensures that clients can work with any transport type through
     a common interface.
     """
 
@@ -37,7 +38,7 @@ class Transport(ABC):
     def connect(self) -> str:
         """
         Establish a connection using this transport protocol.
-        
+
         Returns:
             A string describing the connection state.
         """
@@ -47,10 +48,10 @@ class Transport(ABC):
     def send_data(self, data: str) -> str:
         """
         Send data using this transport protocol.
-        
+
         Args:
             data: The payload to transmit.
-            
+
         Returns:
             Confirmation message of the transmission.
         """
@@ -60,7 +61,7 @@ class Transport(ABC):
     def disconnect(self) -> str:
         """
         Close the connection gracefully.
-        
+
         Returns:
             A string describing the disconnection.
         """
@@ -70,7 +71,7 @@ class Transport(ABC):
 class HTTPTransport(Transport):
     """
     Concrete Product: HTTP Transport.
-    
+
     Implements the Transport interface for HTTP (unencrypted) communication.
     """
 
@@ -97,7 +98,7 @@ class HTTPTransport(Transport):
 class HTTPSTransport(Transport):
     """
     Concrete Product: HTTPS Transport.
-    
+
     Implements the Transport interface for HTTPS (encrypted) communication.
     Uses SSL/TLS for secure data transmission.
     """
@@ -110,8 +111,7 @@ class HTTPSTransport(Transport):
         """Establish a secure HTTPS connection with certificate verification."""
         self._connected = True
         return (
-            f"HTTPS connection established on port 443 "
-            f"(secured with {self._ssl_certificate})"
+            f"HTTPS connection established on port 443 " f"(secured with {self._ssl_certificate})"
         )
 
     def send_data(self, data: str) -> str:
@@ -129,8 +129,8 @@ class HTTPSTransport(Transport):
 class FTPTransport(Transport):
     """
     Concrete Product: FTP Transport.
-    
-    Implements the Transport interface for FTP (File Transfer Protocol) 
+
+    Implements the Transport interface for FTP (File Transfer Protocol)
     communication, suitable for bulk file transfers.
     """
 
@@ -158,8 +158,8 @@ class FTPTransport(Transport):
 class WebSocketTransport(Transport):
     """
     Concrete Product: WebSocket Transport.
-    
-    Implements the Transport interface for WebSocket (bi-directional) 
+
+    Implements the Transport interface for WebSocket (bi-directional)
     communication, enabling real-time, low-latency data exchange.
     """
 
@@ -190,11 +190,11 @@ class WebSocketTransport(Transport):
 class TransportFactory(ABC):
     """
     Abstract Creator (Factory).
-    
+
     Declares the factory method that returns a Transport object.
     Subclasses override this method to create specific transport types.
-    
-    This abstraction allows client code to work with factories through 
+
+    This abstraction allows client code to work with factories through
     a common interface, promoting loose coupling between client and concrete types.
     """
 
@@ -202,10 +202,10 @@ class TransportFactory(ABC):
     def create_transport(self) -> Transport:
         """
         Factory method that creates and returns a Transport instance.
-        
+
         Each concrete factory subclass implements this method to produce
         its specific transport type.
-        
+
         Returns:
             A Transport instance (concrete type depends on factory subclass).
         """
@@ -214,14 +214,14 @@ class TransportFactory(ABC):
     def communicate(self, message: str) -> str:
         """
         Template method: Uses the factory method to communicate via transport.
-        
-        This demonstrates how the factory method allows the base class 
-        to defer the creation decision to subclasses while maintaining 
+
+        This demonstrates how the factory method allows the base class
+        to defer the creation decision to subclasses while maintaining
         a common workflow.
-        
+
         Args:
             message: The message to transmit.
-            
+
         Returns:
             A status string describing the communication result.
         """
@@ -235,14 +235,14 @@ class TransportFactory(ABC):
 class HTTPFactory(TransportFactory):
     """
     Concrete Creator: HTTPFactory.
-    
+
     Creates and returns HTTP Transport instances.
     """
 
     def create_transport(self) -> Transport:
         """
         Creates an HTTP transport.
-        
+
         Returns:
             An HTTPTransport instance.
         """
@@ -252,14 +252,14 @@ class HTTPFactory(TransportFactory):
 class HTTPSFactory(TransportFactory):
     """
     Concrete Creator: HTTPSFactory.
-    
+
     Creates and returns HTTPS Transport instances.
     """
 
     def create_transport(self) -> Transport:
         """
         Creates an HTTPS transport with SSL/TLS encryption.
-        
+
         Returns:
             An HTTPSTransport instance.
         """
@@ -269,14 +269,14 @@ class HTTPSFactory(TransportFactory):
 class FTPFactory(TransportFactory):
     """
     Concrete Creator: FTPFactory.
-    
+
     Creates and returns FTP Transport instances.
     """
 
     def create_transport(self) -> Transport:
         """
         Creates an FTP transport for file transfers.
-        
+
         Returns:
             An FTPTransport instance.
         """
@@ -286,14 +286,14 @@ class FTPFactory(TransportFactory):
 class WebSocketFactory(TransportFactory):
     """
     Concrete Creator: WebSocketFactory.
-    
+
     Creates and returns WebSocket Transport instances.
     """
 
     def create_transport(self) -> Transport:
         """
         Creates a WebSocket transport for real-time communication.
-        
+
         Returns:
             A WebSocketTransport instance.
         """
@@ -303,11 +303,11 @@ class WebSocketFactory(TransportFactory):
 class TransportFactoryRegistry:
     """
     Registry Pattern (Enhancement): Manages factory instances.
-    
-    This registry provides a centralized way to create transports without 
-    needing to know the factory class names. It offers flexibility to 
+
+    This registry provides a centralized way to create transports without
+    needing to know the factory class names. It offers flexibility to
     add or modify factory implementations at runtime.
-    
+
     Attributes:
         _factories: Mapping of TransportType enum to factory instances.
     """
@@ -323,13 +323,13 @@ class TransportFactoryRegistry:
     def get_factory(self, transport_type: TransportType) -> TransportFactory:
         """
         Retrieve a factory for the specified transport type.
-        
+
         Args:
             transport_type: The TransportType enum value.
-            
+
         Returns:
             The corresponding TransportFactory instance.
-            
+
         Raises:
             ValueError: If the transport type is not registered.
         """
@@ -337,14 +337,12 @@ class TransportFactoryRegistry:
             raise ValueError(f"Unknown transport type: {transport_type}")
         return self._factories[transport_type]
 
-    def register_factory(
-        self, transport_type: TransportType, factory: TransportFactory
-    ) -> None:
+    def register_factory(self, transport_type: TransportType, factory: TransportFactory) -> None:
         """
         Register a custom factory for a transport type.
-        
+
         This allows runtime customization of transport creation logic.
-        
+
         Args:
             transport_type: The TransportType enum value.
             factory: The TransportFactory instance to register.
@@ -354,10 +352,10 @@ class TransportFactoryRegistry:
     def create_transport(self, transport_type: TransportType) -> Transport:
         """
         Convenient method to create a transport by type.
-        
+
         Args:
             transport_type: The desired TransportType.
-            
+
         Returns:
             A Transport instance of the specified type.
         """

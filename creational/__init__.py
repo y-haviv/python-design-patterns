@@ -17,16 +17,16 @@ This module provides five fundamental creational patterns:
 Usage Examples:
     # Singleton - single instance
     from creational import SingletonMeta
-    
+
     # Factory Method - deferred instantiation
     from creational import TransportFactory
-    
+
     # Abstract Factory - family of products
     from creational import UIFactory
-    
+
     # Builder - complex object construction
     from creational import HTTPRequestBuilder
-    
+
     # Prototype - object cloning
     from creational import PrototypeRegistry, Document
 
@@ -97,7 +97,6 @@ __all__ = [
     # Singleton
     "SingletonMeta",
     "FeatureFlagService",
-    
     # Factory Method
     "Transport",
     "HTTPTransport",
@@ -110,7 +109,6 @@ __all__ = [
     "FTPFactory",
     "WebSocketFactory",
     "TransportFactoryRegistry",
-    
     # Abstract Factory
     "Button",
     "Checkbox",
@@ -120,7 +118,6 @@ __all__ = [
     "DarkUIFactory",
     "HighContrastUIFactory",
     "UIFactoryRegistry",
-    
     # Builder
     "HTTPRequest",
     "HTTPRequestBuilder",
@@ -128,7 +125,6 @@ __all__ = [
     "ComputerBuilder",
     "RequestTemplates",
     "ComputerTemplates",
-    
     # Prototype
     "Cloneable",
     "DocumentSection",

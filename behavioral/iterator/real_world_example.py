@@ -15,6 +15,7 @@ from .pattern import Iterator, Iterable, ConcreteIterable
 @dataclass
 class Book:
     """Represents a book in the collection."""
+
     title: str
     author: str
     year: int
@@ -85,7 +86,7 @@ class FilteredBookIterator(Iterator[Book]):
     def __init__(self, books: List[Book], **criteria) -> None:
         """
         Initialize with books and filter criteria.
-        
+
         Usage:
             iterator = FilteredBookIterator(books, genre="Science Fiction", year=2020)
         """
@@ -143,7 +144,7 @@ class BookCollection(Iterable[Book]):
     def create_filtered_iterator(self, **criteria) -> Iterator[Book]:
         """
         Create a filtered iterator.
-        
+
         Args:
             **criteria: Filtering criteria (genre="Science Fiction", author="Asimov", etc.)
         """
@@ -171,10 +172,10 @@ class BookCollection(Iterable[Book]):
 
 def demonstrate_book_collection() -> None:
     """Demonstrate the book collection iterator in action."""
-    
+
     # Create a collection
     library = BookCollection()
-    
+
     # Add books
     books = [
         Book("Foundation", "Isaac Asimov", 1951, 255, "Science Fiction"),
@@ -184,12 +185,12 @@ def demonstrate_book_collection() -> None:
         Book("1984", "George Orwell", 1949, 328, "Dystopian"),
         Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, 180, "Classic"),
     ]
-    
+
     for book in books:
         library.add_book(book)
-    
+
     print("=== Book Collection Iterator Demo ===\n")
-    
+
     # Forward iteration
     print("All books (forward):")
     iterator = library.create_iterator()
@@ -197,7 +198,7 @@ def demonstrate_book_collection() -> None:
     while iterator.has_next():
         print(f"  {count + 1}. {iterator.next()}")
         count += 1
-    
+
     # Reverse iteration
     print("\nAll books (reverse):")
     reverse_iter = library.create_reverse_iterator()
@@ -205,7 +206,7 @@ def demonstrate_book_collection() -> None:
     while reverse_iter.has_next():
         print(f"  {count + 1}. {reverse_iter.next()}")
         count += 1
-    
+
     # Filtered iteration
     print("\nScience Fiction books:")
     sci_fi_iter = library.create_filtered_iterator(genre="Science Fiction")
@@ -213,13 +214,13 @@ def demonstrate_book_collection() -> None:
     while sci_fi_iter.has_next():
         print(f"  {count + 1}. {sci_fi_iter.next()}")
         count += 1
-    
+
     # Books by author
     print("\nBooks by Isaac Asimov:")
     asimov_books = library.get_books_by_author("Isaac Asimov")
     for i, book in enumerate(asimov_books, 1):
         print(f"  {i}. {book}")
-    
+
     # Statistics
     print(f"\nTotal books: {len(library)}")
     print(f"Science Fiction books: {len(library.get_books_by_genre('Science Fiction'))}")

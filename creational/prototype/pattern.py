@@ -1,8 +1,8 @@
 """
 Prototype Pattern - Structural Implementation.
 
-This module demonstrates the Prototype pattern, which provides a way to create 
-new objects by copying an existing object (the prototype) rather than creating 
+This module demonstrates the Prototype pattern, which provides a way to create
+new objects by copying an existing object (the prototype) rather than creating
 them from scratch.
 
 Key Concepts:
@@ -25,7 +25,6 @@ from typing import List, Dict, Any, Optional, Type
 from datetime import datetime
 from enum import Enum
 
-
 # ============================================================================
 # Prototype Interface & Basic Implementations
 # ============================================================================
@@ -34,7 +33,7 @@ from enum import Enum
 class Cloneable(ABC):
     """
     Prototype Interface: Defines the contract for cloneable objects.
-    
+
     Any class that implements this interface can be used as a prototype.
     """
 
@@ -42,7 +41,7 @@ class Cloneable(ABC):
     def clone(self) -> Cloneable:
         """
         Create a clone of this object.
-        
+
         Returns:
             A copy of this object.
         """
@@ -57,6 +56,7 @@ class Cloneable(ABC):
 @dataclass
 class DocumentSection:
     """Represents a section within a document."""
+
     title: str
     content: str
     page_number: int
@@ -66,7 +66,7 @@ class DocumentSection:
 class Document(Cloneable):
     """
     Prototype: Document.
-    
+
     A complex object that is expensive to create from scratch
     (might involve database queries, file I/O, complex parsing).
     """
@@ -83,10 +83,10 @@ class Document(Cloneable):
     def clone(self) -> Document:
         """
         Clone the document.
-        
+
         Uses deepcopy to ensure nested objects are also copied,
         preventing unintended modifications to the original.
-        
+
         Returns:
             A deep copy of this document.
         """
@@ -123,6 +123,7 @@ class Document(Cloneable):
 
 class CharacterClass(Enum):
     """Game character classes."""
+
     WARRIOR = "Warrior"
     MAGE = "Mage"
     ROGUE = "Rogue"
@@ -133,6 +134,7 @@ class CharacterClass(Enum):
 @dataclass
 class Skill:
     """Represents a character skill."""
+
     name: str
     damage: int
     cooldown: float  # Seconds
@@ -143,7 +145,7 @@ class Skill:
 class GameCharacter(Cloneable):
     """
     Prototype: Game Character.
-    
+
     A complex object representing a game character with equipment,
     skills, and inventory. Creating a new character from scratch
     might require loading from databases or APIs.
@@ -155,23 +157,23 @@ class GameCharacter(Cloneable):
     experience: int = 0
     health: int = 100
     mana: int = 50
-    
+
     # Equipment
     main_weapon: str = "Iron Sword"
     armor_type: str = "Leather Armor"
-    
+
     # Skills
     skills: List[Skill] = field(default_factory=list)
-    
+
     # Inventory
     inventory: Dict[str, int] = field(default_factory=dict)  # item: quantity
-    
+
     # Stats
     strength: int = 10
     agility: int = 10
     intelligence: int = 10
     wisdom: int = 10
-    
+
     # Progress
     quests_completed: int = 0
     achievements: List[str] = field(default_factory=list)
@@ -179,10 +181,10 @@ class GameCharacter(Cloneable):
     def clone(self) -> GameCharacter:
         """
         Clone the character.
-        
+
         Creates a new character with the same equipment, skills, and stats.
         Useful for creating character variants or templates.
-        
+
         Returns:
             A deep copy of this character.
         """
@@ -233,6 +235,7 @@ class GameCharacter(Cloneable):
 
 class UIComponentType(Enum):
     """Types of UI components."""
+
     BUTTON = "Button"
     TEXT_INPUT = "TextInput"
     CHECKBOX = "Checkbox"
@@ -243,6 +246,7 @@ class UIComponentType(Enum):
 @dataclass
 class UIStyle:
     """Styling for UI components."""
+
     background_color: str = "#FFFFFF"
     text_color: str = "#000000"
     border_color: str = "#CCCCCC"
@@ -257,7 +261,7 @@ class UIStyle:
 class UIComponent(Cloneable):
     """
     Prototype: UI Component.
-    
+
     Represents a reusable UI component that can be cloned to create
     new instances with similar styling and configuration.
     """
@@ -269,21 +273,21 @@ class UIComponent(Cloneable):
     height: int = 30
     x_position: int = 0
     y_position: int = 0
-    
+
     style: UIStyle = field(default_factory=UIStyle)
     is_enabled: bool = True
     is_visible: bool = True
-    
+
     # Component-specific properties
     properties: Dict[str, Any] = field(default_factory=dict)
-    
+
     # Event handlers
     handlers: Dict[str, str] = field(default_factory=dict)  # event: handler_name
 
     def clone(self) -> UIComponent:
         """
         Clone the UI component with its styling and configuration.
-        
+
         Returns:
             A deep copy of this component.
         """
@@ -331,11 +335,11 @@ class UIComponent(Cloneable):
 class PrototypeRegistry:
     """
     Registry Pattern Enhancement: Manages prototype instances.
-    
+
     Stores prototypes and allows easy access for cloning.
     This is particularly useful when you have many prototypes
     and need to manage them centrally.
-    
+
     Example use case:
     - Game engine storing character templates
     - UI framework storing component templates
@@ -349,7 +353,7 @@ class PrototypeRegistry:
     def register(self, name: str, prototype: Cloneable) -> None:
         """
         Register a prototype with a name.
-        
+
         Args:
             name: Identifier for the prototype.
             prototype: The prototype object to register.
@@ -359,10 +363,10 @@ class PrototypeRegistry:
     def get(self, name: str) -> Optional[Cloneable]:
         """
         Retrieve a registered prototype by name.
-        
+
         Args:
             name: The prototype identifier.
-            
+
         Returns:
             The registered prototype or None if not found.
         """
@@ -371,10 +375,10 @@ class PrototypeRegistry:
     def clone(self, name: str) -> Optional[Cloneable]:
         """
         Clone a registered prototype.
-        
+
         Args:
             name: The prototype identifier.
-            
+
         Returns:
             A clone of the registered prototype, or None if not found.
         """
@@ -386,7 +390,7 @@ class PrototypeRegistry:
     def unregister(self, name: str) -> None:
         """
         Unregister a prototype.
-        
+
         Args:
             name: The prototype identifier to remove.
         """
@@ -396,7 +400,7 @@ class PrototypeRegistry:
     def list_prototypes(self) -> List[str]:
         """
         Get a list of all registered prototype names.
-        
+
         Returns:
             List of prototype identifiers.
         """
@@ -415,7 +419,7 @@ class PrototypeRegistry:
 class DocumentTemplateRegistry(PrototypeRegistry):
     """
     Specialized Registry: For managing document templates.
-    
+
     Provides convenient methods for registering and accessing
     document prototypes.
     """
@@ -427,10 +431,10 @@ class DocumentTemplateRegistry(PrototypeRegistry):
     def create_from_template(self, template_name: str) -> Optional[Document]:
         """
         Create a new document from a registered template.
-        
+
         Args:
             template_name: The name of the template to use.
-            
+
         Returns:
             A new document cloned from the template.
         """
@@ -449,7 +453,7 @@ class DocumentTemplateRegistry(PrototypeRegistry):
 class CharacterTemplateRegistry(PrototypeRegistry):
     """
     Specialized Registry: For managing game character templates.
-    
+
     Provides convenient methods for creating character instances from templates.
     """
 
@@ -457,13 +461,15 @@ class CharacterTemplateRegistry(PrototypeRegistry):
         """Register a character template for a specific class."""
         self.register(class_name.value.lower(), template)
 
-    def create_character_from_class(self, character_class: CharacterClass) -> Optional[GameCharacter]:
+    def create_character_from_class(
+        self, character_class: CharacterClass
+    ) -> Optional[GameCharacter]:
         """
         Create a new character instance from a class template.
-        
+
         Args:
             character_class: The character class.
-            
+
         Returns:
             A new character cloned from the template.
         """
@@ -486,7 +492,7 @@ class CharacterTemplateRegistry(PrototypeRegistry):
 def create_document_templates() -> DocumentTemplateRegistry:
     """
     Factory function: Create and populate a document template registry.
-    
+
     Returns:
         A DocumentTemplateRegistry with pre-defined templates.
     """
@@ -494,30 +500,19 @@ def create_document_templates() -> DocumentTemplateRegistry:
 
     # Report template
     report_template = Document(
-        title="Annual Report",
-        author="Company",
-        content="",
-        tags=["report", "official"]
+        title="Annual Report", author="Company", content="", tags=["report", "official"]
     )
     report_template.set_metadata("confidential", True)
     report_template.set_metadata("retention_years", 7)
     registry.register_template("annual_report", report_template)
 
     # Memo template
-    memo_template = Document(
-        title="MEMO",
-        author="Management",
-        tags=["memo", "internal"]
-    )
+    memo_template = Document(title="MEMO", author="Management", tags=["memo", "internal"])
     memo_template.set_metadata("type", "internal_communication")
     registry.register_template("memo", memo_template)
 
     # Letter template
-    letter_template = Document(
-        title="Letter",
-        author="Company",
-        tags=["letter", "formal"]
-    )
+    letter_template = Document(title="Letter", author="Company", tags=["letter", "formal"])
     letter_template.set_metadata("requires_signature", True)
     registry.register_template("formal_letter", letter_template)
 
@@ -527,7 +522,7 @@ def create_document_templates() -> DocumentTemplateRegistry:
 def create_character_templates() -> CharacterTemplateRegistry:
     """
     Factory function: Create and populate a character template registry.
-    
+
     Returns:
         A CharacterTemplateRegistry with pre-defined class templates.
     """
@@ -544,7 +539,7 @@ def create_character_templates() -> CharacterTemplateRegistry:
         intelligence=6,
         wisdom=10,
         main_weapon="Great Sword",
-        armor_type="Plate Armor"
+        armor_type="Plate Armor",
     )
     warrior.add_skill(Skill("Slash", damage=30, cooldown=1.5, mana_cost=10))
     warrior.add_skill(Skill("Shield Bash", damage=20, cooldown=2.0, mana_cost=15))
@@ -561,7 +556,7 @@ def create_character_templates() -> CharacterTemplateRegistry:
         intelligence=16,
         wisdom=13,
         main_weapon="Staff",
-        armor_type="Cloth Armor"
+        armor_type="Cloth Armor",
     )
     mage.add_skill(Skill("Fireball", damage=40, cooldown=2.0, mana_cost=40))
     mage.add_skill(Skill("Frost Bolt", damage=35, cooldown=1.8, mana_cost=35))
@@ -578,7 +573,7 @@ def create_character_templates() -> CharacterTemplateRegistry:
         intelligence=9,
         wisdom=8,
         main_weapon="Dagger",
-        armor_type="Leather Armor"
+        armor_type="Leather Armor",
     )
     rogue.add_skill(Skill("Backstab", damage=45, cooldown=2.0, mana_cost=30))
     rogue.add_skill(Skill("Evasion", damage=0, cooldown=1.0, mana_cost=20))
@@ -590,7 +585,7 @@ def create_character_templates() -> CharacterTemplateRegistry:
 def create_ui_component_templates() -> PrototypeRegistry:
     """
     Factory function: Create and populate a UI component template registry.
-    
+
     Returns:
         A PrototypeRegistry with pre-defined UI component templates.
     """
@@ -608,8 +603,8 @@ def create_ui_component_templates() -> PrototypeRegistry:
             text_color="#FFFFFF",
             border_color="#004488",
             border_width=2,
-            font_size=14
-        )
+            font_size=14,
+        ),
     )
     primary_button.bind_handler("click", "on_button_click")
     registry.register("primary_button", primary_button)
@@ -626,8 +621,8 @@ def create_ui_component_templates() -> PrototypeRegistry:
             text_color="#000000",
             border_color="#AAAAAA",
             border_width=1,
-            font_size=12
-        )
+            font_size=12,
+        ),
     )
     text_input.set_property("placeholder", "Enter your input here...")
     registry.register("text_input", text_input)
@@ -639,11 +634,7 @@ def create_ui_component_templates() -> PrototypeRegistry:
         label="I agree",
         width=20,
         height=20,
-        style=UIStyle(
-            background_color="#FFFFFF",
-            border_color="#666666",
-            border_width=1
-        )
+        style=UIStyle(background_color="#FFFFFF", border_color="#666666", border_width=1),
     )
     checkbox.set_property("checked", False)
     registry.register("checkbox", checkbox)

@@ -411,4 +411,3 @@ class TestPaymentSystem:
 
         with pytest.raises(RuntimeError):
             system.process_order_payment("order_7", 100.0, "customer_7", "Test")
-

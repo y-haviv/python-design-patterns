@@ -21,7 +21,7 @@ from datetime import datetime
 class Visitor(ABC):
     """
     Abstract visitor that declares visit methods for each element type.
-    
+
     Visitors define operations to be performed on elements of a structure
     without changing the element classes.
     """
@@ -45,7 +45,7 @@ class Visitor(ABC):
 class Element(ABC):
     """
     Abstract element that accepts visitors.
-    
+
     Elements define an accept method that allows visitors to operate
     on them without the element knowing about the specific operations.
     """
@@ -67,7 +67,7 @@ class ConcreteElementA(Element):
     def __init__(self, name: str, value: str) -> None:
         """
         Initialize element A.
-        
+
         Args:
             name: Element name.
             value: Element value.
@@ -94,7 +94,7 @@ class ConcreteElementB(Element):
     def __init__(self, name: str, count: int) -> None:
         """
         Initialize element B.
-        
+
         Args:
             name: Element name.
             count: Element count.
@@ -128,12 +128,14 @@ class ConcreteVisitorA(Visitor):
         result = f"[VisitorA] Processing ElementA: {element.operation_a()}"
         print(f"  {result}")
         self.results.append(result)
-        self.visit_log.append({
-            "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
-            "element_type": "ConcreteElementA",
-            "element_name": element.get_name(),
-            "operation": element.operation_a(),
-        })
+        self.visit_log.append(
+            {
+                "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
+                "element_type": "ConcreteElementA",
+                "element_name": element.get_name(),
+                "operation": element.operation_a(),
+            }
+        )
         return result
 
     def visit_element_b(self, element: ConcreteElementB) -> Any:
@@ -141,12 +143,14 @@ class ConcreteVisitorA(Visitor):
         result = f"[VisitorA] Processing ElementB: {element.operation_b()}"
         print(f"  {result}")
         self.results.append(result)
-        self.visit_log.append({
-            "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
-            "element_type": "ConcreteElementB",
-            "element_name": element.get_name(),
-            "operation": element.operation_b(),
-        })
+        self.visit_log.append(
+            {
+                "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
+                "element_type": "ConcreteElementB",
+                "element_name": element.get_name(),
+                "operation": element.operation_b(),
+            }
+        )
         return result
 
     def get_name(self) -> str:
@@ -177,12 +181,14 @@ class ConcreteVisitorB(Visitor):
         result = f"[VisitorB] ElementA length: {len(element.value)} chars"
         print(f"  {result}")
         self.results.append(result)
-        self.visit_log.append({
-            "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
-            "element_type": "ConcreteElementA",
-            "element_name": element.get_name(),
-            "analysis": f"Length: {len(element.value)}",
-        })
+        self.visit_log.append(
+            {
+                "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
+                "element_type": "ConcreteElementA",
+                "element_name": element.get_name(),
+                "analysis": f"Length: {len(element.value)}",
+            }
+        )
         return result
 
     def visit_element_b(self, element: ConcreteElementB) -> Any:
@@ -191,12 +197,14 @@ class ConcreteVisitorB(Visitor):
         result = f"[VisitorB] ElementB sum: {element.count * 2}"
         print(f"  {result}")
         self.results.append(result)
-        self.visit_log.append({
-            "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
-            "element_type": "ConcreteElementB",
-            "element_name": element.get_name(),
-            "analysis": f"Sum: {element.count * 2}",
-        })
+        self.visit_log.append(
+            {
+                "timestamp": datetime.now().strftime("%H:%M:%S.%f")[:-3],
+                "element_type": "ConcreteElementB",
+                "element_name": element.get_name(),
+                "analysis": f"Sum: {element.count * 2}",
+            }
+        )
         return result
 
     def get_name(self) -> str:

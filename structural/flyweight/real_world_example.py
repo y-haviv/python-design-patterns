@@ -53,4 +53,3 @@ class TextRenderer:
         for text, font, x, y in self.text_data:
             result.append(f"At ({x},{y}): {font.render_character(text[0])}")
         return result
-

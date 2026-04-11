@@ -151,21 +151,14 @@ class OrderFacade:
         self._payment.authorize(amount)
         self._inventory.reserve(item_id, 1)
 
-        return {
-            "status": "confirmed",
-            "email": customer_email,
-            "amount": amount
-        }
+        return {"status": "confirmed", "email": customer_email, "amount": amount}
 
     def cancel_order(self, order_id: str, item_id: str, amount: float, customer_email: str) -> Dict:
         """Cancel an order - handles all subsystems."""
         self._inventory.release(item_id, 1)
         self._payment.refund(order_id)
-        self._notification.send_email(customer_email, f"Order {order_id} cancelled. Refunded: ${amount}")
+        self._notification.send_email(
+            customer_email, f"Order {order_id} cancelled. Refunded: ${amount}"
+        )
 
-        return {
-            "status": "cancelled",
-            "refunded_amount": amount
-        }
-
-
+        return {"status": "cancelled", "refunded_amount": amount}

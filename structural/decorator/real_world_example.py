@@ -94,5 +94,3 @@ class BufferedStreamDecorator(StreamDecorator):
     def read(self) -> str:
         self.flush()
         return super().read()
-
-

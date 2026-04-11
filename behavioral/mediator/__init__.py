@@ -13,7 +13,6 @@ from .pattern import (
     ConcreteColleague,
 )
 from .real_world_example import (
-    ChatRoom,
     User,
     ChatMediator,
 )
@@ -23,7 +22,6 @@ __all__ = [
     "Colleague",
     "ConcreteMediator",
     "ConcreteColleague",
-    "ChatRoom",
     "User",
     "ChatMediator",
 ]

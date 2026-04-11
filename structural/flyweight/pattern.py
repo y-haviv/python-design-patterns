@@ -129,7 +129,7 @@ class Image:
 
     def _load_image(self) -> bytes:
         """Simulate loading image (expensive)."""
-        return bytes(f"Image:{self.file_path}", 'utf-8')
+        return bytes(f"Image:{self.file_path}", "utf-8")
 
     def get_info(self) -> str:
         return f"Image: {self.file_path} ({self.width}x{self.height})"
@@ -209,5 +209,3 @@ class ParticleFactory:
     @classmethod
     def get_count(cls) -> int:
         return len(cls.particles)
-
-

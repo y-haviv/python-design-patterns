@@ -39,7 +39,7 @@ class TestConcreteIterator:
         collection = ConcreteIterable()
         collection.add_item(1)
         collection.add_item(2)
-        
+
         iterator = collection.create_iterator()
         assert iterator.has_next() is True
 
@@ -48,13 +48,13 @@ class TestConcreteIterator:
         collection = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
-        
+
         iterator = collection.create_iterator()
         results = []
-        
+
         while iterator.has_next():
             results.append(iterator.next())
-        
+
         assert results == [1, 2, 3, 4, 5]
 
     def test_has_next_at_end(self) -> None:
@@ -62,21 +62,21 @@ class TestConcreteIterator:
         collection = ConcreteIterable()
         collection.add_item("a")
         collection.add_item("b")
-        
+
         iterator = collection.create_iterator()
         iterator.next()
         iterator.next()
-        
+
         assert iterator.has_next() is False
 
     def test_iterator_stop_iteration(self) -> None:
         """Verify StopIteration is raised when no more elements."""
         collection = ConcreteIterable()
         collection.add_item(1)
-        
+
         iterator = collection.create_iterator()
         iterator.next()
-        
+
         with pytest.raises(StopIteration):
             iterator.next()
 
@@ -85,15 +85,15 @@ class TestConcreteIterator:
         collection = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
-        
+
         iterator = collection.create_iterator()
-        
+
         # Iterate through all
         while iterator.has_next():
             iterator.next()
-        
+
         assert iterator.has_next() is False
-        
+
         # Reset
         iterator.reset()
         assert iterator.has_next() is True
@@ -108,13 +108,13 @@ class TestReverseIterator:
         collection = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
-        
+
         iterator = collection.create_reverse_iterator()
         results = []
-        
+
         while iterator.has_next():
             results.append(iterator.next())
-        
+
         assert results == [5, 4, 3, 2, 1]
 
     def test_reverse_iterator_reset(self) -> None:
@@ -122,11 +122,11 @@ class TestReverseIterator:
         collection = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
-        
+
         iterator = collection.create_reverse_iterator()
         iterator.next()
         iterator.next()
-        
+
         iterator.reset()
         assert iterator.next() == 3
 
@@ -139,16 +139,14 @@ class TestFilteredIterator:
         collection = ConcreteIterable()
         for i in range(1, 11):
             collection.add_item(i)
-        
+
         # Filter for even numbers
-        iterator = collection.create_filtered_iterator(
-            predicate=lambda x: x % 2 == 0
-        )
-        
+        iterator = collection.create_filtered_iterator(predicate=lambda x: x % 2 == 0)
+
         results = []
         while iterator.has_next():
             results.append(iterator.next())
-        
+
         assert results == [2, 4, 6, 8, 10]
 
     def test_filtered_iterator_no_matches(self) -> None:
@@ -156,12 +154,10 @@ class TestFilteredIterator:
         collection = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
-        
+
         # Filter for values > 100
-        iterator = collection.create_filtered_iterator(
-            predicate=lambda x: x > 100
-        )
-        
+        iterator = collection.create_filtered_iterator(predicate=lambda x: x > 100)
+
         assert iterator.has_next() is False
 
     def test_filtered_iterator_reset(self) -> None:
@@ -169,24 +165,22 @@ class TestFilteredIterator:
         collection = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
-        
-        iterator = collection.create_filtered_iterator(
-            predicate=lambda x: x % 2 == 0
-        )
-        
+
+        iterator = collection.create_filtered_iterator(predicate=lambda x: x % 2 == 0)
+
         # First pass
         results = []
         while iterator.has_next():
             results.append(iterator.next())
-        
+
         assert results == [2, 4]
-        
+
         # Reset and do it again
         iterator.reset()
         results = []
         while iterator.has_next():
             results.append(iterator.next())
-        
+
         assert results == [2, 4]
 
 
@@ -198,9 +192,9 @@ class TestBidirectionalIterator:
         collection = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
-        
+
         iterator = BidirectionalIterator(collection)
-        
+
         assert iterator.next() == 1
         assert iterator.next() == 2
         assert iterator.has_next() is True
@@ -210,11 +204,11 @@ class TestBidirectionalIterator:
         collection = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
-        
+
         iterator = BidirectionalIterator(collection)
         iterator.next()
         iterator.next()
-        
+
         assert iterator.previous() == 2
         assert iterator.previous() == 1
 
@@ -223,10 +217,10 @@ class TestBidirectionalIterator:
         collection = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
-        
+
         iterator = BidirectionalIterator(collection)
         iterator.go_to_end()
-        
+
         assert iterator.next() == 3
 
     def test_bidirectional_get_index(self) -> None:
@@ -234,9 +228,9 @@ class TestBidirectionalIterator:
         collection = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
-        
+
         iterator = BidirectionalIterator(collection)
-        
+
         assert iterator.get_index() == 0
         iterator.next()
         assert iterator.get_index() == 1
@@ -248,18 +242,19 @@ class TestLazyIterator:
     def test_lazy_iterator_finite(self) -> None:
         """Verify lazy iterator with finite sequence."""
         # Generate squares: 0, 1, 4, 9, 16
-        iterator = LazyIterator(lambda i: i ** 2, size=5)
-        
+        iterator = LazyIterator(lambda i: i**2, size=5)
+
         results = []
         while iterator.has_next():
             results.append(iterator.next())
-        
+
         assert results == [0, 1, 4, 9, 16]
 
     def test_lazy_iterator_infinite(self) -> None:
         """Verify lazy iterator with infinite sequence."""
         # Fibonacci sequence
         fib_cache = {}
+
         def fib(n):
             if n <= 1:
                 return n
@@ -267,34 +262,34 @@ class TestLazyIterator:
                 return fib_cache[n]
             fib_cache[n] = fib(n - 1) + fib(n - 2)
             return fib_cache[n]
-        
+
         iterator = LazyIterator(fib, size=None)
-        
+
         # Generate first 10 fibonacci numbers
         results = []
         for _ in range(10):
             if iterator.has_next():
                 results.append(iterator.next())
-        
+
         assert len(results) == 10
 
     def test_lazy_iterator_reset(self) -> None:
         """Verify lazy iterator reset."""
         iterator = LazyIterator(lambda i: i * 2, size=3)
-        
+
         # First pass
         results1 = []
         while iterator.has_next():
             results1.append(iterator.next())
-        
+
         # Reset
         iterator.reset()
-        
+
         # Second pass
         results2 = []
         while iterator.has_next():
             results2.append(iterator.next())
-        
+
         assert results1 == results2 == [0, 2, 4]
 
 
@@ -306,10 +301,10 @@ class TestMultipleSimultaneousIterators:
         collection = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
-        
+
         iter1 = collection.create_iterator()
         iter2 = collection.create_iterator()
-        
+
         assert iter1.next() == 1
         assert iter2.next() == 1
         assert iter1.next() == 2
@@ -337,31 +332,31 @@ class TestBookCollectionExample:
         while iterator.has_next():
             iterator.next()
             count += 1
-        
+
         assert count == 5
 
     def test_book_reverse_iteration(self, library: BookCollection) -> None:
         """Verify reverse iteration through books."""
         iterator = library.create_reverse_iterator()
         first_book = iterator.next()
-        
+
         assert first_book.title == "The Great Gatsby"
 
     def test_book_filtered_iteration(self, library: BookCollection) -> None:
         """Verify filtering books by genre."""
         iterator = library.create_filtered_iterator(genre="Science Fiction")
-        
+
         results = []
         while iterator.has_next():
             results.append(iterator.next())
-        
+
         assert len(results) == 3
         assert all(b.genre == "Science Fiction" for b in results)
 
     def test_get_books_by_author(self, library: BookCollection) -> None:
         """Verify getting books by author."""
         asimov_books = library.get_books_by_author("Isaac Asimov")
-        
+
         assert len(asimov_books) == 2
         assert all(b.author == "Isaac Asimov" for b in asimov_books)
 
