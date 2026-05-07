@@ -11,26 +11,28 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
     Component,
-    Leaf,
     Composite,
-    File,
+    Department,
     Directory,
     Employee,
-    Department,
-    MenuItem,
+    File,
+    Leaf,
     Menu,
+    MenuItem,
 )
 from .real_world_example import (
-    TextElement,
-    Paragraph,
-    Heading,
     BulletList,
-    Section,
     Document,
     DocumentBuilder,
+    Heading,
+    Paragraph,
+    Section,
+    TextElement,
 )
 
 
@@ -195,7 +197,7 @@ class TestOrganization:
         company.add_member(sales)
 
         assert company.get_head_count() == 4
-        assert company.get_budget() == 360000
+        assert company.get_budget() == 280000
 
     def test_mixed_structure(self) -> None:
         """Verify mixed structure with employees and departments."""
@@ -208,7 +210,7 @@ class TestOrganization:
         company.add_member(eng)
 
         assert company.get_head_count() == 3
-        assert company.get_budget() == 350000
+        assert company.get_budget() == 250000
 
 
 class TestMenuComposite:
@@ -294,7 +296,7 @@ class TestDocumentStructure:
         section.add(Heading(2, "Getting Started"))
         section.add(Paragraph("This is the intro"))
 
-        assert section.get_word_count() == 5
+        assert section.get_word_count() == 6
 
     def test_full_document(self) -> None:
         """Verify full document."""

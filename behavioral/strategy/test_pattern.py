@@ -10,19 +10,21 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    Strategy,
-    Context,
     ConcreteStrategyA,
     ConcreteStrategyB,
     ConcreteStrategyC,
+    Context,
+    Strategy,
 )
 from .real_world_example import (
-    PaymentProcessor,
     CreditCardStrategy,
-    PayPalStrategy,
     CryptocurrencyStrategy,
+    PaymentProcessor,
+    PayPalStrategy,
     ShoppingCart,
 )
 
@@ -138,7 +140,7 @@ class TestPaymentStrategies:
 
     def test_credit_card_validation(self) -> None:
         """Verify credit card validation."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
 
         assert card.validate_payment_details() is True
 
@@ -156,7 +158,7 @@ class TestPaymentStrategies:
 
     def test_credit_card_payment(self) -> None:
         """Verify credit card payment processing."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
 
         result = card.process_payment(100.0)
 
@@ -240,7 +242,7 @@ class TestPaymentStrategies:
 
     def test_payment_processor_with_credit_card(self) -> None:
         """Verify payment processor with credit card."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
         processor = PaymentProcessor(card)
 
         result = processor.pay(100.0)
@@ -250,7 +252,7 @@ class TestPaymentStrategies:
 
     def test_payment_processor_switch_method(self) -> None:
         """Verify switching payment methods."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
         paypal = PayPalStrategy("user@example.com", "password123")
 
         processor = PaymentProcessor(card)
@@ -303,7 +305,7 @@ class TestPaymentStrategies:
         cart = ShoppingCart()
         cart.add_item("Widget", 10.0, 1)
 
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
         cart.set_payment_method(card)
 
         result = cart.checkout()

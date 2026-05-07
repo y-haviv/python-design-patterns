@@ -7,10 +7,12 @@ depending on the operations performed on it.
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any
 from datetime import datetime
-from .pattern import State, Context
+from typing import Any, Dict, List, Optional
+
+from .pattern import Context, State
 
 
 class TCPState(State):

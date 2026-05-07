@@ -1,7 +1,7 @@
 """Proxy Real-World Example: Remote Service Proxy."""
 
-from typing import Any, List
 from datetime import datetime
+from typing import Any, List
 
 
 class RemoteService:

@@ -1,7 +1,7 @@
 """Proxy Pattern Implementation (Structural)."""
 
-from typing import Any, Optional
 from abc import ABC, abstractmethod
+from typing import Any, Optional
 
 
 class Subject(ABC):

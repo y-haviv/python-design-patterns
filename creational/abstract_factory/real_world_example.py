@@ -10,10 +10,11 @@ This is a common pattern in ORMs like SQLAlchemy and database abstraction layers
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any, Dict, List, Optional
 
 
 class DatabaseEngine(Enum):

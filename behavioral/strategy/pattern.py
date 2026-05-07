@@ -11,9 +11,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, Optional, List, Dict
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 
 class Strategy(ABC):
@@ -230,4 +231,4 @@ class ConcreteStrategyC(Strategy):
 
     def describe(self) -> str:
         """Get strategy description."""
-        return "Removes duplicates or takes absolute value"
+        return "Uses Unique values for sequences or absolute value for numbers"

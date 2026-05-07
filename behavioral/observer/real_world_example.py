@@ -6,9 +6,11 @@ in stock prices without the stock needing to know about them directly.
 """
 
 from __future__ import annotations
-from typing import List, Dict, Optional, Any
+
 from datetime import datetime
-from .pattern import Subject, Observer
+from typing import Any, Dict, List, Optional
+
+from .pattern import Observer, Subject
 
 
 class Stock(Subject):
@@ -101,6 +103,10 @@ class Stock(Subject):
     def get_state(self) -> float:
         """Get the current state (price) of the stock."""
         return self._price
+
+    def get_observer_count(self) -> int:
+        """Get number of investors observing this stock."""
+        return len(self._observers)
 
     def notify(self, **kwargs) -> None:
         """Notify all investors about the price change."""
@@ -258,19 +264,11 @@ class Investor(Observer):
         new_price = kwargs.get("new_price")
         change_percent = kwargs.get("change_percent", 0)
 
-        # Simple trading strategy: buy on dips, sell on rallies
+        # Simple trading strategy: buy on dips
         if "quantity" in self.portfolio.get(stock.symbol, {}):
-            holding_quantity = self.portfolio[stock.symbol]["quantity"]
-
             if change_percent < -2:  # Price dropped more than 2%
                 # Buying opportunity - buy 10 shares
                 self.buy(stock, 10, new_price)
-            elif change_percent > 5:  # Price increased more than 5%
-                # Selling opportunity - sell 25% of holdings
-                if holding_quantity > 0:
-                    sell_quantity = int(holding_quantity * 0.25)
-                    if sell_quantity > 0:
-                        self.sell(stock, sell_quantity, new_price)
         else:
             # Don't hold shares yet
             if change_percent < -3:  # Significant dip

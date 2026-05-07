@@ -10,19 +10,21 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    State,
-    Context,
     ConcreteStateA,
     ConcreteStateB,
     ConcreteStateC,
+    Context,
+    State,
 )
 from .real_world_example import (
-    TCPConnection,
     TCPClosed,
-    TCPListen,
+    TCPConnection,
     TCPEstablished,
+    TCPListen,
 )
 
 

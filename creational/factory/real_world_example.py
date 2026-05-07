@@ -7,10 +7,11 @@ Method pattern abstracts away these differences from the client code.
 """
 
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional, List
-from enum import Enum
+
 import json
+from abc import ABC, abstractmethod
+from enum import Enum
+from typing import Any, Dict, List, Optional
 
 
 class APIService(ABC):

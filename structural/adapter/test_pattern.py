@@ -10,24 +10,26 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    Target,
     Adaptee,
     Adapter,
-    TwoWayAdapter,
+    AdapterRegistry,
+    AdapterWithValidation,
     LegacySystem,
     LegacySystemAdapter,
-    AdapterWithValidation,
-    AdapterRegistry,
+    Target,
+    TwoWayAdapter,
 )
 from .real_world_example import (
     PaymentProcessor,
-    StripePaymentGateway,
+    PaymentSystem,
+    PayPalAdapter,
     PayPalPaymentGateway,
     StripeAdapter,
-    PayPalAdapter,
-    PaymentSystem,
+    StripePaymentGateway,
 )
 
 

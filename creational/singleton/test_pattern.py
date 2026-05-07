@@ -9,9 +9,12 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import threading
 from typing import List
+
 import pytest
+
 from .pattern import AppSettings, reset_singletons
 from .real_world_example import FeatureFlagService
 

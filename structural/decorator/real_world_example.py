@@ -1,7 +1,7 @@
 """Real-World Decorator Example: Advanced I/O Stream Wrapper System."""
 
-from typing import Optional, List
 import json
+from typing import List, Optional
 
 
 class Stream:

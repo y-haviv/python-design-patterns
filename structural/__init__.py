@@ -43,151 +43,155 @@ See README.md for comprehensive comparison and best practices.
 
 # Adapter Pattern
 from .adapter.pattern import (
-    Target,
     Adaptee,
     Adapter,
-    TwoWayAdapter,
+    AdapterRegistry,
+    AdapterWithValidation,
     LegacySystem,
     LegacySystemAdapter,
-    AdapterWithValidation,
-    AdapterRegistry,
+    Target,
+    TwoWayAdapter,
 )
 from .adapter.real_world_example import (
     PaymentProcessor,
-    StripePaymentGateway,
+    PaymentSystem,
+    PayPalAdapter,
     PayPalPaymentGateway,
     StripeAdapter,
-    PayPalAdapter,
-    PaymentSystem,
+    StripePaymentGateway,
 )
 
 # Bridge Pattern
 from .bridge.pattern import (
-    Implementor,
+    SVGAPI,
+)
+from .bridge.pattern import Abstraction as BridgeAbstraction
+from .bridge.pattern import (
+    CanvasAPI,
+    Circle,
     ConcreteImplementorA,
     ConcreteImplementorB,
-    Abstraction as BridgeAbstraction,
-    RefinedAbstraction,
     DrawingAPI,
-    CanvasAPI,
-    SVGAPI,
-    Shape,
-    Circle,
-    Rectangle,
+    Implementor,
     Line,
+    Rectangle,
+    RefinedAbstraction,
+    Shape,
     ShapeComposer,
 )
 from .bridge.real_world_example import (
-    CommunicationBridge,
-    WiFiBridge,
     BluetoothBridge,
+    CommunicationBridge,
     InfraredBridge,
-    RemoteControl,
-    TVRemote,
-    StereoRemote,
     ProjectorRemote,
+    RemoteControl,
     RemoteControlFactory,
+    StereoRemote,
+    TVRemote,
+    WiFiBridge,
 )
 
 # Composite Pattern
 from .composite.pattern import (
     Component,
-    Leaf,
     Composite,
-    FileSystemComponent,
-    File,
-    Directory,
-    OrganizationComponent,
-    Employee,
     Department,
+    Directory,
+    Employee,
+    File,
+    FileSystemComponent,
+    Leaf,
+    Menu,
     MenuComponent,
     MenuItem,
-    Menu,
+    OrganizationComponent,
 )
 from .composite.real_world_example import (
-    TextElement,
-    Paragraph,
-    Heading,
     BulletList,
-    Section,
     Document,
     DocumentBuilder,
+    Heading,
+    Paragraph,
+    Section,
+    TextElement,
 )
 
 # Decorator Pattern
 from .decorator.pattern import (
-    Component as DecoratorComponent,
+    BorderDecorator,
+    Coffee,
+    CoffeeBuilder,
+    CoffeeDecorator,
+)
+from .decorator.pattern import Component as DecoratorComponent
+from .decorator.pattern import (
+    CompressionDecorator,
     ConcreteComponent,
-    Decorator,
     ConcreteDecoratorA,
     ConcreteDecoratorB,
     DataSource,
-    FileDataSource,
     DataSourceDecorator,
+    Decorator,
     EncryptionDecorator,
-    CompressionDecorator,
+    FileDataSource,
     LoggingDecorator,
-    Coffee,
-    SimpleCoffee,
-    CoffeeDecorator,
     MilkDecorator,
-    SugarDecorator,
-    WhippedCreamDecorator,
-    VanillaDecorator,
-    CoffeeBuilder,
-    Widget,
-    SimpleWidget,
-    WidgetDecorator,
-    BorderDecorator,
     ScrollDecorator,
     ShadowDecorator,
+    SimpleCoffee,
+    SimpleWidget,
+    SugarDecorator,
+    VanillaDecorator,
+    WhippedCreamDecorator,
+    Widget,
+    WidgetDecorator,
 )
 from .decorator.real_world_example import (
-    Stream,
-    FileStream,
-    StreamDecorator,
+    BufferedStreamDecorator,
     CompressionStreamDecorator,
     EncryptionStreamDecorator,
-    BufferedStreamDecorator,
+    FileStream,
+    Stream,
+    StreamDecorator,
 )
 
 # Facade Pattern
 from .facade.pattern import (
+    CacheManager,
+    DatabaseConnection,
+    Facade,
+    InventoryService,
+    LogManager,
+    NotificationService,
+    OrderFacade,
+    PaymentGateway,
+    RepositoryFacade,
     Subsystem1,
     Subsystem2,
-    Facade,
-    DatabaseConnection,
-    CacheManager,
-    LogManager,
-    RepositoryFacade,
-    PaymentGateway,
-    NotificationService,
-    InventoryService,
-    OrderFacade,
 )
 from .facade.real_world_example import (
     CPU,
-    Memory,
-    HardDrive,
     ComputerFacade,
+    HardDrive,
+    Memory,
 )
 
 # Flyweight Pattern
 from .flyweight.pattern import (
+    Character,
+    CharacterStyle,
+    CharacterStyleFactory,
     Flyweight,
     FlyweightFactory,
-    TreeType,
+    Image,
+    ImageFactory,
+    ImageReference,
+    Particle,
+    ParticleFactory,
+    ParticleInstance,
     Tree,
     TreeFactory,
-    CharacterStyle,
-    Character,
-    CharacterStyleFactory,
-    Image,
-    ImageReference,
-    ImageFactory,
-    Particle,
-    ParticleInstance,
-    ParticleFactory,
+    TreeType,
 )
 from .flyweight.real_world_example import (
     Font,
@@ -197,25 +201,27 @@ from .flyweight.real_world_example import (
 
 # Proxy Pattern
 from .proxy.pattern import (
-    Subject,
-    RealSubject,
-    Proxy,
-    Image as ProxyImage,
-    RealImage,
-    ImageProxy,
     Database,
-    RealDatabase,
     DatabaseProxy,
-    Service,
-    RealService,
-    ProtectionProxy,
     DataValidator,
-    ValidationProxy,
+)
+from .proxy.pattern import Image as ProxyImage
+from .proxy.pattern import (
+    ImageProxy,
     LoggingProxy,
+    ProtectionProxy,
+    Proxy,
+    RealDatabase,
+    RealImage,
+    RealService,
+    RealSubject,
+    Service,
+    Subject,
+    ValidationProxy,
 )
 from .proxy.real_world_example import (
-    RemoteService,
     ExpensiveRemoteService,
+    RemoteService,
     RemoteServiceProxy,
 )
 

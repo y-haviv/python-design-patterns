@@ -9,37 +9,38 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from copy import deepcopy
 
+import pytest
+
 from .pattern import (
-    Cloneable,
-    DocumentSection,
-    Document,
     CharacterClass,
-    Skill,
+    CharacterTemplateRegistry,
+    Cloneable,
+    Document,
+    DocumentSection,
+    DocumentTemplateRegistry,
     GameCharacter,
+    PrototypeRegistry,
+    Skill,
+    UIComponent,
     UIComponentType,
     UIStyle,
-    UIComponent,
-    PrototypeRegistry,
-    DocumentTemplateRegistry,
-    CharacterTemplateRegistry,
-    create_document_templates,
     create_character_templates,
+    create_document_templates,
     create_ui_component_templates,
 )
-
 from .real_world_example import (
     Color,
-    Typography,
-    Spacing,
     DesignTheme,
-    create_light_theme_prototype,
+    Spacing,
+    ThemeLibrary,
+    Typography,
+    create_compact_theme_from_light,
     create_dark_theme_from_light,
     create_high_contrast_theme_from_light,
-    create_compact_theme_from_light,
-    ThemeLibrary,
+    create_light_theme_prototype,
 )
 
 

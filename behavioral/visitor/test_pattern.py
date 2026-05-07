@@ -10,24 +10,26 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    Visitor,
-    Element,
     ConcreteElementA,
     ConcreteElementB,
     ConcreteVisitorA,
     ConcreteVisitorB,
+    Element,
+    Visitor,
 )
 from .real_world_example import (
-    DocumentElement,
-    Paragraph,
-    Image,
-    Table,
-    PDFExportVisitor,
-    HTMLExportVisitor,
-    TextAnalysisVisitor,
     Document,
+    DocumentElement,
+    HTMLExportVisitor,
+    Image,
+    Paragraph,
+    PDFExportVisitor,
+    Table,
+    TextAnalysisVisitor,
 )
 
 

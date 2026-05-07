@@ -10,16 +10,18 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    Observer,
-    Subject,
     ConcreteObserver,
     ConcreteSubject,
+    Observer,
+    Subject,
 )
 from .real_world_example import (
-    Stock,
     Investor,
+    Stock,
     StockMarket,
 )
 

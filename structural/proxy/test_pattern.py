@@ -1,16 +1,17 @@
 """Tests for Proxy Pattern."""
 
 import pytest
+
 from .pattern import (
-    RealSubject,
+    DatabaseProxy,
+    ImageProxy,
+    LoggingProxy,
+    ProtectionProxy,
     Proxy,
     RealImage,
-    ImageProxy,
-    DatabaseProxy,
     RealService,
-    ProtectionProxy,
+    RealSubject,
     ValidationProxy,
-    LoggingProxy,
 )
 
 

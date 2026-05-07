@@ -1,17 +1,28 @@
 """Tests for Flyweight Pattern."""
 
 import pytest
+
 from .pattern import (
-    FlyweightFactory,
-    TreeFactory,
-    Tree,
-    CharacterStyleFactory,
     Character,
+    CharacterStyleFactory,
+    FlyweightFactory,
     ImageFactory,
     ImageReference,
     ParticleFactory,
     ParticleInstance,
+    Tree,
+    TreeFactory,
 )
+
+
+@pytest.fixture(autouse=True)
+def reset_flyweight_factories():
+    """Ensure class-level flyweight caches don't leak between tests."""
+    TreeFactory.tree_types.clear()
+    CharacterStyleFactory.styles.clear()
+    ImageFactory.images.clear()
+    ParticleFactory.particles.clear()
+    yield
 
 
 class TestBasicFlyweight:

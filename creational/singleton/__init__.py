@@ -10,7 +10,7 @@ Included in this package:
 - FeatureFlagService: A complex, real-world scenario for shared state.
 """
 
-from .pattern import SingletonMeta, AppSettings
+from .pattern import AppSettings, SingletonMeta
 from .real_world_example import FeatureFlagService
 
 __all__ = ["SingletonMeta", "AppSettings", "FeatureFlagService"]

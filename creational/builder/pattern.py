@@ -14,9 +14,10 @@ The Builder pattern is particularly useful when:
 """
 
 from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing import Dict, List, Any, Optional, Type
 from enum import Enum
+from typing import Any, Dict, List, Optional, Type
 
 
 class HTTPMethod(Enum):

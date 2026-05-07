@@ -13,9 +13,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, List, Optional, Dict
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 
 class Visitor(ABC):
@@ -86,6 +87,10 @@ class ConcreteElementA(Element):
     def get_name(self) -> str:
         """Get element name."""
         return self.name
+
+    def get_type(self) -> str:
+        """Get element type."""
+        return "Element A"
 
 
 class ConcreteElementB(Element):

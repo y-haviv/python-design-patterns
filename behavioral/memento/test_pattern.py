@@ -9,16 +9,18 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    Memento,
-    Originator,
     Caretaker,
     ConcreteMemento,
+    Memento,
+    Originator,
 )
 from .real_world_example import (
-    TextDocument,
     DocumentHistory,
+    TextDocument,
 )
 
 

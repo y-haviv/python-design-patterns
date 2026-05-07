@@ -7,9 +7,11 @@ and reapply their changes at any point.
 """
 
 from __future__ import annotations
-from typing import List, Optional
-from .pattern import Command, Receiver, Invoker, ConcreteCommand
+
 from datetime import datetime
+from typing import List, Optional
+
+from .pattern import Command, ConcreteCommand, Invoker, Receiver
 
 
 class TextEditor(Receiver):

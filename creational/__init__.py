@@ -33,65 +33,67 @@ Usage Examples:
 See README.md for comprehensive comparison and best practices.
 """
 
-# Singleton Pattern
-from .singleton.pattern import SingletonMeta
-from .singleton.real_world_example import FeatureFlagService
-
-# Factory Method Pattern
-from .factory.pattern import (
-    Transport,
-    HTTPTransport,
-    HTTPSTransport,
-    FTPTransport,
-    WebSocketTransport,
-    TransportFactory,
-    HTTPFactory,
-    HTTPSFactory,
-    FTPFactory,
-    WebSocketFactory,
-    TransportFactoryRegistry,
-)
-
 # Abstract Factory Pattern
 from .abstract_factory.pattern import (
     Button,
     Checkbox,
+)
+from .abstract_factory.pattern import DarkThemeFactory as DarkUIFactory
+from .abstract_factory.pattern import HighContrastThemeFactory as HighContrastUIFactory
+from .abstract_factory.pattern import LightThemeFactory as LightUIFactory
+from .abstract_factory.pattern import (
     TextInput,
     UIFactory,
-    LightThemeFactory as LightUIFactory,
-    DarkThemeFactory as DarkUIFactory,
-    HighContrastThemeFactory as HighContrastUIFactory,
-    UIThemeRegistry as UIFactoryRegistry,
 )
+from .abstract_factory.pattern import UIThemeRegistry as UIFactoryRegistry
 
 # Builder Pattern
 from .builder.pattern import (
-    HTTPRequest,
-    HTTPRequestBuilder,
     Computer,
     ComputerBuilder,
-    RequestTemplates,
     ComputerTemplates,
+    HTTPRequest,
+    HTTPRequestBuilder,
+    RequestTemplates,
+)
+
+# Factory Method Pattern
+from .factory.pattern import (
+    FTPFactory,
+    FTPTransport,
+    HTTPFactory,
+    HTTPSFactory,
+    HTTPSTransport,
+    HTTPTransport,
+    Transport,
+    TransportFactory,
+    TransportFactoryRegistry,
+    WebSocketFactory,
+    WebSocketTransport,
 )
 
 # Prototype Pattern
 from .prototype.pattern import (
-    Cloneable,
-    DocumentSection,
-    Document,
     CharacterClass,
-    Skill,
+    CharacterTemplateRegistry,
+    Cloneable,
+    Document,
+    DocumentSection,
+    DocumentTemplateRegistry,
     GameCharacter,
+    PrototypeRegistry,
+    Skill,
+    UIComponent,
     UIComponentType,
     UIStyle,
-    UIComponent,
-    PrototypeRegistry,
-    DocumentTemplateRegistry,
-    CharacterTemplateRegistry,
-    create_document_templates,
     create_character_templates,
+    create_document_templates,
     create_ui_component_templates,
 )
+
+# Singleton Pattern
+from .singleton.pattern import SingletonMeta
+from .singleton.real_world_example import FeatureFlagService
 
 __all__ = [
     # Singleton

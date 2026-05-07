@@ -11,25 +11,26 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from typing import List
 
+import pytest
+
 from .pattern import (
+    Computer,
+    ComputerBuilder,
+    ComputerTemplates,
     HTTPMethod,
     HTTPRequest,
     HTTPRequestBuilder,
-    Computer,
-    ComputerBuilder,
     RequestTemplates,
-    ComputerTemplates,
 )
-
 from .real_world_example import (
     JoinType,
     OrderDirection,
+    QueryTemplates,
     SQLQuery,
     SQLQueryBuilder,
-    QueryTemplates,
 )
 
 

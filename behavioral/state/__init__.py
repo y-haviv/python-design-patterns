@@ -7,17 +7,17 @@ behavior without modifying the object's class directly.
 """
 
 from .pattern import (
-    State,
-    Context,
     ConcreteStateA,
     ConcreteStateB,
     ConcreteStateC,
+    Context,
+    State,
 )
 from .real_world_example import (
-    TCPConnection,
-    TCPListen,
-    TCPEstablished,
     TCPClosed,
+    TCPConnection,
+    TCPEstablished,
+    TCPListen,
 )
 
 __all__ = [

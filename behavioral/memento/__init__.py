@@ -6,14 +6,14 @@ and allow restoring the object to this state later without triggering side effec
 """
 
 from .pattern import (
+    Caretaker,
     Memento,
     Originator,
-    Caretaker,
 )
 from .real_world_example import (
-    TextDocument,
-    DocumentMemento,
     DocumentHistory,
+    DocumentMemento,
+    TextDocument,
 )
 
 __all__ = [

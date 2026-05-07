@@ -17,9 +17,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Dict, Type, Any, Optional
+from typing import Any, Dict, Optional, Type
 
 
 class UITheme(Enum):

@@ -7,8 +7,10 @@ production environments.
 """
 
 from __future__ import annotations
+
 from threading import Lock
-from typing import Dict, Any, Mapping, Optional
+from typing import Any, Dict, Mapping, Optional
+
 from .pattern import SingletonMeta
 
 

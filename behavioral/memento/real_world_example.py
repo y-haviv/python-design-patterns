@@ -6,9 +6,11 @@ and full undo/redo history without providing direct access to internal state.
 """
 
 from __future__ import annotations
-from typing import Optional
+
 from datetime import datetime
-from .pattern import Memento, Originator, Caretaker, ConcreteMemento
+from typing import Optional
+
+from .pattern import Caretaker, ConcreteMemento, Memento, Originator
 
 
 class DocumentMemento(Memento):

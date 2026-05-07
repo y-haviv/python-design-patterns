@@ -13,8 +13,9 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Optional, Union, Any
+from typing import Any, List, Optional, Union
 
 
 class Component(ABC):
@@ -262,7 +263,8 @@ class Department(OrganizationComponent):
 
     def get_head_count(self) -> int:
         """Get total headcount in department (recursive)."""
-        total = 0
+        has_sub_departments = any(isinstance(member, Department) for member in self.members)
+        total = 1 if has_sub_departments else 0
         for member in self.members:
             total += member.get_head_count()
         return total

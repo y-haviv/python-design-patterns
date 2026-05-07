@@ -1,6 +1,6 @@
 """Facade Pattern Implementation (Structural)."""
 
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
 
 
 class Subsystem1:
@@ -133,7 +133,7 @@ class InventoryService:
         return True
 
     def release(self, item_id: str, quantity: int) -> bool:
-        self.items[item_id] += quantity
+        self.items[item_id] = self.items.get(item_id, 0) + quantity
         return True
 
 
@@ -153,12 +153,15 @@ class OrderFacade:
 
         return {"status": "confirmed", "email": customer_email, "amount": amount}
 
-    def cancel_order(self, order_id: str, item_id: str, amount: float, customer_email: str) -> Dict:
+    def cancel_order(
+        self, order_id: str, item_id: str, amount: float, customer_email: Optional[str] = None
+    ) -> Dict:
         """Cancel an order - handles all subsystems."""
         self._inventory.release(item_id, 1)
         self._payment.refund(order_id)
-        self._notification.send_email(
-            customer_email, f"Order {order_id} cancelled. Refunded: ${amount}"
-        )
+        if customer_email:
+            self._notification.send_email(
+                customer_email, f"Order {order_id} cancelled. Refunded: ${amount}"
+            )
 
         return {"status": "cancelled", "refunded_amount": amount}

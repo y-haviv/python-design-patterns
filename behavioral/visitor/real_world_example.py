@@ -6,9 +6,10 @@ visitors to generate different output formats (PDF, HTML, statistics).
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any, Tuple
 from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
 
 
 class DocumentElement(ABC):

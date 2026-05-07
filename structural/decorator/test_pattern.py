@@ -1,21 +1,22 @@
 """Tests for Decorator Pattern."""
 
 import pytest
+
 from .pattern import (
+    BorderDecorator,
+    CoffeeBuilder,
+    CompressionDecorator,
     ConcreteComponent,
     ConcreteDecoratorA,
     ConcreteDecoratorB,
-    FileDataSource,
     EncryptionDecorator,
-    CompressionDecorator,
+    FileDataSource,
     LoggingDecorator,
-    SimpleCoffee,
     MilkDecorator,
-    SugarDecorator,
-    CoffeeBuilder,
-    SimpleWidget,
-    BorderDecorator,
     ScrollDecorator,
+    SimpleCoffee,
+    SimpleWidget,
+    SugarDecorator,
 )
 
 

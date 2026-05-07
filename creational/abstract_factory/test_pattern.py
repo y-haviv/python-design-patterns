@@ -10,33 +10,34 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from typing import List
 
+import pytest
+
 from .pattern import (
-    UITheme,
+    Application,
     Button,
     Checkbox,
-    TextInput,
-    UIFactory,
-    LightThemeFactory,
     DarkThemeFactory,
     HighContrastThemeFactory,
-    Application,
+    LightThemeFactory,
+    TextInput,
+    UIFactory,
+    UITheme,
     UIThemeRegistry,
 )
-
 from .real_world_example import (
+    Connection,
+    DatabaseAdapter,
     DatabaseEngine,
     DatabaseFactory,
-    PostgreSQLFactory,
-    MySQLFactory,
-    SQLiteFactory,
-    Connection,
-    QueryBuilder,
-    DataTypeMapper,
-    DatabaseAdapter,
     DatabaseFactoryRegistry,
+    DataTypeMapper,
+    MySQLFactory,
+    PostgreSQLFactory,
+    QueryBuilder,
+    SQLiteFactory,
 )
 
 

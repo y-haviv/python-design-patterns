@@ -1,7 +1,8 @@
 """Tests for Facade Pattern."""
 
 import pytest
-from .pattern import Subsystem1, Subsystem2, Facade, RepositoryFacade, OrderFacade
+
+from .pattern import Facade, OrderFacade, RepositoryFacade, Subsystem1, Subsystem2
 
 
 class TestBasicFacade:

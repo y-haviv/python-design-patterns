@@ -6,8 +6,10 @@ without them knowing about each other directly.
 """
 
 from __future__ import annotations
-from typing import List, Optional
+
 from datetime import datetime
+from typing import List, Optional
+
 from .pattern import Colleague, Mediator
 
 
