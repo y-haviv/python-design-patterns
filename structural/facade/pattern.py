@@ -157,8 +157,9 @@ class OrderFacade:
 
         return {"status": "confirmed", "email": customer_email, "amount": amount}
 
-    def cancel_order(self, order_id: str, item_id: str,
-                     amount: float, customer_email: str) -> Dict[str, Any]:
+    def cancel_order(
+        self, order_id: str, item_id: str, amount: float, customer_email: str
+    ) -> Dict[str, Any]:
         """Cancel an order - handles all subsystems."""
         self._inventory.release(item_id, 1)
         self._payment.refund(order_id)

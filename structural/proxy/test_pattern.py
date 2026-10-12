@@ -1,6 +1,5 @@
 """Tests for Proxy Pattern."""
 
-
 from .pattern import (
     DatabaseProxy,
     ImageProxy,

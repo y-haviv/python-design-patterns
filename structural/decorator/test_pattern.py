@@ -1,6 +1,5 @@
 """Tests for Decorator Pattern."""
 
-
 from .pattern import (
     BorderDecorator,
     CoffeeBuilder,

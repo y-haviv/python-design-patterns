@@ -1,6 +1,5 @@
 """Tests for Facade Pattern."""
 
-
 from .pattern import Facade, OrderFacade, RepositoryFacade, Subsystem1, Subsystem2
 
 
