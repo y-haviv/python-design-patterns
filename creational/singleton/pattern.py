@@ -7,8 +7,9 @@ exists in a multi-threaded environment.
 """
 
 from __future__ import annotations
+
 from threading import Lock
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 
 class SingletonMeta(type):

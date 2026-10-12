@@ -6,9 +6,11 @@ in stock prices without the stock needing to know about them directly.
 """
 
 from __future__ import annotations
-from typing import List, Dict, Optional, Any
+
 from datetime import datetime
-from .pattern import Subject, Observer
+from typing import Any, Dict, List, Optional
+
+from .pattern import Observer, Subject
 
 
 class Stock(Subject):
@@ -101,6 +103,10 @@ class Stock(Subject):
     def get_state(self) -> float:
         """Get the current state (price) of the stock."""
         return self._price
+
+    def get_observer_count(self) -> int:
+        """Get the number of attached investors."""
+        return len(self._observers)
 
     def notify(self, **kwargs) -> None:
         """Notify all investors about the price change."""

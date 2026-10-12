@@ -11,9 +11,10 @@ subclasses, allowing the type of objects created to be determined at runtime.
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Dict, Type, Any, Optional
+from typing import Dict
 
 
 class TransportType(Enum):
@@ -42,7 +43,6 @@ class Transport(ABC):
         Returns:
             A string describing the connection state.
         """
-        pass
 
     @abstractmethod
     def send_data(self, data: str) -> str:
@@ -55,7 +55,6 @@ class Transport(ABC):
         Returns:
             Confirmation message of the transmission.
         """
-        pass
 
     @abstractmethod
     def disconnect(self) -> str:
@@ -65,7 +64,6 @@ class Transport(ABC):
         Returns:
             A string describing the disconnection.
         """
-        pass
 
 
 class HTTPTransport(Transport):
@@ -209,7 +207,6 @@ class TransportFactory(ABC):
         Returns:
             A Transport instance (concrete type depends on factory subclass).
         """
-        pass
 
     def communicate(self, message: str) -> str:
         """

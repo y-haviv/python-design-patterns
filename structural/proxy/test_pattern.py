@@ -1,16 +1,15 @@
 """Tests for Proxy Pattern."""
 
-import pytest
+
 from .pattern import (
-    RealSubject,
-    Proxy,
-    RealImage,
-    ImageProxy,
     DatabaseProxy,
-    RealService,
-    ProtectionProxy,
-    ValidationProxy,
+    ImageProxy,
     LoggingProxy,
+    ProtectionProxy,
+    Proxy,
+    RealService,
+    RealSubject,
+    ValidationProxy,
 )
 
 
@@ -35,6 +34,7 @@ class TestDatabaseProxy:
         result1 = proxy.query("SELECT * FROM users")
         result2 = proxy.query("SELECT * FROM users")
 
+        assert result1 is not None
         assert "Cached" in result2
 
 

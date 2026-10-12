@@ -10,9 +10,10 @@ This pattern is used in popular ORMs like SQLAlchemy and Django ORM.
 """
 
 from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional, Tuple
 from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
 
 
 class JoinType(Enum):

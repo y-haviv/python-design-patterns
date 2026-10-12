@@ -48,75 +48,79 @@ See README.md for comprehensive comparison and best practices.
 # Command Pattern
 from .command.pattern import (
     Command,
-    Receiver,
     ConcreteCommand,
     Invoker,
     MacroCommand,
+    Receiver,
 )
 
 # Iterator Pattern
 from .iterator.pattern import (
-    Iterator,
-    Iterable,
-    ConcreteIterator,
-    ReverseIterator,
-    FilteredIterator,
-    ConcreteIterable,
     BidirectionalIterator,
+    ConcreteIterable,
+    ConcreteIterator,
+    FilteredIterator,
+    Iterable,
+    Iterator,
     LazyIterator,
+    ReverseIterator,
 )
 
 # Mediator Pattern
 from .mediator.pattern import (
     Colleague,
-    Mediator,
     ConcreteColleague,
     ConcreteMediator,
+    Mediator,
     SmartMediator,
 )
 
 # Memento Pattern
 from .memento.pattern import (
-    Memento,
-    ConcreteMemento,
-    Originator,
     Caretaker,
+    ConcreteMemento,
+    Memento,
+    Originator,
 )
 
 # Observer Pattern
 from .observer.pattern import (
-    Observer,
-    Subject,
     ConcreteObserver,
     ConcreteSubject,
+    Observer,
+    Subject,
 )
 
 # State Pattern
 from .state.pattern import (
-    State,
-    Context as StateContext,
     ConcreteStateA,
     ConcreteStateB,
     ConcreteStateC,
 )
+from .state.pattern import Context as StateContext
+from .state.pattern import (
+    State,
+)
 
 # Strategy Pattern
 from .strategy.pattern import (
-    Strategy,
-    Context as StrategyContext,
     ConcreteStrategyA,
     ConcreteStrategyB,
     ConcreteStrategyC,
 )
+from .strategy.pattern import Context as StrategyContext
+from .strategy.pattern import (
+    Strategy,
+)
 
 # Visitor Pattern
 from .visitor.pattern import (
-    Visitor,
-    Element,
     ConcreteElementA,
     ConcreteElementB,
     ConcreteVisitorA,
     ConcreteVisitorB,
+    Element,
+    Visitor,
 )
 
 __all__ = [

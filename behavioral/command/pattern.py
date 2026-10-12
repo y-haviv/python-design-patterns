@@ -14,9 +14,9 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import Any, List
-from datetime import datetime
 
 
 class Command(ABC):
@@ -30,12 +30,10 @@ class Command(ABC):
     @abstractmethod
     def execute(self) -> None:
         """Execute the command's operation."""
-        pass
 
     @abstractmethod
     def undo(self) -> None:
         """Undo the command's operation (optional but recommended)."""
-        pass
 
 
 class Receiver:

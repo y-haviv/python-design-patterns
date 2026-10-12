@@ -8,9 +8,9 @@ compositions uniformly.
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import List, Optional
-from enum import Enum
 
 
 class TextElement(ABC):
@@ -19,32 +19,26 @@ class TextElement(ABC):
     @abstractmethod
     def get_content(self) -> str:
         """Get rendered content."""
-        pass
 
     @abstractmethod
     def add(self, element: TextElement) -> None:
         """Add child element."""
-        pass
 
     @abstractmethod
     def remove(self, element: TextElement) -> None:
         """Remove child element."""
-        pass
 
     @abstractmethod
     def export_to_html(self) -> str:
         """Export to HTML."""
-        pass
 
     @abstractmethod
     def export_to_markdown(self) -> str:
         """Export to Markdown."""
-        pass
 
     @abstractmethod
     def get_word_count(self) -> int:
         """Get word count."""
-        pass
 
 
 class Paragraph(TextElement):
@@ -181,7 +175,8 @@ class Section(TextElement):
 
     def get_word_count(self) -> int:
         """Get total word count."""
-        return sum(child.get_word_count() for child in self.children)
+        title_count = len(self.title.split())
+        return title_count + sum(child.get_word_count() for child in self.children)
 
     def get_children(self) -> List[TextElement]:
         """Get section children."""

@@ -6,9 +6,11 @@ and full undo/redo history without providing direct access to internal state.
 """
 
 from __future__ import annotations
-from typing import Optional
+
 from datetime import datetime
-from .pattern import Memento, Originator, Caretaker, ConcreteMemento
+from typing import Optional
+
+from .pattern import Caretaker, Memento, Originator
 
 
 class DocumentMemento(Memento):
@@ -111,7 +113,7 @@ class DocumentHistory(Caretaker):
 
     def display_timeline(self) -> None:
         """Display document version timeline."""
-        print(f"\n=== Document Timeline ===")
+        print("\n=== Document Timeline ===")
         if not self.history:
             print("  (no versions saved)")
             return

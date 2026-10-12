@@ -7,21 +7,21 @@ explicitly, and it lets you vary their interaction independently.
 """
 
 from .pattern import (
-    Mediator,
     Colleague,
-    ConcreteMediator,
     ConcreteColleague,
+    ConcreteMediator,
+    Mediator,
 )
 from .real_world_example import (
-    User,
     ChatMediator,
+    User,
 )
 
 __all__ = [
-    "Mediator",
-    "Colleague",
-    "ConcreteMediator",
-    "ConcreteColleague",
-    "User",
     "ChatMediator",
+    "Colleague",
+    "ConcreteColleague",
+    "ConcreteMediator",
+    "Mediator",
+    "User",
 ]

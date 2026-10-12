@@ -10,33 +10,31 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
-from typing import List
 
 from .pattern import (
-    UITheme,
+    Application,
     Button,
     Checkbox,
-    TextInput,
-    UIFactory,
-    LightThemeFactory,
     DarkThemeFactory,
     HighContrastThemeFactory,
-    Application,
+    LightThemeFactory,
+    TextInput,
+    UIFactory,
+    UITheme,
     UIThemeRegistry,
 )
-
 from .real_world_example import (
-    DatabaseEngine,
-    DatabaseFactory,
-    PostgreSQLFactory,
-    MySQLFactory,
-    SQLiteFactory,
     Connection,
-    QueryBuilder,
-    DataTypeMapper,
     DatabaseAdapter,
+    DatabaseEngine,
     DatabaseFactoryRegistry,
+    DataTypeMapper,
+    MySQLFactory,
+    PostgreSQLFactory,
+    QueryBuilder,
+    SQLiteFactory,
 )
 
 
@@ -487,6 +485,8 @@ class TestAbstractFactoryBenefits:
 
         # Both should have consistent styling cues
         assert ("Dark" in button1_render) == ("Dark" in checkbox1_render)
+        assert button2 is not None
+        assert checkbox2 is not None
 
     def test_database_adapter_abstracts_implementation_details(self):
         """Show how adapter abstracts away implementation details."""

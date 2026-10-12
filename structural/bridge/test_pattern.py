@@ -10,32 +10,27 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from .pattern import (
-    Implementor,
+    SVGAPI,
+    Abstraction,
+    CanvasAPI,
+    Circle,
     ConcreteImplementorA,
     ConcreteImplementorB,
-    Abstraction,
-    RefinedAbstraction,
-    DrawingAPI,
-    CanvasAPI,
-    SVGAPI,
-    Shape,
-    Circle,
-    Rectangle,
     Line,
+    Rectangle,
+    RefinedAbstraction,
     ShapeComposer,
 )
 from .real_world_example import (
-    CommunicationBridge,
-    WiFiBridge,
     BluetoothBridge,
     InfraredBridge,
-    RemoteControl,
-    TVRemote,
-    StereoRemote,
     ProjectorRemote,
     RemoteControlFactory,
+    StereoRemote,
+    TVRemote,
+    WiFiBridge,
 )
 
 

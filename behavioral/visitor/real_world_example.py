@@ -6,9 +6,10 @@ visitors to generate different output formats (PDF, HTML, statistics).
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any, Tuple
 from datetime import datetime
+from typing import Any, Dict, List, Tuple
 
 
 class DocumentElement(ABC):
@@ -17,12 +18,10 @@ class DocumentElement(ABC):
     @abstractmethod
     def accept(self, visitor: DocumentVisitor) -> Any:
         """Accept a visitor to process this element."""
-        pass
 
     @abstractmethod
     def get_type(self) -> str:
         """Get the type of this element."""
-        pass
 
 
 class Paragraph(DocumentElement):
@@ -126,27 +125,22 @@ class DocumentVisitor(ABC):
     @abstractmethod
     def visit_paragraph(self, element: Paragraph) -> Any:
         """Visit a paragraph element."""
-        pass
 
     @abstractmethod
     def visit_image(self, element: Image) -> Any:
         """Visit an image element."""
-        pass
 
     @abstractmethod
     def visit_table(self, element: Table) -> Any:
         """Visit a table element."""
-        pass
 
     @abstractmethod
     def get_result(self) -> Any:
         """Get the final result of the visitor."""
-        pass
 
     @abstractmethod
     def get_visitor_name(self) -> str:
         """Get visitor name."""
-        pass
 
 
 class PDFExportVisitor(DocumentVisitor):
@@ -210,7 +204,7 @@ class HTMLExportVisitor(DocumentVisitor):
         self.element_count += 1
         html_line = f"<p>{element.text}</p>"
         self.output.append(html_line)
-        print(f"  ✓ HTML: Generated <p> tag")
+        print("  ✓ HTML: Generated <p> tag")
         return html_line
 
     def visit_image(self, element: Image) -> Any:
@@ -221,7 +215,7 @@ class HTMLExportVisitor(DocumentVisitor):
             f'width="{element.width}" height="{element.height}" />'
         )
         self.output.append(html_line)
-        print(f"  ✓ HTML: Generated <img> tag")
+        print("  ✓ HTML: Generated <img> tag")
         return html_line
 
     def visit_table(self, element: Table) -> Any:
@@ -240,7 +234,7 @@ class HTMLExportVisitor(DocumentVisitor):
 
         table_html += "</table>"
         self.output.append(table_html)
-        print(f"  ✓ HTML: Generated <table>")
+        print("  ✓ HTML: Generated <table>")
         return table_html
 
     def get_result(self) -> str:

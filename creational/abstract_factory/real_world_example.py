@@ -10,10 +10,11 @@ This is a common pattern in ORMs like SQLAlchemy and database abstraction layers
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any, Dict, List, Optional
 
 
 class DatabaseEngine(Enum):
@@ -45,17 +46,14 @@ class Connection(ABC):
     @abstractmethod
     def connect(self, host: str, user: str, password: str) -> str:
         """Establish a database connection with specific credentials."""
-        pass
 
     @abstractmethod
     def execute_query(self, query: str) -> QueryResult:
         """Execute a query and return results."""
-        pass
 
     @abstractmethod
     def close(self) -> str:
         """Close the database connection."""
-        pass
 
 
 class QueryBuilder(ABC):
@@ -64,17 +62,14 @@ class QueryBuilder(ABC):
     @abstractmethod
     def build_select(self, table: str, columns: List[str]) -> str:
         """Build a SELECT query (dialect-specific)."""
-        pass
 
     @abstractmethod
     def build_insert(self, table: str, values: Dict[str, Any]) -> str:
         """Build an INSERT query (dialect-specific)."""
-        pass
 
     @abstractmethod
     def build_update(self, table: str, values: Dict[str, Any], where: str) -> str:
         """Build an UPDATE query (dialect-specific)."""
-        pass
 
 
 class DataTypeMapper(ABC):
@@ -83,12 +78,10 @@ class DataTypeMapper(ABC):
     @abstractmethod
     def python_to_sql_type(self, python_type: type) -> str:
         """Convert Python type to database-specific column type."""
-        pass
 
     @abstractmethod
     def sql_to_python_type(self, sql_type: str) -> type:
         """Convert database-specific type to Python type."""
-        pass
 
 
 # ============================================================================
@@ -228,7 +221,7 @@ class MySQLQueryBuilder(QueryBuilder):
 
     def build_insert(self, table: str, values: Dict[str, Any]) -> str:
         """Build MySQL INSERT."""
-        cols = ", ".join(f"`{k}`" for k in values.keys())
+        cols = ", ".join(f"`{k}`" for k in values)
         vals = ", ".join(f"'{v}'" for v in values.values())
         return f"INSERT INTO `{table}` ({cols}) VALUES ({vals});"
 
@@ -355,17 +348,14 @@ class DatabaseFactory(ABC):
     @abstractmethod
     def create_connection(self) -> Connection:
         """Create a connection for this database engine."""
-        pass
 
     @abstractmethod
     def create_query_builder(self) -> QueryBuilder:
         """Create a query builder for this database engine."""
-        pass
 
     @abstractmethod
     def create_data_type_mapper(self) -> DataTypeMapper:
         """Create a data type mapper for this database engine."""
-        pass
 
 
 # ============================================================================

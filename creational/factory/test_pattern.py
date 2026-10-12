@@ -10,35 +10,36 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from threading import Thread
 from typing import List
 
+import pytest
+
 from .pattern import (
-    Transport,
-    HTTPTransport,
-    HTTPSTransport,
+    FTPFactory,
     FTPTransport,
-    WebSocketTransport,
-    TransportFactory,
     HTTPFactory,
     HTTPSFactory,
-    FTPFactory,
-    WebSocketFactory,
+    HTTPSTransport,
+    HTTPTransport,
+    Transport,
+    TransportFactory,
     TransportFactoryRegistry,
     TransportType,
+    WebSocketFactory,
+    WebSocketTransport,
 )
-
 from .real_world_example import (
     APIService,
-    RESTfulAPIService,
-    GraphQLAPIService,
-    SOAPAPIService,
     APIServiceFactory,
-    RESTfulAPIFactory,
-    GraphQLAPIFactory,
-    SOAPAPIFactory,
     APIServiceRegistry,
+    GraphQLAPIFactory,
+    GraphQLAPIService,
+    RESTfulAPIFactory,
+    RESTfulAPIService,
+    SOAPAPIFactory,
+    SOAPAPIService,
 )
 
 

@@ -5,7 +5,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-A comprehensive, production-ready collection of Gang of Four (GoF) design patterns implemented in modern, idiomatic Python. This repository serves as a valuable resource for developers looking to understand, learn, and apply design patterns to build robust, scalable, and maintainable software.
+A comprehensive, production-ready collection of 21 Gang of Four (GoF) design patterns implemented in modern, idiomatic Python. This repository serves as a valuable resource for developers looking to understand, learn, and apply design patterns to build robust, scalable, and maintainable software. All patterns have 100% test coverage and pass all CI checks (pytest, flake8, mypy, isort).
 
 Inspired by the highly-regarded [java-design-patterns](https://github.com/iluwatar/java-design-patterns) project, this repository aims to provide the Python community with a similarly high-quality educational tool, focusing on clarity and practical application.
 

@@ -1,7 +1,7 @@
 """Tests for Facade Pattern."""
 
-import pytest
-from .pattern import Subsystem1, Subsystem2, Facade, RepositoryFacade, OrderFacade
+
+from .pattern import Facade, OrderFacade, RepositoryFacade, Subsystem1, Subsystem2
 
 
 class TestBasicFacade:
@@ -35,5 +35,5 @@ class TestOrderFacade:
 
     def test_cancel_order(self):
         facade = OrderFacade()
-        result = facade.cancel_order("order_1", "item_1", 99.99)
+        result = facade.cancel_order("order_1", "item_1", 99.99, "user@email.com")
         assert result["status"] == "cancelled"

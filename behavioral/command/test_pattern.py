@@ -10,18 +10,19 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    Command,
-    Receiver,
     ConcreteCommand,
     Invoker,
     MacroCommand,
+    Receiver,
 )
 from .real_world_example import (
-    TextEditor,
-    InsertTextCommand,
     DeleteTextCommand,
+    InsertTextCommand,
+    TextEditor,
 )
 
 
@@ -191,7 +192,7 @@ class TestInvoker:
         invoker = Invoker()
 
         cmd1 = ConcreteCommand(receiver, "insert_text", 5, "1")
-        cmd2 = ConcreteCommand(receiver, "insert_text", 6, "2")
+        cmd2 = ConcreteCommand(receiver, "insert_text", 5, "2")
 
         invoker.execute_command(cmd1)
         invoker.undo()

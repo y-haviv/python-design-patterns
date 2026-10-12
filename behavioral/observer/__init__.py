@@ -7,23 +7,23 @@ provides a way to loosely couple disparate components of a system.
 """
 
 from .pattern import (
-    Observer,
-    Subject,
     ConcreteObserver,
     ConcreteSubject,
+    Observer,
+    Subject,
 )
 from .real_world_example import (
-    Stock,
     Investor,
+    Stock,
     StockMarket,
 )
 
 __all__ = [
-    "Observer",
-    "Subject",
     "ConcreteObserver",
     "ConcreteSubject",
-    "Stock",
     "Investor",
+    "Observer",
+    "Stock",
     "StockMarket",
+    "Subject",
 ]

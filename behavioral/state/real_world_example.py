@@ -7,10 +7,11 @@ depending on the operations performed on it.
 """
 
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any
+
 from datetime import datetime
-from .pattern import State, Context
+from typing import Any, Dict, List, Optional
+
+from .pattern import Context, State
 
 
 class TCPState(State):
@@ -57,7 +58,7 @@ class TCPClosed(TCPState):
 
     def open(self, context: Context, connection: TCPConnection) -> None:
         """Open the connection - transition to LISTEN state."""
-        print(f"  [CLOSED] Opening connection...")
+        print("  [CLOSED] Opening connection...")
         context.set_state(TCPListen())
 
     def get_name(self) -> str:
@@ -94,12 +95,12 @@ class TCPListen(TCPState):
 
     def send_syn_ack(self, context: Context, connection: TCPConnection) -> None:
         """Send SYN-ACK and transition to ESTABLISHED state."""
-        print(f"  [LISTEN] Received connection request, sending SYN-ACK...")
+        print("  [LISTEN] Received connection request, sending SYN-ACK...")
         context.set_state(TCPEstablished())
 
     def close(self, context: Context, connection: TCPConnection) -> None:
         """Close the connection - transition to CLOSED state."""
-        print(f"  [LISTEN] Closing connection...")
+        print("  [LISTEN] Closing connection...")
         context.set_state(TCPClosed())
 
     def get_name(self) -> str:
@@ -161,7 +162,7 @@ class TCPEstablished(TCPState):
 
     def close(self, context: Context, connection: TCPConnection) -> None:
         """Close the connection - transition to CLOSED state."""
-        print(f"  [ESTABLISHED] Initiating close sequence...")
+        print("  [ESTABLISHED] Initiating close sequence...")
         context.set_state(TCPClosed())
 
     def get_name(self) -> str:

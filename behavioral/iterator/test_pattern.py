@@ -11,23 +11,17 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    Iterator,
-    Iterable,
-    ConcreteIterator,
-    ConcreteIterable,
-    ReverseIterator,
-    FilteredIterator,
     BidirectionalIterator,
+    ConcreteIterable,
     LazyIterator,
 )
 from .real_world_example import (
     Book,
     BookCollection,
-    BookIterator,
-    ReverseBookIterator,
-    FilteredBookIterator,
 )
 
 

@@ -6,29 +6,29 @@ Strategy lets the algorithm vary independently from clients that use it.
 """
 
 from .pattern import (
-    Strategy,
-    Context,
     ConcreteStrategyA,
     ConcreteStrategyB,
     ConcreteStrategyC,
+    Context,
+    Strategy,
 )
 from .real_world_example import (
-    PaymentProcessor,
     CreditCardStrategy,
-    PayPalStrategy,
     CryptocurrencyStrategy,
+    PaymentProcessor,
+    PayPalStrategy,
     ShoppingCart,
 )
 
 __all__ = [
-    "Strategy",
-    "Context",
     "ConcreteStrategyA",
     "ConcreteStrategyB",
     "ConcreteStrategyC",
-    "PaymentProcessor",
+    "Context",
     "CreditCardStrategy",
-    "PayPalStrategy",
     "CryptocurrencyStrategy",
+    "PayPalStrategy",
+    "PaymentProcessor",
     "ShoppingCart",
+    "Strategy",
 ]

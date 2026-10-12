@@ -7,10 +7,10 @@ Method pattern abstracts away these differences from the client code.
 """
 
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional, List
-from enum import Enum
+
 import json
+from abc import ABC, abstractmethod
+from typing import Any, Dict, List
 
 
 class APIService(ABC):
@@ -23,12 +23,10 @@ class APIService(ABC):
     @abstractmethod
     def get_config(self) -> Dict[str, Any]:
         """Return the configuration for this API service."""
-        pass
 
     @abstractmethod
     def build_headers(self) -> Dict[str, str]:
         """Build request headers specific to this API."""
-        pass
 
     @abstractmethod
     def make_request(self, endpoint: str, method: str = "GET") -> str:
@@ -42,7 +40,6 @@ class APIService(ABC):
         Returns:
             A simulated response from the API.
         """
-        pass
 
 
 class RESTfulAPIService(APIService):
@@ -194,7 +191,6 @@ class APIServiceFactory(ABC):
         Returns:
             An APIService instance of the appropriate type.
         """
-        pass
 
     def call_api(self, endpoint: str) -> str:
         """

@@ -6,9 +6,10 @@ different strategies, allowing clients to choose at runtime.
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any
-from datetime import datetime, timedelta
+from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 
 class PaymentStrategy(ABC):
@@ -22,22 +23,18 @@ class PaymentStrategy(ABC):
     @abstractmethod
     def validate_payment_details(self) -> bool:
         """Validate payment details."""
-        pass
 
     @abstractmethod
     def process_payment(self, amount: float) -> Dict[str, Any]:
         """Process a payment."""
-        pass
 
     @abstractmethod
     def refund(self, transaction_id: str, amount: float) -> Dict[str, Any]:
         """Refund a previous payment."""
-        pass
 
     @abstractmethod
     def get_payment_method_name(self) -> str:
         """Get the name of this payment method."""
-        pass
 
 
 class CreditCardStrategy(PaymentStrategy):
@@ -110,7 +107,7 @@ class CreditCardStrategy(PaymentStrategy):
         }
         self.transaction_history.append(transaction)
 
-        print(f"  ✓ Credit card payment processed")
+        print("  ✓ Credit card payment processed")
         print(f"    Amount: ${amount:.2f}")
         print(f"    Fee: ${fee:.2f}")
         print(f"    Total: ${total:.2f}")
@@ -137,7 +134,7 @@ class CreditCardStrategy(PaymentStrategy):
         }
         self.transaction_history.append(refund)
 
-        print(f"  ✓ Credit card refund processed")
+        print("  ✓ Credit card refund processed")
         print(f"    Original Transaction: {transaction_id}")
         print(f"    Refund Amount: ${amount:.2f}")
         print(f"    Refund ID: {refund_id}")
@@ -213,7 +210,7 @@ class PayPalStrategy(PaymentStrategy):
         }
         self.transaction_history.append(transaction)
 
-        print(f"  ✓ PayPal payment processed")
+        print("  ✓ PayPal payment processed")
         print(f"    Amount: ${amount:.2f}")
         print(f"    Fee: ${fee:.2f}")
         print(f"    Total: ${total:.2f}")
@@ -240,7 +237,7 @@ class PayPalStrategy(PaymentStrategy):
         }
         self.transaction_history.append(refund)
 
-        print(f"  ✓ PayPal refund processed")
+        print("  ✓ PayPal refund processed")
         print(f"    Original Transaction: {transaction_id}")
         print(f"    Refund Amount: ${amount:.2f}")
         print(f"    Refund ID: {refund_id}")
@@ -317,12 +314,12 @@ class CryptocurrencyStrategy(PaymentStrategy):
         }
         self.transaction_history.append(transaction)
 
-        print(f"  ✓ Cryptocurrency payment initiated")
+        print("  ✓ Cryptocurrency payment initiated")
         print(f"    USD Amount: ${amount:.2f}")
         print(f"    Crypto Amount: {crypto_amount:.8f} {self.currency}")
         print(f"    Network Fee: {fee:.8f} {self.currency}")
         print(f"    Transaction ID: {transaction_id}")
-        print(f"    Status: Awaiting blockchain confirmation")
+        print("    Status: Awaiting blockchain confirmation")
 
         return {
             "success": True,
@@ -346,7 +343,7 @@ class CryptocurrencyStrategy(PaymentStrategy):
         }
         self.transaction_history.append(refund)
 
-        print(f"  ✓ Cryptocurrency refund initiated")
+        print("  ✓ Cryptocurrency refund initiated")
         print(f"    Original Transaction: {transaction_id}")
         print(f"    Refund Amount: ${amount:.2f}")
         print(f"    Refund ID: {refund_id}")
@@ -510,7 +507,7 @@ class ShoppingCart:
             return False
 
         total = self.get_total()
-        print(f"\n=== Checkout ===")
+        print("\n=== Checkout ===")
         print(f"  Items in cart: {len(self.items)}")
         print(f"  Total: ${total:.2f}")
 

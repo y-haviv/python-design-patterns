@@ -11,9 +11,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Optional, List, Dict, Any
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 
 class State(ABC):
@@ -27,22 +28,18 @@ class State(ABC):
     @abstractmethod
     def on_enter(self, context: Context) -> None:
         """Called when entering this state."""
-        pass
 
     @abstractmethod
     def on_exit(self, context: Context) -> None:
         """Called when exiting this state."""
-        pass
 
     @abstractmethod
     def handle(self, context: Context) -> None:
         """Handle the primary action in this state."""
-        pass
 
     @abstractmethod
     def get_name(self) -> str:
         """Get the name of this state."""
-        pass
 
 
 class Context:

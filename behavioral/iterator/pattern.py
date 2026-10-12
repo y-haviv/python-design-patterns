@@ -14,8 +14,9 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, Generic, List, Optional, TypeVar
+from typing import Generic, List, Optional, TypeVar
 
 T = TypeVar("T")
 
@@ -31,17 +32,14 @@ class Iterator(ABC, Generic[T]):
     @abstractmethod
     def has_next(self) -> bool:
         """Check if there are more elements to iterate over."""
-        pass
 
     @abstractmethod
     def next(self) -> T:
         """Get the next element in the iteration."""
-        pass
 
     @abstractmethod
     def reset(self) -> None:
         """Reset the iterator to the beginning."""
-        pass
 
 
 class Iterable(ABC, Generic[T]):
@@ -55,7 +53,6 @@ class Iterable(ABC, Generic[T]):
     @abstractmethod
     def create_iterator(self) -> Iterator[T]:
         """Create an iterator for this collection."""
-        pass
 
 
 class ConcreteIterator(Iterator[T]):

@@ -14,8 +14,9 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Optional, Any
+from typing import List
 
 
 class Implementor(ABC):
@@ -29,7 +30,6 @@ class Implementor(ABC):
     @abstractmethod
     def operation_impl(self) -> str:
         """Perform implementation-specific operation."""
-        pass
 
 
 class ConcreteImplementorA(Implementor):
@@ -101,7 +101,10 @@ class RefinedAbstraction(Abstraction):
 
     def extended_operation(self) -> str:
         """Additional refined operation."""
-        return f"RefinedAbstraction: Extended implementation detail: {self._implementor.operation_impl()}"
+        return (
+            "RefinedAbstraction: Extended implementation detail: "
+            f"{self._implementor.operation_impl()}"
+        )
 
 
 class DrawingAPI(ABC):
@@ -114,17 +117,14 @@ class DrawingAPI(ABC):
     @abstractmethod
     def draw_circle(self, x: float, y: float, radius: float) -> str:
         """Draw a circle."""
-        pass
 
     @abstractmethod
     def draw_rectangle(self, x: float, y: float, width: float, height: float) -> str:
         """Draw a rectangle."""
-        pass
 
     @abstractmethod
     def draw_line(self, x1: float, y1: float, x2: float, y2: float) -> str:
         """Draw a line."""
-        pass
 
 
 class CanvasAPI(DrawingAPI):

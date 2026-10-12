@@ -13,9 +13,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, List, Optional, Dict
 from datetime import datetime
+from typing import Any, Dict, List
 
 
 class Visitor(ABC):
@@ -29,17 +30,14 @@ class Visitor(ABC):
     @abstractmethod
     def visit_element_a(self, element: ConcreteElementA) -> Any:
         """Visit a ConcreteElementA."""
-        pass
 
     @abstractmethod
     def visit_element_b(self, element: ConcreteElementB) -> Any:
         """Visit a ConcreteElementB."""
-        pass
 
     @abstractmethod
     def get_name(self) -> str:
         """Get the name of this visitor."""
-        pass
 
 
 class Element(ABC):
@@ -53,12 +51,10 @@ class Element(ABC):
     @abstractmethod
     def accept(self, visitor: Visitor) -> Any:
         """Accept a visitor to perform an operation."""
-        pass
 
     @abstractmethod
     def get_name(self) -> str:
         """Get the name of this element."""
-        pass
 
 
 class ConcreteElementA(Element):

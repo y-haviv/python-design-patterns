@@ -6,25 +6,25 @@ without exposing its underlying representation.
 """
 
 from .pattern import (
-    Iterator,
-    Iterable,
-    ConcreteIterator,
     ConcreteIterable,
+    ConcreteIterator,
+    Iterable,
+    Iterator,
 )
 from .real_world_example import (
     BookCollection,
     BookIterator,
-    ReverseBookIterator,
     FilteredBookIterator,
+    ReverseBookIterator,
 )
 
 __all__ = [
-    "Iterator",
-    "Iterable",
-    "ConcreteIterator",
-    "ConcreteIterable",
     "BookCollection",
     "BookIterator",
-    "ReverseBookIterator",
+    "ConcreteIterable",
+    "ConcreteIterator",
     "FilteredBookIterator",
+    "Iterable",
+    "Iterator",
+    "ReverseBookIterator",
 ]

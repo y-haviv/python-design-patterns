@@ -10,17 +10,17 @@ These tests verify:
 """
 
 from __future__ import annotations
+
 import pytest
+
 from .pattern import (
-    Colleague,
-    Mediator,
     ConcreteColleague,
     ConcreteMediator,
     SmartMediator,
 )
 from .real_world_example import (
-    User,
     ChatMediator,
+    User,
 )
 
 

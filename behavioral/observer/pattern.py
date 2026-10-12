@@ -12,9 +12,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, List, Dict, Optional
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 
 class Observer(ABC):
@@ -34,7 +35,6 @@ class Observer(ABC):
             subject: The subject that changed.
             **kwargs: Additional information about the change.
         """
-        pass
 
 
 class Subject(ABC):
@@ -48,17 +48,14 @@ class Subject(ABC):
     @abstractmethod
     def attach(self, observer: Observer) -> None:
         """Attach an observer to the subject."""
-        pass
 
     @abstractmethod
     def detach(self, observer: Observer) -> None:
         """Detach an observer from the subject."""
-        pass
 
     @abstractmethod
     def notify(self, **kwargs: Any) -> None:
         """Notify all observers about a state change."""
-        pass
 
 
 class ConcreteObserver(Observer):

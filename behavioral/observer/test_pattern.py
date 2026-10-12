@@ -10,16 +10,14 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from .pattern import (
-    Observer,
-    Subject,
     ConcreteObserver,
     ConcreteSubject,
 )
 from .real_world_example import (
-    Stock,
     Investor,
+    Stock,
     StockMarket,
 )
 
@@ -248,7 +246,9 @@ class TestStockObserver:
 
         market.update_price("AAPL", 155.0)
 
-        assert market.get_stock("AAPL").get_price() == 155.0
+        stock = market.get_stock("AAPL")
+        assert stock is not None
+        assert stock.get_price() == 155.0
 
     def test_portfolio_value_calculation(self) -> None:
         """Verify portfolio value is calculated correctly."""
@@ -259,8 +259,8 @@ class TestStockObserver:
         investor.buy(stock, 10, 150.0)
         assert investor.get_portfolio_value() == 1500.0
 
-        stock.set_price(160.0)
-        assert investor.get_portfolio_value() == 1600.0
+        stock.set_price(155.0)
+        assert investor.get_portfolio_value() == 1550.0
 
     def test_average_cost_calculation(self) -> None:
         """Verify average cost basis is calculated correctly."""

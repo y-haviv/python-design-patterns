@@ -14,6 +14,7 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List
 
@@ -29,7 +30,6 @@ class Target(ABC):
     @abstractmethod
     def request(self) -> str:
         """Process a request in the expected format."""
-        pass
 
 
 class Adaptee:

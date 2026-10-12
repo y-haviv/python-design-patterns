@@ -13,9 +13,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 
 class Colleague(ABC):
@@ -40,12 +41,10 @@ class Colleague(ABC):
     @abstractmethod
     def send(self, message: str, recipient: Optional[str] = None) -> None:
         """Send a message through the mediator."""
-        pass
 
     @abstractmethod
     def receive(self, message: str, sender: str) -> None:
         """Receive a message from another colleague through the mediator."""
-        pass
 
 
 class Mediator(ABC):
@@ -59,14 +58,12 @@ class Mediator(ABC):
     @abstractmethod
     def register_colleague(self, colleague: Colleague) -> None:
         """Register a colleague with this mediator."""
-        pass
 
     @abstractmethod
     def send_message(
         self, message: str, sender: Colleague, recipient: Optional[Colleague] = None
     ) -> None:
         """Send a message from one colleague to another (or all)."""
-        pass
 
 
 class ConcreteColleague(Colleague):

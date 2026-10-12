@@ -12,10 +12,11 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, List, Optional
 from copy import deepcopy
 from datetime import datetime
+from typing import Any, List
 
 
 class Memento(ABC):
@@ -29,12 +30,10 @@ class Memento(ABC):
     @abstractmethod
     def get_name(self) -> str:
         """Get a descriptive name for this memento."""
-        pass
 
     @abstractmethod
     def get_date(self) -> str:
         """Get the creation date/time of this memento."""
-        pass
 
 
 class ConcreteMemento(Memento):

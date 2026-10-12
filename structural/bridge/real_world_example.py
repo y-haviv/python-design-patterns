@@ -10,9 +10,10 @@ platform independently.
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Dict, Any, List
 from datetime import datetime
+from typing import Any, Dict, List
 
 
 class CommunicationBridge(ABC):
@@ -26,27 +27,22 @@ class CommunicationBridge(ABC):
     @abstractmethod
     def send_command(self, device_id: str, command: str, *args: Any) -> bool:
         """Send a command to a device."""
-        pass
 
     @abstractmethod
     def receive_status(self, device_id: str) -> Dict[str, Any]:
         """Receive status from a device."""
-        pass
 
     @abstractmethod
     def connect(self, device_id: str) -> bool:
         """Connect to device."""
-        pass
 
     @abstractmethod
     def disconnect(self, device_id: str) -> bool:
         """Disconnect from device."""
-        pass
 
     @abstractmethod
     def get_connection_type(self) -> str:
         """Get connection type name."""
-        pass
 
 
 class WiFiBridge(CommunicationBridge):

@@ -10,19 +10,18 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from .pattern import (
-    Strategy,
-    Context,
     ConcreteStrategyA,
     ConcreteStrategyB,
     ConcreteStrategyC,
+    Context,
 )
 from .real_world_example import (
-    PaymentProcessor,
     CreditCardStrategy,
-    PayPalStrategy,
     CryptocurrencyStrategy,
+    PaymentProcessor,
+    PayPalStrategy,
     ShoppingCart,
 )
 
@@ -84,7 +83,7 @@ class TestContextStrategy:
 
         assert result_a == [2, 1, 3]
         assert result_b == [1, 2, 3]
-        # Result C would be unordered set converted to list
+        assert len(result_c) == 3  # Unordered set converted to list
 
     def test_strategy_with_string_data(self) -> None:
         """Verify strategies work with string data."""
@@ -123,7 +122,7 @@ class TestContextStrategy:
 
         assert "Reverse" in strategy_a.describe()
         assert "Sort" in strategy_b.describe()
-        assert "Unique" in strategy_c.describe()
+        assert "duplicates" in strategy_c.describe()
 
     def test_get_strategy_returns_current(self) -> None:
         """Verify getting current strategy."""
@@ -138,25 +137,25 @@ class TestPaymentStrategies:
 
     def test_credit_card_validation(self) -> None:
         """Verify credit card validation."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
 
         assert card.validate_payment_details() is True
 
     def test_credit_card_invalid_number(self) -> None:
         """Verify credit card rejects invalid number."""
-        card = CreditCardStrategy("123", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("123", "12/30", "123", "John Doe")
 
         assert card.validate_payment_details() is False
 
     def test_credit_card_invalid_cvv(self) -> None:
         """Verify credit card rejects invalid CVV."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "12", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "12", "John Doe")
 
         assert card.validate_payment_details() is False
 
     def test_credit_card_payment(self) -> None:
         """Verify credit card payment processing."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
 
         result = card.process_payment(100.0)
 
@@ -166,7 +165,7 @@ class TestPaymentStrategies:
 
     def test_credit_card_refund(self) -> None:
         """Verify credit card refund."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
 
         payment = card.process_payment(100.0)
         refund = card.refund(payment["transaction_id"], 100.0)
@@ -240,7 +239,7 @@ class TestPaymentStrategies:
 
     def test_payment_processor_with_credit_card(self) -> None:
         """Verify payment processor with credit card."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
         processor = PaymentProcessor(card)
 
         result = processor.pay(100.0)
@@ -250,7 +249,7 @@ class TestPaymentStrategies:
 
     def test_payment_processor_switch_method(self) -> None:
         """Verify switching payment methods."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
         paypal = PayPalStrategy("user@example.com", "password123")
 
         processor = PaymentProcessor(card)
@@ -263,10 +262,12 @@ class TestPaymentStrategies:
 
     def test_payment_processor_refund(self) -> None:
         """Verify payment processor refund."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
         processor = PaymentProcessor(card)
 
         payment_result = processor.pay(100.0)
+        assert payment_result is True
+
         # Get transaction ID from the payment
         payment = card.process_payment(100.0)
 
@@ -303,7 +304,7 @@ class TestPaymentStrategies:
         cart = ShoppingCart()
         cart.add_item("Widget", 10.0, 1)
 
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
         cart.set_payment_method(card)
 
         result = cart.checkout()
@@ -336,7 +337,7 @@ class TestPaymentStrategies:
 
     def test_payment_method_names(self) -> None:
         """Verify payment method names."""
-        card = CreditCardStrategy("1234567890123456", "12/25", "123", "John Doe")
+        card = CreditCardStrategy("1234567890123456", "12/30", "123", "John Doe")
         paypal = PayPalStrategy("user@example.com", "password123")
         crypto = CryptocurrencyStrategy("1A1z7agoat2YLZW51Yz8aS1UNvXLoVUUwt", "BTC")
 

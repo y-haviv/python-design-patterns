@@ -1,6 +1,6 @@
 """Flyweight Pattern Implementation (Structural)."""
 
-from typing import Dict, Optional
+from typing import Dict
 
 
 class Flyweight:

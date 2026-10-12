@@ -13,9 +13,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Optional, List
 from datetime import datetime
+from typing import List
 
 
 class Component(ABC):
@@ -24,7 +25,6 @@ class Component(ABC):
     @abstractmethod
     def operation(self) -> str:
         """Perform operation."""
-        pass
 
 
 class ConcreteComponent(Component):
@@ -74,12 +74,10 @@ class DataSource(ABC):
     @abstractmethod
     def write_data(self, data: str) -> None:
         """Write data."""
-        pass
 
     @abstractmethod
     def read_data(self) -> str:
         """Read data."""
-        pass
 
 
 class FileDataSource(DataSource):
@@ -195,12 +193,10 @@ class Coffee(ABC):
     @abstractmethod
     def get_cost(self) -> float:
         """Get coffee cost."""
-        pass
 
     @abstractmethod
     def get_description(self) -> str:
         """Get description."""
-        pass
 
 
 class SimpleCoffee(Coffee):
@@ -325,7 +321,6 @@ class Widget(ABC):
     @abstractmethod
     def render(self) -> str:
         """Render widget."""
-        pass
 
 
 class SimpleWidget(Widget):

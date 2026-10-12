@@ -6,8 +6,10 @@ without them knowing about each other directly.
 """
 
 from __future__ import annotations
-from typing import List, Optional
+
 from datetime import datetime
+from typing import List, Optional
+
 from .pattern import Colleague, Mediator
 
 
@@ -104,7 +106,7 @@ class ChatMediator(Mediator):
             if recipient in self.users and recipient != sender.name:
                 self.users[recipient].receive(message, sender.name)
             elif recipient == sender.name:
-                print(f"    ↳ Cannot send message to yourself")
+                print("    ↳ Cannot send message to yourself")
         else:
             # Broadcast
             for username, user in self.users.items():

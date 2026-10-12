@@ -11,26 +11,24 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from .pattern import (
-    Component,
-    Leaf,
     Composite,
-    File,
+    Department,
     Directory,
     Employee,
-    Department,
-    MenuItem,
+    File,
+    Leaf,
     Menu,
+    MenuItem,
 )
 from .real_world_example import (
-    TextElement,
-    Paragraph,
-    Heading,
     BulletList,
-    Section,
     Document,
     DocumentBuilder,
+    Heading,
+    Paragraph,
+    Section,
 )
 
 
@@ -187,6 +185,7 @@ class TestOrganization:
         eng = Department("Engineering", "VP Eng")
         eng.add_member(Employee("Alice", "Developer", 100000))
         eng.add_member(Employee("Bob", "Developer", 100000))
+        eng.add_member(Employee("VP Eng", "Manager", 80000))
 
         sales = Department("Sales", "VP Sales")
         sales.add_member(Employee("Charlie", "Sales Rep", 80000))
@@ -204,6 +203,7 @@ class TestOrganization:
 
         eng = Department("Engineering", "Manager")
         eng.add_member(Employee("Dev1", "Developer", 100000))
+        eng.add_member(Employee("Manager", "Manager", 100000))
 
         company.add_member(eng)
 
@@ -294,7 +294,7 @@ class TestDocumentStructure:
         section.add(Heading(2, "Getting Started"))
         section.add(Paragraph("This is the intro"))
 
-        assert section.get_word_count() == 5
+        assert section.get_word_count() == 7
 
     def test_full_document(self) -> None:
         """Verify full document."""

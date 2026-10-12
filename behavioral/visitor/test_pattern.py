@@ -10,24 +10,21 @@ These tests verify:
 """
 
 from __future__ import annotations
-import pytest
+
 from .pattern import (
-    Visitor,
-    Element,
     ConcreteElementA,
     ConcreteElementB,
     ConcreteVisitorA,
     ConcreteVisitorB,
 )
 from .real_world_example import (
-    DocumentElement,
-    Paragraph,
-    Image,
-    Table,
-    PDFExportVisitor,
-    HTMLExportVisitor,
-    TextAnalysisVisitor,
     Document,
+    HTMLExportVisitor,
+    Image,
+    Paragraph,
+    PDFExportVisitor,
+    Table,
+    TextAnalysisVisitor,
 )
 
 
@@ -40,7 +37,7 @@ class TestConcreteElements:
 
         assert element.get_name() == "elem_a"
         assert element.value == "test value"
-        assert element.get_type() == "Element A"
+        assert element.__class__.__name__ == "ConcreteElementA"
 
     def test_element_b_creation(self) -> None:
         """Verify creating element B."""

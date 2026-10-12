@@ -7,9 +7,10 @@ unified payment system.
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional
 from datetime import datetime
+from typing import Any, Dict, Optional
 
 
 class PaymentProcessor(ABC):
@@ -21,17 +22,14 @@ class PaymentProcessor(ABC):
     @abstractmethod
     def process_payment(self, amount: float, customer_id: str, description: str) -> Dict[str, Any]:
         """Process a payment and return transaction result."""
-        pass
 
     @abstractmethod
     def get_transaction_status(self, transaction_id: str) -> str:
         """Get the status of a transaction."""
-        pass
 
     @abstractmethod
     def refund_payment(self, transaction_id: str) -> Dict[str, Any]:
         """Refund a payment."""
-        pass
 
 
 class StripePaymentGateway:

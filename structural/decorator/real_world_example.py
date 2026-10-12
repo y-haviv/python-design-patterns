@@ -1,7 +1,6 @@
 """Real-World Decorator Example: Advanced I/O Stream Wrapper System."""
 
-from typing import Optional, List
-import json
+from typing import List
 
 
 class Stream:
@@ -61,7 +60,7 @@ class EncryptionStreamDecorator(StreamDecorator):
 
     def write(self, data: str) -> None:
         encrypted = "".join(chr((ord(c) + 5) % 256) for c in data)
-        super().write(f"[ENCRYPTED]" + encrypted)
+        super().write("[ENCRYPTED]" + encrypted)
 
     def read(self) -> str:
         data = super().read()

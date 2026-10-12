@@ -13,8 +13,9 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import List, Optional, Union, Any
+from typing import List, Optional
 
 
 class Component(ABC):
@@ -28,15 +29,12 @@ class Component(ABC):
     @abstractmethod
     def operation(self) -> str:
         """Perform operation on component."""
-        pass
 
     def add(self, component: Component) -> None:
         """Add child component (optional, for composite only)."""
-        pass
 
     def remove(self, component: Component) -> None:
         """Remove child component (optional, for composite only)."""
-        pass
 
     def get_child(self, index: int) -> Optional[Component]:
         """Get child at index (optional, for composite only)."""
@@ -106,17 +104,14 @@ class FileSystemComponent(ABC):
     @abstractmethod
     def get_size(self) -> int:
         """Get size of component in bytes."""
-        pass
 
     @abstractmethod
     def display(self, indent: int = 0) -> str:
         """Display component structure."""
-        pass
 
     @abstractmethod
     def get_path(self) -> str:
         """Get path representation."""
-        pass
 
 
 class File(FileSystemComponent):
@@ -191,22 +186,18 @@ class OrganizationComponent(ABC):
     @abstractmethod
     def get_name(self) -> str:
         """Get component name."""
-        pass
 
     @abstractmethod
     def get_head_count(self) -> int:
         """Get number of people in component."""
-        pass
 
     @abstractmethod
     def get_budget(self) -> float:
         """Get total budget."""
-        pass
 
     @abstractmethod
     def describe(self) -> str:
         """Get description."""
-        pass
 
 
 class Employee(OrganizationComponent):
@@ -294,22 +285,18 @@ class MenuComponent(ABC):
     @abstractmethod
     def add(self, component: MenuComponent) -> None:
         """Add menu item or submenu."""
-        pass
 
     @abstractmethod
     def remove(self, component: MenuComponent) -> None:
         """Remove menu item or submenu."""
-        pass
 
     @abstractmethod
     def display(self, depth: int = 0) -> str:
         """Display menu."""
-        pass
 
     @abstractmethod
     def execute(self) -> str:
         """Execute menu action."""
-        pass
 
 
 class MenuItem(MenuComponent):

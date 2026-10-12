@@ -1,6 +1,6 @@
 """Facade Pattern Implementation (Structural)."""
 
-from typing import List, Dict, Optional
+from typing import Any, Dict, List, cast
 
 
 class Subsystem1:
@@ -50,13 +50,13 @@ class DatabaseConnection:
 
 class CacheManager:
     def __init__(self):
-        self.cache: Dict = {}
+        self.cache: Dict[str, Any] = {}
 
-    def put(self, key: str, value: str) -> str:
+    def put(self, key: str, value: Any) -> str:
         self.cache[key] = value
         return f"✓ Cached: {key}"
 
-    def get(self, key: str) -> Optional[str]:
+    def get(self, key: str) -> Any:
         return self.cache.get(key)
 
     def clear(self) -> str:
@@ -83,20 +83,22 @@ class RepositoryFacade:
         self._cache = CacheManager()
         self._logger = LogManager()
 
-    def get_user(self, user_id: int) -> Dict:
+    def get_user(self, user_id: int) -> Dict[str, Any]:
         cache_key = f"user_{user_id}"
         self._logger.log(f"Getting user {user_id}")
 
         if cache_key in self._cache.cache:
             self._logger.log("Retrieved from cache")
-            return self._cache.get(cache_key)
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cast(Dict[str, Any], cached)
 
         self._logger.log("Querying database")
         result = {"id": user_id, "name": "User"}
-        self._cache.put(cache_key, str(result))
+        self._cache.put(cache_key, result)
         return result
 
-    def create_user(self, name: str) -> Dict:
+    def create_user(self, name: str) -> Dict[str, Any]:
         self._logger.log(f"Creating user: {name}")
         user = {"id": 1, "name": name}
         self._cache.clear()
@@ -133,6 +135,8 @@ class InventoryService:
         return True
 
     def release(self, item_id: str, quantity: int) -> bool:
+        if item_id not in self.items:
+            self.items[item_id] = 100
         self.items[item_id] += quantity
         return True
 
@@ -145,7 +149,7 @@ class OrderFacade:
         self._notification = NotificationService()
         self._inventory = InventoryService()
 
-    def place_order(self, customer_email: str, item_id: str, amount: float) -> Dict:
+    def place_order(self, customer_email: str, item_id: str, amount: float) -> Dict[str, Any]:
         """Place an order - handles all subsystems."""
         self._notification.send_email(customer_email, "Order received")
         self._payment.authorize(amount)
@@ -153,7 +157,8 @@ class OrderFacade:
 
         return {"status": "confirmed", "email": customer_email, "amount": amount}
 
-    def cancel_order(self, order_id: str, item_id: str, amount: float, customer_email: str) -> Dict:
+    def cancel_order(self, order_id: str, item_id: str,
+                     amount: float, customer_email: str) -> Dict[str, Any]:
         """Cancel an order - handles all subsystems."""
         self._inventory.release(item_id, 1)
         self._payment.refund(order_id)

@@ -11,9 +11,10 @@ Key Components:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, Optional, List, Dict
 from datetime import datetime
+from typing import Any, Dict, List
 
 
 class Strategy(ABC):
@@ -35,17 +36,14 @@ class Strategy(ABC):
         Returns:
             Result of the algorithm.
         """
-        pass
 
     @abstractmethod
     def get_name(self) -> str:
         """Get the name of this strategy."""
-        pass
 
     @abstractmethod
     def describe(self) -> str:
         """Get a description of this strategy."""
-        pass
 
 
 class Context:

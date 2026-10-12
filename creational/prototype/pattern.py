@@ -18,12 +18,13 @@ The Prototype pattern is useful when:
 """
 
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from copy import copy, deepcopy
+from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional, Type
 from datetime import datetime
 from enum import Enum
+from typing import Any, Dict, List, Optional
 
 # ============================================================================
 # Prototype Interface & Basic Implementations
@@ -45,7 +46,6 @@ class Cloneable(ABC):
         Returns:
             A copy of this object.
         """
-        pass
 
 
 # ============================================================================

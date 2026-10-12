@@ -7,9 +7,11 @@ filtered by criteria, etc.
 """
 
 from __future__ import annotations
-from typing import List, Optional
+
 from dataclasses import dataclass
-from .pattern import Iterator, Iterable, ConcreteIterable
+from typing import List
+
+from .pattern import Iterable, Iterator
 
 
 @dataclass
