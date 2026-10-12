@@ -1,7 +1,7 @@
 """Proxy Pattern Implementation (Structural)."""
 
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Dict, List, Optional
 
 
 class Subject(ABC):
@@ -89,9 +89,9 @@ class RealDatabase(Database):
 class DatabaseProxy(Database):
     """Proxy with caching."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._real_db = RealDatabase()
-        self._cache = {}
+        self._cache: Dict[str, str] = {}
 
     def query(self, sql: str) -> str:
         if sql in self._cache:
@@ -156,13 +156,13 @@ class ValidationProxy(Service):
 class LoggingProxy(Service):
     """Proxy with logging."""
 
-    def __init__(self, real_service: RealService):
+    def __init__(self, real_service: RealService) -> None:
         self._service = real_service
-        self._log = []
+        self._log: List[str] = []
 
     def operation(self, data: str) -> str:
         self._log.append(f"Operation called with: {data}")
         return self._service.operation(data)
 
-    def get_log(self):
+    def get_log(self) -> List[str]:
         return self._log

@@ -30,7 +30,7 @@ class TestConcreteIterator:
 
     def test_iterator_initialization(self) -> None:
         """Verify iterator initializes correctly."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         collection.add_item(1)
         collection.add_item(2)
 
@@ -39,7 +39,7 @@ class TestConcreteIterator:
 
     def test_forward_iteration(self) -> None:
         """Verify forward iteration through elements."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
 
@@ -53,7 +53,7 @@ class TestConcreteIterator:
 
     def test_has_next_at_end(self) -> None:
         """Verify has_next returns False at the end."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[str] = ConcreteIterable()
         collection.add_item("a")
         collection.add_item("b")
 
@@ -65,7 +65,7 @@ class TestConcreteIterator:
 
     def test_iterator_stop_iteration(self) -> None:
         """Verify StopIteration is raised when no more elements."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         collection.add_item(1)
 
         iterator = collection.create_iterator()
@@ -76,7 +76,7 @@ class TestConcreteIterator:
 
     def test_iterator_reset(self) -> None:
         """Verify iterator can be reset to the beginning."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
 
@@ -99,7 +99,7 @@ class TestReverseIterator:
 
     def test_reverse_iterator_basic(self) -> None:
         """Verify reverse iteration works correctly."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
 
@@ -113,7 +113,7 @@ class TestReverseIterator:
 
     def test_reverse_iterator_reset(self) -> None:
         """Verify reverse iterator reset goes to the end."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
 
@@ -130,7 +130,7 @@ class TestFilteredIterator:
 
     def test_filtered_iterator_basic(self) -> None:
         """Verify filtered iteration returns only matching elements."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 11):
             collection.add_item(i)
 
@@ -145,7 +145,7 @@ class TestFilteredIterator:
 
     def test_filtered_iterator_no_matches(self) -> None:
         """Verify filtered iterator with no matches."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
 
@@ -156,7 +156,7 @@ class TestFilteredIterator:
 
     def test_filtered_iterator_reset(self) -> None:
         """Verify filtered iterator can be reset."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
 
@@ -183,7 +183,7 @@ class TestBidirectionalIterator:
 
     def test_bidirectional_forward(self) -> None:
         """Verify forward movement in bidirectional iterator."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 6):
             collection.add_item(i)
 
@@ -195,7 +195,7 @@ class TestBidirectionalIterator:
 
     def test_bidirectional_backward(self) -> None:
         """Verify backward movement."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
 
@@ -208,7 +208,7 @@ class TestBidirectionalIterator:
 
     def test_bidirectional_go_to_end(self) -> None:
         """Verify jumping to the end."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
 
@@ -219,7 +219,7 @@ class TestBidirectionalIterator:
 
     def test_bidirectional_get_index(self) -> None:
         """Verify getting current index."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
 
@@ -236,7 +236,7 @@ class TestLazyIterator:
     def test_lazy_iterator_finite(self) -> None:
         """Verify lazy iterator with finite sequence."""
         # Generate squares: 0, 1, 4, 9, 16
-        iterator = LazyIterator(lambda i: i**2, size=5)
+        iterator: LazyIterator[int] = LazyIterator(lambda i: i**2, size=5)
 
         results = []
         while iterator.has_next():
@@ -247,7 +247,7 @@ class TestLazyIterator:
     def test_lazy_iterator_infinite(self) -> None:
         """Verify lazy iterator with infinite sequence."""
         # Fibonacci sequence
-        fib_cache = {}
+        fib_cache: dict[int, int] = {}
 
         def fib(n):
             if n <= 1:
@@ -257,7 +257,7 @@ class TestLazyIterator:
             fib_cache[n] = fib(n - 1) + fib(n - 2)
             return fib_cache[n]
 
-        iterator = LazyIterator(fib, size=None)
+        iterator: LazyIterator[int] = LazyIterator(fib, size=None)
 
         # Generate first 10 fibonacci numbers
         results = []
@@ -269,7 +269,7 @@ class TestLazyIterator:
 
     def test_lazy_iterator_reset(self) -> None:
         """Verify lazy iterator reset."""
-        iterator = LazyIterator(lambda i: i * 2, size=3)
+        iterator: LazyIterator[int] = LazyIterator(lambda i: i * 2, size=3)
 
         # First pass
         results1 = []
@@ -292,7 +292,7 @@ class TestMultipleSimultaneousIterators:
 
     def test_multiple_iterators_independent(self) -> None:
         """Verify multiple iterators are independent."""
-        collection = ConcreteIterable()
+        collection: ConcreteIterable[int] = ConcreteIterable()
         for i in range(1, 4):
             collection.add_item(i)
 

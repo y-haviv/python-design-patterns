@@ -253,15 +253,19 @@ class Investor(Observer):
             f"${price:.2f} (Profit: ${profit:+.2f})"
         )
 
-    def update(self, stock: Stock, **kwargs) -> None:
+    def update(self, subject: Subject, **kwargs: Any) -> None:
         """
         React to stock price changes.
 
         Args:
-            stock: The stock that changed.
+            subject: The stock that changed.
             **kwargs: Information about the price change.
         """
-        new_price = kwargs.get("new_price")
+        if not isinstance(subject, Stock):
+            return
+        stock = subject
+        price_val = kwargs.get("new_price")
+        new_price: float = float(price_val) if isinstance(price_val, (int, float)) else stock.get_price()
         change_percent = kwargs.get("change_percent", 0)
 
         # Simple trading strategy: buy on dips, sell on rallies

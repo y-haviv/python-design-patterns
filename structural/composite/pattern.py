@@ -15,7 +15,7 @@ Key Components:
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 
 class Component(ABC):
@@ -304,7 +304,7 @@ class MenuItem(MenuComponent):
     Leaf - represents menu item with action.
     """
 
-    def __init__(self, name: str, action: callable) -> None:
+    def __init__(self, name: str, action: Callable[[], str]) -> None:
         """Initialize menu item."""
         self.name = name
         self.action = action

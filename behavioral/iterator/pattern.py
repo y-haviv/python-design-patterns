@@ -16,7 +16,7 @@ Key Components:
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Generic, List, Optional, TypeVar
+from typing import Callable, Generic, List, Optional, TypeVar
 
 T = TypeVar("T")
 
@@ -130,7 +130,7 @@ class FilteredIterator(Iterator[T]):
     This is more memory-efficient for large collections.
     """
 
-    def __init__(self, collection: ConcreteIterable[T], predicate: callable) -> None:
+    def __init__(self, collection: ConcreteIterable[T], predicate: Callable[[T], bool]) -> None:
         """
         Initialize filtered iterator.
 
@@ -203,7 +203,7 @@ class ConcreteIterable(Iterable[T]):
         """Create a reverse iterator for this collection."""
         return ReverseIterator(self)
 
-    def create_filtered_iterator(self, predicate: callable) -> Iterator[T]:
+    def create_filtered_iterator(self, predicate: Callable[[T], bool]) -> Iterator[T]:
         """
         Create a filtered iterator for this collection.
 
@@ -282,7 +282,7 @@ class LazyIterator(Iterator[T]):
     compute or store all elements upfront.
     """
 
-    def __init__(self, generator_func: callable, size: Optional[int] = None) -> None:
+    def __init__(self, generator_func: Callable[[int], T], size: Optional[int] = None) -> None:
         """
         Initialize a lazy iterator.
 

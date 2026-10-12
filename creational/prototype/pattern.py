@@ -438,7 +438,8 @@ class DocumentTemplateRegistry(PrototypeRegistry):
         Returns:
             A new document cloned from the template.
         """
-        return self.clone(template_name)
+        result = self.clone(template_name)
+        return result if isinstance(result, Document) else None
 
     def list_templates(self) -> List[str]:
         """List all available templates."""
@@ -474,10 +475,11 @@ class CharacterTemplateRegistry(PrototypeRegistry):
             A new character cloned from the template.
         """
         character = self.clone(character_class.value.lower())
-        if character:
+        if isinstance(character, GameCharacter):
             # Give the cloned character a unique name (in practice, user would input this)
             character.name = f"New {character_class.value}"
-        return character
+            return character
+        return None
 
     def list_available_classes(self) -> List[str]:
         """List all available character class templates."""

@@ -7,7 +7,7 @@ class RemoteService:
     """Remote service interface."""
 
     def fetch_data(self, resource_id: str) -> dict:
-        pass
+        raise NotImplementedError
 
 
 class ExpensiveRemoteService(RemoteService):

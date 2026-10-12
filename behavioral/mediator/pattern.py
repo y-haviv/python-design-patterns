@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 
 class Colleague(ABC):
@@ -61,7 +61,7 @@ class Mediator(ABC):
 
     @abstractmethod
     def send_message(
-        self, message: str, sender: Colleague, recipient: Optional[Colleague] = None
+        self, message: str, sender: Colleague, recipient: Optional[str] = None
     ) -> None:
         """Send a message from one colleague to another (or all)."""
 
@@ -182,10 +182,10 @@ class SmartMediator(ConcreteMediator):
     def __init__(self) -> None:
         """Initialize the smart mediator."""
         super().__init__()
-        self.filters: Dict[str, callable] = {}
+        self.filters: Dict[str, Callable[[str], bool]] = {}
         self.routing_rules: Dict[str, str] = {}  # recipient mapping
 
-    def add_filter(self, colleague_name: str, filter_func: callable) -> None:
+    def add_filter(self, colleague_name: str, filter_func: Callable[[str], bool]) -> None:
         """
         Add a message filter for a colleague.
 

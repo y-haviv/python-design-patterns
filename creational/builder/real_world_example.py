@@ -302,7 +302,7 @@ class SQLQueryBuilder:
 
     def reset(self) -> SQLQueryBuilder:
         """Reset the builder to initial state."""
-        self.__init__()
+        SQLQueryBuilder.__init__(self)
         return self
 
     def build(self) -> SQLQuery:

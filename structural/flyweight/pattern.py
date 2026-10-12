@@ -18,8 +18,8 @@ class Flyweight:
 class FlyweightFactory:
     """Factory for creating and managing flyweights."""
 
-    def __init__(self):
-        self._flyweights: Dict = {}
+    def __init__(self) -> None:
+        self._flyweights: Dict[str, Flyweight] = {}
 
     def get_flyweight(self, shared_state) -> Flyweight:
         """Get or create flyweight."""

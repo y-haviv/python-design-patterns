@@ -8,15 +8,16 @@ and full undo/redo history without providing direct access to internal state.
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 
-from .pattern import Caretaker, Memento, Originator
+from .pattern import Caretaker, ConcreteMemento, Memento, Originator
 
 
-class DocumentMemento(Memento):
+class DocumentMemento(ConcreteMemento):
     """Memento specifically for text documents."""
 
     def __init__(self, content: str, title: str, timestamp: str) -> None:
+        super().__init__({"content": content, "title": title}, title)
         self._content = content
         self._title = title
         self._timestamp = timestamp
@@ -44,7 +45,7 @@ class TextDocument(Originator):
         self.title = title
         self.content = ""
         self.cursor_position = 0
-        self.formatting = {}
+        self.formatting: dict[str, Any] = {}
 
     def insert_text(self, text: str, position: Optional[int] = None) -> None:
         """Insert text at a specific position."""
@@ -80,10 +81,11 @@ class TextDocument(Originator):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return DocumentMemento(self.content, self.title, timestamp)
 
-    def restore_from_memento(self, memento: DocumentMemento) -> None:
+    def restore_from_memento(self, memento: ConcreteMemento) -> None:
         """Restore document from a memento."""
-        self.content = memento.content
-        self.title = memento.title
+        if isinstance(memento, DocumentMemento):
+            self.content = memento.content
+            self.title = memento.title
 
     def display(self) -> None:
         """Display the document content."""
@@ -131,11 +133,12 @@ class DocumentHistory(Caretaker):
         mem1 = self.history[index1]
         mem2 = self.history[index2]
 
-        print(f"\n=== Comparing Version {index1 + 1} vs {index2 + 1} ===")
-        print(f"Version {index1 + 1}: {mem1.get_name()}")
-        print(f"  Length: {len(mem1.content)} characters")
-        print(f"Version {index2 + 1}: {mem2.get_name()}")
-        print(f"  Length: {len(mem2.content)} characters")
+        if isinstance(mem1, DocumentMemento) and isinstance(mem2, DocumentMemento):
+            print(f"\n=== Comparing Version {index1 + 1} vs {index2 + 1} ===")
+            print(f"Version {index1 + 1}: {mem1.get_name()}")
+            print(f"  Length: {len(mem1.content)} characters")
+            print(f"Version {index2 + 1}: {mem2.get_name()}")
+            print(f"  Length: {len(mem2.content)} characters")
 
 
 def demonstrate_document_history() -> None:

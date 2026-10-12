@@ -93,7 +93,7 @@ class PostgreSQLConnection(Connection):
     """Concrete Product: PostgreSQL Connection."""
 
     def __init__(self) -> None:
-        self.host = None
+        self.host: Optional[str] = None
         self.connected = False
         self.port = 5432  # Default PostgreSQL port
 
@@ -179,7 +179,7 @@ class MySQLConnection(Connection):
     """Concrete Product: MySQL Connection."""
 
     def __init__(self) -> None:
-        self.host = None
+        self.host: Optional[str] = None
         self.connected = False
         self.port = 3306  # Default MySQL port
 
@@ -260,7 +260,7 @@ class SQLiteConnection(Connection):
     """Concrete Product: SQLite Connection."""
 
     def __init__(self) -> None:
-        self.db_file = None
+        self.db_file: Optional[str] = None
         self.connected = False
 
     def connect(

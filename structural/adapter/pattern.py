@@ -16,7 +16,7 @@ Key Components:
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List
+from typing import Any, Dict, List, cast
 
 
 class Target(ABC):
@@ -208,7 +208,7 @@ class AdapterWithValidation(Target):
 
     def _transform(self, data: Dict[str, Any]) -> str:
         """Transform the adapted data."""
-        message = data.get("message", "")
+        message = str(data.get("message", ""))
         return message.upper()
 
 
@@ -234,7 +234,7 @@ class AdapterRegistry:
             raise ValueError(f"No adapter registered for type: {adaptee_type}")
 
         adapter_class = self._adapters[adaptee_type]
-        return adapter_class(adaptee)
+        return cast(Target, adapter_class(adaptee))
 
     def get_registered_adapters(self) -> List[str]:
         """Get list of registered adapter types."""

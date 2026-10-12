@@ -69,7 +69,7 @@ class StripePaymentGateway:
     def get_charge_status(self, charge_id: str) -> str:
         """Get Stripe charge status."""
         if charge_id in self.transactions:
-            return self.transactions[charge_id]["status"]
+            return str(self.transactions[charge_id]["status"])
         return "unknown"
 
     def refund_charge(self, charge_id: str) -> Dict[str, Any]:
@@ -116,7 +116,7 @@ class PayPalPaymentGateway:
     def get_payment_state(self, payment_id: str) -> str:
         """Get PayPal payment state."""
         if payment_id in self.payments:
-            return self.payments[payment_id]["state"]
+            return str(self.payments[payment_id]["state"])
         return "unknown"
 
     def execute_refund(self, payment_id: str, refund_amount: str) -> Dict[str, Any]:
@@ -260,7 +260,7 @@ class PaymentSystem:
             "provider": result["provider"],
         }
 
-        return result["success"]
+        return bool(result["success"])
 
     def check_payment_status(self, order_id: str) -> str:
         """Check the status of a payment."""
@@ -284,7 +284,7 @@ class PaymentSystem:
         if result["success"]:
             transaction["status"] = "refunded"
 
-        return result["success"]
+        return bool(result["success"])
 
     def get_transaction_details(self, order_id: str) -> Optional[Dict[str, Any]]:
         """Get transaction details."""

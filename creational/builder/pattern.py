@@ -333,7 +333,7 @@ class HTTPRequestBuilder:
         Returns:
             Self for method chaining.
         """
-        self.__init__()
+        HTTPRequestBuilder.__init__(self)
         return self
 
     def build(self) -> HTTPRequest:

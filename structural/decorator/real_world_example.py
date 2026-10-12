@@ -10,7 +10,7 @@ class Stream:
         pass
 
     def read(self) -> str:
-        pass
+        raise NotImplementedError
 
 
 class FileStream(Stream):

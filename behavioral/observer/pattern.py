@@ -57,6 +57,10 @@ class Subject(ABC):
     def notify(self, **kwargs: Any) -> None:
         """Notify all observers about a state change."""
 
+    def get_state(self) -> Any:
+        """Get the current state of the subject."""
+        return None
+
 
 class ConcreteObserver(Observer):
     """

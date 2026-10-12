@@ -132,6 +132,7 @@ class ConcreteStrategyA(Strategy):
             Result of algorithm A.
         """
         print("  [Strategy A] Executing algorithm...")
+        result: Any
         if isinstance(data, (list, str)):
             result = data[::-1]  # Reverse
             print(f"  [Strategy A] Result: {result}")
@@ -167,6 +168,7 @@ class ConcreteStrategyB(Strategy):
             Result of algorithm B.
         """
         print("  [Strategy B] Executing algorithm...")
+        result: Any
         if isinstance(data, (list, tuple)):
             result = sorted(data)  # Sort
             print(f"  [Strategy B] Result: {result}")
@@ -206,6 +208,7 @@ class ConcreteStrategyC(Strategy):
             Result of algorithm C.
         """
         print("  [Strategy C] Executing algorithm...")
+        result: Any
         if isinstance(data, (list, tuple)):
             result = list(set(data))  # Remove duplicates
             print(f"  [Strategy C] Result: {result}")

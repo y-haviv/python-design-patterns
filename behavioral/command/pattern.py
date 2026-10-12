@@ -16,7 +16,7 @@ Key Components:
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, List
+from typing import Any, List, Optional
 
 
 class Command(ABC):
@@ -106,7 +106,7 @@ class ConcreteCommand(Command):
         self.action = action
         self.args = args
         self.kwargs = kwargs
-        self.previous_state = None
+        self.previous_state: Optional[str] = None
 
     def execute(self) -> None:
         """Execute the command by calling the appropriate receiver method."""
@@ -201,7 +201,7 @@ class Invoker:
             List of command descriptions.
         """
         return [
-            f"{i + 1}. {cmd.action} at {getattr(cmd, 'timestamp', 'unknown')}"
+            f"{i + 1}. {getattr(cmd, 'action', 'unknown')} at {getattr(cmd, 'timestamp', 'unknown')}"
             for i, cmd in enumerate(self.history)
         ]
 

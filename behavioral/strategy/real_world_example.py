@@ -414,7 +414,7 @@ class PaymentProcessor:
                 }
             )
 
-        return result["success"]
+        return bool(result["success"])
 
     def refund(self, transaction_id: str, amount: float) -> bool:
         """
@@ -443,7 +443,7 @@ class PaymentProcessor:
                 }
             )
 
-        return result["success"]
+        return bool(result["success"])
 
     def get_transaction_count(self) -> int:
         """Get number of transactions processed."""
@@ -483,7 +483,7 @@ class ShoppingCart:
 
     def get_total(self) -> float:
         """Calculate cart total."""
-        return sum(item["subtotal"] for item in self.items)
+        return float(sum(item["subtotal"] for item in self.items))
 
     def set_payment_method(self, strategy: PaymentStrategy) -> None:
         """
