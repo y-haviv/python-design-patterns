@@ -201,7 +201,8 @@ class Invoker:
             List of command descriptions.
         """
         return [
-            f"{i + 1}. {getattr(cmd, 'action', 'unknown')} at {getattr(cmd, 'timestamp', 'unknown')}"
+            f"{i + 1}. {getattr(cmd, 'action', 'unknown')} "
+            f"at {getattr(cmd, 'timestamp', 'unknown')}"
             for i, cmd in enumerate(self.history)
         ]
 

@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Optional
 
-from .pattern import Caretaker, ConcreteMemento, Memento, Originator
+from .pattern import Caretaker, ConcreteMemento, Originator
 
 
 class DocumentMemento(ConcreteMemento):
