@@ -265,7 +265,9 @@ class Investor(Observer):
             return
         stock = subject
         price_val = kwargs.get("new_price")
-        new_price: float = float(price_val) if isinstance(price_val, (int, float)) else stock.get_price()
+        new_price: float = (
+            float(price_val) if isinstance(price_val, (int, float)) else stock.get_price()
+        )
         change_percent = kwargs.get("change_percent", 0)
 
         # Simple trading strategy: buy on dips, sell on rallies
